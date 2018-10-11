@@ -85,8 +85,8 @@ Web based DAW.
 - Log in Form component
 - Song Card component
 - Note component
+- Key component
 - Piano component
-
 
 ## Services
 
@@ -209,6 +209,7 @@ notes			[
 ### Git
 
 [Client repository Link](https://github.com/jchaconalvarez/IH-Project3-Client.git)
+
 [Server repository Link](https://github.com/jchaconalvarez/IH-Project3-Server.git)
 
 [Deploy Link](http://heroku.com)
