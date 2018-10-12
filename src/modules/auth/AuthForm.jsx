@@ -5,6 +5,7 @@ import {
   Field,
   ErrorMessage,
 } from 'formik';
+import store from '../../store';
 
 const validateInput = (values) => {
   let errors = {};
@@ -26,7 +27,6 @@ const AuthForm = (props) => {
       // validate={validateInput}
       onSubmit={(values, actions) => {
         props.sendData(values);
-        actions.setSubmitting(false);
       }}
       render={( isSubmitting ) => {
         return (

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import store from '../../store';
 import AuthForm from './AuthForm';
-import auth from '../../lib/auth-service';
 
 class AuthConnection extends Component {
   sendData = (values) => {
-    console.log('AUTHCONNECTION: SENDDATA', values);
     if (window.location.pathname === '/signup') {
-      auth.signup(values);
+      store.dispatch({ type: 'SIGN_UP_REQUESTED', payload: values });
+    } else {
+      store.dispatch({ type: 'LOG_IN_REQUESTED', payload: values });
     }
   }
 
