@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import store from '../store';
+import { signUp, logIn } from '../actions/auth';
+import { connect } from 'react-redux';
 import AuthForm from './AuthForm';
 
 class AuthConnection extends Component {
 
-  sendData = (values) => {
+  sendData = ({ email, password }) => {
     if (window.location.pathname === '/signup') {
-      store.dispatch({ type: 'SIGN_UP_REQUESTED', payload: values })
+      this.props.signUp({ email, password });
     } else {
-      store.dispatch({ type: 'LOG_IN_REQUESTED', payload: values });
+      this.props.logIn({ email, password });
     }
   }
 
@@ -24,4 +25,18 @@ class AuthConnection extends Component {
   }
 }
 
-export default AuthConnection;
+const mapStateToProps = (state) => {
+  return {
+    user: state.session.user,
+    isLogged: state.session.isLogged,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signUp: ({ email, password }) => dispatch(signUp({ email, password })),
+    logIn: ({ email, password }) => dispatch(logIn({ email, password })),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthConnection);

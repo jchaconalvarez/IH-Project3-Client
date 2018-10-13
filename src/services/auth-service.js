@@ -10,15 +10,18 @@ class Auth {
 
   signup(user) {
     return this.auth.post('/signup', user)
-      .then(({ data }) => data)
-      .catch((error) => { console.log('Error signing up', error); });
+      .then(({ data }) => data);
   }
 
   login(user) {
-    console.log('log in');
     return this.auth.post('/login', user)
+      .then(({ data }) => data);
+  }
+
+  me() {
+    return this.auth.get('/me')
       .then(({ data }) => data)
-      .catch((error) => { console.log('Error logging in', error); });
+      .catch((error) => { console.log('Could not retrieve user information', error); });
   }
 }
 

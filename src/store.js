@@ -1,20 +1,20 @@
-import { createStore, applyMiddleware } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import AuthReducers from './reducers/AuthReducers';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import combinedReducers from './reducers';
 
-import authSaga from './sagas/AuthSaga';
-
-const sagaMiddleware = createSagaMiddleware();
+const session = {
+  user: null,
+  isLogged: false,
+};
 
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
-  AuthReducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(sagaMiddleware),
+  combinedReducers,
+  { session },
+  composeWithDevTools(applyMiddleware(thunkMiddleware)),
 );
 /* eslint-enable */
-
-sagaMiddleware.run(authSaga);
 
 store.subscribe(() => {
   console.log('Store changed!', store.getState());

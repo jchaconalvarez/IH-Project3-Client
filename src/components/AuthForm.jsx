@@ -25,7 +25,8 @@ const AuthForm = (props) => {
       initialValues={initialValues}
       // validate={validateInput}
       onSubmit={(values, actions) => {
-        props.sendData(values);
+        const { email, password } = values;
+        props.sendData({ email, password });
       }}
       render={( isSubmitting ) => {
         return (
