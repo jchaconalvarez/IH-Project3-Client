@@ -5,7 +5,6 @@ import {
   Field,
   ErrorMessage,
 } from 'formik';
-import store from '../../store';
 
 const validateInput = (values) => {
   let errors = {};

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AuthConnection from '../AuthHandler';
+import AuthConnection from '../components/AuthHandler';
 
 const Signup = () => (
   <div>

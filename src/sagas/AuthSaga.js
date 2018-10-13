@@ -1,5 +1,5 @@
 import { all, put, takeEvery } from 'redux-saga/effects';
-import auth from './services/auth-service';
+import auth from '../services/auth-service';
 
 function* signUp(action) {
   const user = yield auth.signup(action.payload);
