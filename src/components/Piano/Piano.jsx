@@ -11,7 +11,7 @@ const Board = styled.div`
   border-radius: 12px;
   box-shadow: 0 8px 0 0 #E2BE09;
   align-content: center;
-`
+`;
 
 // const Key = styled.div`
 //   border-top: 6px solid #E2BE09;
@@ -22,7 +22,7 @@ const WhiteKeysGroup = styled.div`
   position: absolute;
   display: grid;
   grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
-`
+`;
 
 const WhiteKey = styled.div`
   border-top: 6px solid #E2BE09;
@@ -38,14 +38,14 @@ const WhiteKey = styled.div`
   box-shadow:
     0 8px #F8F8F8;
 }
-`
+`;
 
 const BlackKeysGroup = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: 20px 70px 20px 20px 70px 20px 70px 20px 20px 20px;
   grid-column-gap: 30px;
-`
+`;
 
 const BlackKey = styled.div`
   border-top: 6px solid #E2BE09;
@@ -55,13 +55,13 @@ const BlackKey = styled.div`
   height: 100px;
   background: #424242;
   box-shadow:
-    0 0 0 0.5px inset #353535, 
+    0 0 0 0.5px inset #353535,
     0 8px #353535;
   &:active{
    box-shadow:
     0 8px #424242
-} 
-`
+}
+`;
 
 export default class Piano extends Component {
   render() {
@@ -96,7 +96,6 @@ export default class Piano extends Component {
           <BlackKey id="A#3" />
         </BlackKeysGroup>
       </Board>
-
     )
   }
 }
