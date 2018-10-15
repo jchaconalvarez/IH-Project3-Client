@@ -7,6 +7,7 @@ class AuthHandler extends Component {
 
   sendData = ({ email, password }) => {
     const { showLogin, signUp, logIn } = this.props;
+    console.log('sendData:', email, password);
     showLogin ? logIn({ email, password }) : signUp({ email, password });
   }
 

@@ -12,7 +12,7 @@ const CardButton = styled.button`
   border-radius: 35px;
   /* background-color: #EF4957; */
   /*--------------- NOTE: no se si hacerlo esto o no*/
-  background: #f9d423;
+  background: #F9D423;
   animation: mymove 15s infinite;
   }
     @keyframes mymove {
@@ -21,13 +21,13 @@ const CardButton = styled.button`
   /*------------------------------------------------*/
 
   &:focus{
-    background-color: #ff7d84;
+    background-color: #FF7D84;
   }
-`
+`;
 
 export default function Button(props) {
   return (
-    <CardButton>
+    <CardButton type="button">
       {props.children}
     </CardButton>
   );

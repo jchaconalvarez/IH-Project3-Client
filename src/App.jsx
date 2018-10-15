@@ -28,12 +28,12 @@ injectGlobal`
 const Background = styled.div`
   transform: skewY(10deg);
   background-image: linear-gradient(to right, #EF4957 0%, #f9d423 100%);
-`
+`;
 
 const UnSkewY = styled.div`
   transform: skewY(-10deg);
 
-`
+`;
 
 class App extends Component {
   render() {
