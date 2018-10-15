@@ -14,7 +14,7 @@ const signUpSucceeded = (user) => {
   };
 };
 
-export const signUpFailed = (error) => {
+const signUpFailed = (error) => {
   return {
     type: actions.SIGN_UP_FAILED,
     error,
@@ -28,20 +28,20 @@ export const signUp = ({ email, password }) => (dispatch, getState) => {
     .catch(error => dispatch(signUpFailed(error)));
 };
 
-export const logInRequested = () => {
+const logInRequested = () => {
   return {
     type: actions.LOG_IN_REQUESTED,
   };
 };
 
-export const logInSucceeded = (user) => {
+const logInSucceeded = (user) => {
   return {
     type: actions.LOG_IN_SUCCEEDED,
     user,
   };
 };
 
-export const logInFailed = (error) => {
+const logInFailed = (error) => {
   return {
     type: actions.LOG_IN_FAILED,
     error,
@@ -53,4 +53,29 @@ export const logIn = ({ email, password }) => (dispatch, getState) => {
   auth.login({ email, password })
     .then(user => dispatch(logInSucceeded(user)))
     .catch(error => dispatch(logInFailed(error)));
+};
+
+const checkAuthRequested = () => {
+  return {
+    type: actions.CHECK_AUTH_REQUESTED,
+  };
+};
+
+const checkAuthSucceeded = () => {
+  return {
+    type: actions.CHECK_AUTH_SUCCEEDED,
+  };
+};
+
+const checkAuthFailed = () => {
+  return {
+    type: actions.CHECK_AUTH_FAILED,
+  };
+};
+
+export const checkAuth = () => (dispatch, getState) => {
+  dispatch(checkAuthRequested);
+  auth.me()
+    .then(() => dispatch(checkAuthSucceeded()))
+    .catch(error => dispatch(checkAuthFailed(error)));
 };

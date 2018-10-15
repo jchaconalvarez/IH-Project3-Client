@@ -1,16 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import AuthConnection from '../components/AuthHandler';
+import AuthHandler from '../components/AuthHandler';
+import { CardContainer, CardH1, CardBody, CardText, CardLink } from '../components/AuthCard';
 
-const Signup = () => (
-  <div>
-    <h1>Sign up</h1>
-    <AuthConnection />
-    <p>
-      Already have an account?
-      <Link to="/login">Log in!</Link>
-    </p>
-  </div>
-);
+const Signup = (props) => {
+  const { switchForm } = props;
+  return (
+    <CardContainer>
+      <CardH1>Sign up</CardH1>
+      <CardBody>
+        <AuthHandler />
+        <CardText>
+          Already have an account?
+          <CardLink onClick={switchForm}>Log in!</CardLink>
+        </CardText>
+      </CardBody>
+    </CardContainer>
+  );
+};
 
 export default Signup;

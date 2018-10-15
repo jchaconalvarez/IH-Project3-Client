@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { signUp, logIn } from '../actions/auth';
 import { connect } from 'react-redux';
+import { signUp, logIn } from '../actions/auth';
 import AuthForm from './AuthForm';
 
-class AuthConnection extends Component {
+class AuthHandler extends Component {
 
   sendData = ({ email, password }) => {
-    if (window.location.pathname === '/signup') {
-      this.props.signUp({ email, password });
-    } else {
-      this.props.logIn({ email, password });
-    }
+    const { showLogin, signUp, logIn } = this.props;
+    showLogin ? logIn({ email, password }) : signUp({ email, password });
   }
 
   render() {
@@ -29,14 +25,14 @@ const mapStateToProps = (state) => {
   return {
     user: state.session.user,
     isLogged: state.session.isLogged,
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     signUp: ({ email, password }) => dispatch(signUp({ email, password })),
     logIn: ({ email, password }) => dispatch(logIn({ email, password })),
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthConnection);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthHandler);
