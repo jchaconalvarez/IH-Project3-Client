@@ -20,8 +20,7 @@ class Auth {
 
   me() {
     return this.auth.get('/me')
-      .then(({ data }) => data)
-      .catch((error) => { console.log('Could not retrieve user information', error); });
+      .then(({ data }) => data);
   }
 }
 

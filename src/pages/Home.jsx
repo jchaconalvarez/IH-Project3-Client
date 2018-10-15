@@ -1,12 +1,25 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import Signup from './Signup';
+import Login from './Login';
 
-const Home = () => (
-  <div>
-    HOME
-    <Link to="/signup">Sign up</Link>
-    <Link to="/login">Log in</Link>
-  </div>
-);
+class Home extends Component {
+  state = {
+    signup: true,
+  }
+
+  switchForm = () => {
+    this.setState({ signup: !this.state.signup });
+  }
+
+  render() {
+    const { signup } = this.state;
+    return (
+      <div>
+        <h1>HOME</h1>
+        { signup ? <Signup switchForm={this.switchForm} /> : <Login switchForm={this.switchForm} /> }
+      </div>
+    );
+  }
+}
 
 export default Home;

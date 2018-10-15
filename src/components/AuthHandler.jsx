@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { signUp, logIn } from '../actions/auth';
 import { connect } from 'react-redux';
+import { signUp, logIn } from '../actions/auth';
 import AuthForm from './AuthForm';
 
-class AuthConnection extends Component {
+class AuthHandler extends Component {
 
   sendData = ({ email, password }) => {
     if (window.location.pathname === '/signup') {
@@ -39,4 +38,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthConnection);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthHandler);

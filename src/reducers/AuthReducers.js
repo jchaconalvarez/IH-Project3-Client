@@ -42,6 +42,24 @@ const AuthReducers = (state = {}, action) => {
         status: 'loaded',
       };
     }
+    case 'AUTH_CHECK_REQUESTED': {
+      return {
+        ...state,
+      };
+    }
+    case 'AUTH_CHECK_SUCCEEDED': {
+      return {
+        ...state,
+        isLogged: true,
+      };
+    }
+    case 'AUTH_CHECK_FAILED': {
+      return {
+        ...state,
+        isLogged: false,
+        error: action.error,
+      };
+    }
     default: {
       return state;
     }
