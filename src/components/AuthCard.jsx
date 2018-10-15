@@ -8,11 +8,11 @@ export const CardContainer = styled.div`
   padding: 30px;
   margin: 10% auto;
   width: 200px;
-  box-shadow: 
-    0 0 20px rgba(0, 0, 0, .05), 
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, .05),
     0 0px 20px rgba(0, 0, 0, .05);
   border-radius: 8px;
-`
+`;
 
 export const CardH1 = styled.h1`
   /* NOTE: ¿ poner font de gazzette ? */
@@ -21,12 +21,12 @@ export const CardH1 = styled.h1`
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
-`
+`;
 
 export const CardBody = styled.div`
   padding-right: 42px;
   padding-left: 32px;
-`
+`;
 
 export const CardText = styled.p`
   font-family: 'Raleway', sans-serif;
@@ -35,7 +35,7 @@ export const CardText = styled.p`
   padding-top: 8px;
   width: 100%;
   text-align: center;
-`
+`;
 
 export const CardLink = styled.a`
   color: #EF4957;
@@ -50,4 +50,4 @@ export const CardLink = styled.a`
   &:focus {
     text-decoration: none;
   }
-`
+`;

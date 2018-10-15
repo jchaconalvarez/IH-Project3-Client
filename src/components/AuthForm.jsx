@@ -6,7 +6,7 @@ import {
   ErrorMessage,
 } from 'formik';
 import styled from 'styled-components';
-import CardButton from './Button';
+import Button from './Button';
 
 const CardFields = styled.div`
   position: relative;
@@ -62,16 +62,16 @@ const AuthForm = (props) => {
           <Form>
             <CardFields>
               {/* <Field type="email" name="email" /> */}
-              <CardInput type="email" name="email" placeholder="email"/>
+              <CardInput type="email" name="email" placeholder="email" />
               <ErrorMessage name="email" component="p" />
             </CardFields>
             <CardFields>
               {/* <Field type="password" name="password" /> */}
-              <CardInput type="password" name="password" placeholder="password"/>
+              <CardInput type="password" name="password" placeholder="password" />
               <ErrorMessage name="password" component="p" />
             </CardFields>
             <CardFields>
-              <CardButton type="submit">Submit</CardButton>
+              <Button>Submit</Button>
             </CardFields>
           </Form>
         );

@@ -15,10 +15,10 @@ const Login = (props) => {
       <CardH1>Log in</CardH1>
       <CardBody>
         <AuthHandler />
-          <CardText>
-            Don&apos;t have an account?
-            <CardLink onClick={switchForm}> Sign up!</CardLink>
-          </CardText>
+        <CardText>
+          Don&apos;t have an account?
+          <CardLink onClick={switchForm}> Sign up!</CardLink>
+        </CardText>
       </CardBody>
     </CardContainer>
   );
