@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import combinedReducers from './reducers';
@@ -8,10 +8,14 @@ const session = {
   isLogged: false,
 };
 
+const ui = {
+  showLogin: false,
+};
+
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
   combinedReducers,
-  { session },
+  { session, ui },
   composeWithDevTools(applyMiddleware(thunkMiddleware)),
 );
 /* eslint-enable */

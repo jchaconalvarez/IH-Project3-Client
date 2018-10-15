@@ -1,5 +1,5 @@
 import React from 'react';
-import AuthHandler from '../components/AuthHandler';
+import AuthHandler from './AuthHandler';
 
 const Login = (props) => {
   const { switchForm } = props;

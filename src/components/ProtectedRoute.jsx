@@ -17,7 +17,7 @@ class ProtectedRoute extends Component {
           if (isLogged) {
             return <Comp {...props} />;
           }
-          return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />;
+          return <Redirect to={{ pathname: '/', state: { from: props.location } }} />;
         }}
       />
     );

@@ -1,25 +1,33 @@
-import React, { Component } from 'react';
-import Signup from './Signup';
-import Login from './Login';
+import React from 'react';
+import { connect } from 'react-redux';
+import { switchForm } from '../actions/ui';
+import Signup from '../components/Signup';
+import Login from '../components/Login';
 
-class Home extends Component {
-  state = {
-    signup: true,
-  }
+const Home = (props) => {
+  const { showLogin, switchForm } = props;
+  return (
+    <div>
+      <h1>HOME</h1>
+      {
+        showLogin
+          ? <Login showLogin={showLogin} switchForm={switchForm} />
+          : <Signup showLogin={showLogin} switchForm={switchForm} />
+      }
+    </div>
+  );
+};
 
-  switchForm = () => {
-    this.setState({ signup: !this.state.signup });
-  }
+const mapStateToProps = (state) => {
+  return {
+    showLogin: state.ui.showLogin,
+  };
+};
 
-  render() {
-    const { signup } = this.state;
-    return (
-      <div>
-        <h1>HOME</h1>
-        { signup ? <Signup switchForm={this.switchForm} /> : <Login switchForm={this.switchForm} /> }
-      </div>
-    );
-  }
-}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    switchForm: () => dispatch(switchForm()),
+  };
+};
 
-export default Home;
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
