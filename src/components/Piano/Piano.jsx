@@ -4,7 +4,7 @@ import styled from 'styled-components';
 // import Board from './Board';
 
 const Board = styled.div`
-  width: 350px;
+  width: 700px;
   height: 200px;
   padding: 60px 15px 15px;
   background-color: #f9d423;
@@ -21,7 +21,7 @@ const Board = styled.div`
 const WhiteKeysGroup = styled.div`
   position: absolute;
   display: grid;
-  grid-template-columns: 50px 50px 50px 50px 50px 50px 50px;
+  grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
 `
 
 const WhiteKey = styled.div`
@@ -43,7 +43,7 @@ const WhiteKey = styled.div`
 const BlackKeysGroup = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: 20px 70px 20px 20px 20px;
+  grid-template-columns: 20px 70px 20px 20px 70px 20px 70px 20px 20px 20px;
   grid-column-gap: 30px;
 `
 
@@ -75,6 +75,13 @@ export default class Piano extends Component {
           <WhiteKey id="G" />
           <WhiteKey id="A" />
           <WhiteKey id="B" />
+          <WhiteKey id="C2" />
+          <WhiteKey id="D2" />
+          <WhiteKey id="E2" />
+          <WhiteKey id="F2" />
+          <WhiteKey id="G2" />
+          <WhiteKey id="A2" />
+          <WhiteKey id="B2" />
         </WhiteKeysGroup>
         <BlackKeysGroup>
           <BlackKey id="C#" />
@@ -82,6 +89,11 @@ export default class Piano extends Component {
           <BlackKey id="F#" />
           <BlackKey id="G#" />
           <BlackKey id="A#" />
+          <BlackKey id="C#2" />
+          <BlackKey id="D#2" />
+          <BlackKey id="F#2" />
+          <BlackKey id="G#2" />
+          <BlackKey id="A#2" />
         </BlackKeysGroup>
       </Board>
 
