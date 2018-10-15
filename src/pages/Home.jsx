@@ -8,7 +8,6 @@ const Home = (props) => {
   const { showLogin, switchForm } = props;
   return (
     <div>
-      <h1>HOME</h1>
       {
         showLogin
           ? <Login showLogin={showLogin} switchForm={switchForm} />
