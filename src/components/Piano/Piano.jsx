@@ -68,13 +68,6 @@ export default class Piano extends Component {
     return (
       <Board>
         <WhiteKeysGroup>
-          <WhiteKey id="C" />
-          <WhiteKey id="D" />
-          <WhiteKey id="E" />
-          <WhiteKey id="F" />
-          <WhiteKey id="G" />
-          <WhiteKey id="A" />
-          <WhiteKey id="B" />
           <WhiteKey id="C2" />
           <WhiteKey id="D2" />
           <WhiteKey id="E2" />
@@ -82,18 +75,25 @@ export default class Piano extends Component {
           <WhiteKey id="G2" />
           <WhiteKey id="A2" />
           <WhiteKey id="B2" />
+          <WhiteKey id="C3" />
+          <WhiteKey id="D3" />
+          <WhiteKey id="E3" />
+          <WhiteKey id="F3" />
+          <WhiteKey id="G3" />
+          <WhiteKey id="A3" />
+          <WhiteKey id="B3" />
         </WhiteKeysGroup>
         <BlackKeysGroup>
-          <BlackKey id="C#" />
-          <BlackKey id="D#" />
-          <BlackKey id="F#" />
-          <BlackKey id="G#" />
-          <BlackKey id="A#" />
           <BlackKey id="C#2" />
           <BlackKey id="D#2" />
           <BlackKey id="F#2" />
           <BlackKey id="G#2" />
           <BlackKey id="A#2" />
+          <BlackKey id="C#3" />
+          <BlackKey id="D#3" />
+          <BlackKey id="F#3" />
+          <BlackKey id="G#3" />
+          <BlackKey id="A#3" />
         </BlackKeysGroup>
       </Board>
 
