@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 // import Keys from './Keys';
 // import Board from './Board';
@@ -21,7 +21,8 @@ const Board = styled.div`
 const WhiteKeysGroup = styled.div`
   position: absolute;
   display: grid;
-  grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+  /* grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px; */
+  grid-template-columns: repeat(15, 1fr);
 `;
 
 const WhiteKey = styled.div`
@@ -63,39 +64,37 @@ const BlackKey = styled.div`
 }
 `;
 
-export default class Piano extends Component {
-  render() {
-    return (
-      <Board>
-        <WhiteKeysGroup>
-          <WhiteKey id="C2" />
-          <WhiteKey id="D2" />
-          <WhiteKey id="E2" />
-          <WhiteKey id="F2" />
-          <WhiteKey id="G2" />
-          <WhiteKey id="A2" />
-          <WhiteKey id="B2" />
-          <WhiteKey id="C3" />
-          <WhiteKey id="D3" />
-          <WhiteKey id="E3" />
-          <WhiteKey id="F3" />
-          <WhiteKey id="G3" />
-          <WhiteKey id="A3" />
-          <WhiteKey id="B3" />
-        </WhiteKeysGroup>
-        <BlackKeysGroup>
-          <BlackKey id="C#2" />
-          <BlackKey id="D#2" />
-          <BlackKey id="F#2" />
-          <BlackKey id="G#2" />
-          <BlackKey id="A#2" />
-          <BlackKey id="C#3" />
-          <BlackKey id="D#3" />
-          <BlackKey id="F#3" />
-          <BlackKey id="G#3" />
-          <BlackKey id="A#3" />
-        </BlackKeysGroup>
-      </Board>
-    )
-  }
-}
+const Piano = () => (
+  <Board>
+    <WhiteKeysGroup>
+      <WhiteKey id="C2" />
+      <WhiteKey id="D2" />
+      <WhiteKey id="E2" />
+      <WhiteKey id="F2" />
+      <WhiteKey id="G2" />
+      <WhiteKey id="A2" />
+      <WhiteKey id="B2" />
+      <WhiteKey id="C3" />
+      <WhiteKey id="D3" />
+      <WhiteKey id="E3" />
+      <WhiteKey id="F3" />
+      <WhiteKey id="G3" />
+      <WhiteKey id="A3" />
+      <WhiteKey id="B3" />
+    </WhiteKeysGroup>
+    <BlackKeysGroup>
+      <BlackKey id="C#2" />
+      <BlackKey id="D#2" />
+      <BlackKey id="F#2" />
+      <BlackKey id="G#2" />
+      <BlackKey id="A#2" />
+      <BlackKey id="C#3" />
+      <BlackKey id="D#3" />
+      <BlackKey id="F#3" />
+      <BlackKey id="G#3" />
+      <BlackKey id="A#3" />
+    </BlackKeysGroup>
+  </Board>
+);
+
+export default Piano;

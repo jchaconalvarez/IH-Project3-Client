@@ -1,15 +1,18 @@
 
 import React, { Component } from 'react';
 import { Switch } from 'react-router-dom';
+import styled, { injectGlobal } from 'styled-components';
 import AnonRoute from './components/AnonRoute';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Dash from './pages/Dash';
 import Play from './pages/Play';
 import Profile from './pages/Profile';
-import styled,{ injectGlobal } from 'styled-components';
 
 injectGlobal`
+  html {
+    font-size: 16px;
+  }
   body {
     margin: 0;
     padding: 0;
