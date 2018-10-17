@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { Switch } from 'react-router-dom';
 import styled, { injectGlobal } from 'styled-components';
@@ -35,7 +34,6 @@ const Background = styled.div`
 
 const UnSkewY = styled.div`
   transform: skewY(-10deg);
-
 `;
 
 class App extends Component {
