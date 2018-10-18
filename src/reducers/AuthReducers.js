@@ -18,6 +18,7 @@ const AuthReducers = (state = {}, action) => {
       return {
         ...state,
         error: action.error,
+        isLogged: false,
         status: 'loaded',
       };
     }
@@ -39,6 +40,7 @@ const AuthReducers = (state = {}, action) => {
       return {
         ...state,
         error: action.error,
+        isLogged: false,
         status: 'loaded',
       };
     }

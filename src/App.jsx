@@ -1,7 +1,6 @@
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import styled, { injectGlobal } from 'styled-components';
 import AnonRoute from './components/AnonRoute';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -66,7 +65,6 @@ class App extends Component {
 
   render() {
     const { status } = this.props;
-    console.log(status);
     return (
       status === 'loading' ? <Loading /> : this.renderHome()
     );
@@ -86,4 +84,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
