@@ -61,7 +61,7 @@ const checkAuthRequested = () => {
   };
 };
 
-const checkAuthSucceeded = () => {
+const checkAuthSucceeded = (user) => {
   return {
     type: actions.CHECK_AUTH_SUCCEEDED,
   };
@@ -76,6 +76,6 @@ const checkAuthFailed = () => {
 export const checkAuth = () => (dispatch, getState) => {
   dispatch(checkAuthRequested);
   auth.me()
-    .then(() => dispatch(checkAuthSucceeded()))
+    .then(user => dispatch(checkAuthSucceeded(user)))
     .catch(error => dispatch(checkAuthFailed(error)));
 };

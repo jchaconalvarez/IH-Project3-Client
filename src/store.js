@@ -6,6 +6,7 @@ import combinedReducers from './reducers';
 const session = {
   user: null,
   isLogged: false,
+  status: 'loading',
 };
 
 const ui = {

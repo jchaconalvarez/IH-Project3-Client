@@ -4,12 +4,9 @@ import { Route, Redirect } from 'react-router-dom';
 import { checkAuth } from '../actions/auth';
 
 class ProtectedRoute extends Component {
-  componentDidMount() {
-    checkAuth();
-  }
-
   render() {
     const { component: Comp, isLogged, ...rest } = this.props;
+    console.log('PROTECTED:', isLogged);
     return (
       <Route
         {...rest}
@@ -26,6 +23,8 @@ class ProtectedRoute extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    ...state,
+    user: state.session.user,
     isLogged: state.session.isLogged,
   };
 };
