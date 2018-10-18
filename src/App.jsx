@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import { Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import styled, { injectGlobal } from 'styled-components';
 import AnonRoute from './components/AnonRoute';
 import ProtectedRoute from './components/ProtectedRoute';
+import { checkAuth } from './actions/auth';
+import Loading from './components/Loading';
 import Home from './pages/Home';
 import Dash from './pages/Dash';
 import Play from './pages/Play';
 import Profile from './pages/Profile';
+import NotFound from './pages/NotFound';
 
 injectGlobal`
   html {
@@ -37,7 +41,12 @@ const UnSkewY = styled.div`
 `;
 
 class App extends Component {
-  render() {
+  componentDidMount() {
+    const { checkAuth } = this.props;
+    checkAuth();
+  }
+
+  renderHome = () => {
     return (
       <Background>
         <UnSkewY>
@@ -46,11 +55,32 @@ class App extends Component {
             <ProtectedRoute path="/dash" component={Dash} />
             <ProtectedRoute path="/play" component={Play} />
             <ProtectedRoute path="/profile" component={Profile} />
+            <Route component={NotFound} />
           </Switch>
         </UnSkewY>
       </Background>
     );
+  };
+
+  render() {
+    const { status } = this.props;
+    return (
+      status === 'loading' ? <Loading /> : this.renderHome()
+    );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    ...state,
+    status: state.session.status,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    checkAuth: () => dispatch(checkAuth()),
+  };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
