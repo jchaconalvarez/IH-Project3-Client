@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Switch } from 'react-router-dom';
-import styled, { injectGlobal } from 'styled-components';
+import { injectGlobal } from 'styled-components';
 import AnonRoute from './components/AnonRoute';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
@@ -27,28 +27,16 @@ injectGlobal`
   }
 `;
 
-const Background = styled.div`
-  transform: skewY(10deg);
-  background-image: linear-gradient(to right, #EF4957 0%, #f9d423 100%);
-`;
-
-const UnSkewY = styled.div`
-  transform: skewY(-10deg);
-`;
-
 class App extends Component {
   render() {
     return (
-      <Background>
-        <UnSkewY>
-          <Switch>
-            <AnonRoute exact path="/" component={Home} />
-            <ProtectedRoute path="/dash" component={Dash} />
-            <ProtectedRoute path="/play" component={Play} />
-            <ProtectedRoute path="/profile" component={Profile} />
-          </Switch>
-        </UnSkewY>
-      </Background>
+      <Switch>
+        <AnonRoute exact path="/" component={Home} />
+        <ProtectedRoute path="/dash" component={Dash} />
+        <AnonRoute path="/play" component={Play} />
+        {/* <ProtectedRoute path="/play" component={Play} /> */}
+        <ProtectedRoute path="/profile" component={Profile} />
+      </Switch>
     );
   }
 }

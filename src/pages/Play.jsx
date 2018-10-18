@@ -6,7 +6,7 @@ const Play = () => {
   return (
     <div>
       <NavBar />
-      <h1>Play</h1>
+      {/* <h1>Play</h1> */}
       <Piano />
     </div>
   );
