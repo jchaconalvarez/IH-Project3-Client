@@ -1,14 +1,26 @@
 import React from 'react';
+import styled from 'styled-components';
 import NavBar from '../components/NavBar';
-import Piano from '../components/Piano/Piano'
+import Piano from '../components/Piano/Piano';
+
+const Container = styled.div`
+  display: grid;
+  /* grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr); */
+`;
+
+const Wrapper = styled.div`
+  grid-column: 1 / span 1;
+`;
 
 const Play = () => {
   return (
-    <div>
-      <NavBar />
-      {/* <h1>Play</h1> */}
+    <Container>
+      <Wrapper>
+        <NavBar />
+      </Wrapper>
       <Piano />
-    </div>
+    </Container>
   );
 };
 

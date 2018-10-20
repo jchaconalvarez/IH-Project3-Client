@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Dash from './pages/Dash';
 import Play from './pages/Play';
 import Profile from './pages/Profile';
+import Lassus from '../src/fonts/Lassus.ttf';
 
 injectGlobal`
   html {
@@ -24,6 +25,11 @@ injectGlobal`
   }
   button {
     outline: 0;
+  }
+
+  @font-face {
+    font-family: 'Lassus';
+    src: url(${Lassus}) format('truetype');
   }
 `;
 
