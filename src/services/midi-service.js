@@ -1,72 +1,91 @@
+class MidiController {
+  constructor() {
+    this.AudioContext = window.AudioContext || window.webkitAudioContext;
+    this.context = new this.AudioContext();
+    this.noteHistory = [];
+    this.activeNotes = [];
+  }
 
-  const notes = [];
+  convertNoteDataToFrequency = (noteData) => {
+    const hertz = 440;
+    const semitones = 12;
+    return hertz * (2 ** ((noteData - 69) / semitones));
+  }
 
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  const context = new AudioContext();
-  const oscillatorNode = context.createOscillator();
-  const gainNode = context.createGain();
-  oscillatorNode.connect(gainNode);
-  gainNode.connect(context.destination);
-  oscillatorNode.frequency.value = 0;
-  oscillatorNode.start();
+  noteOn = (midiData, midiStamp, noteData, velocityData) => {
+    const oscillatorNode = this.context.createOscillator();
+    const gainNode = this.context.createGain();
+    const noteFrequency = this.convertNoteDataToFrequency(noteData);
+    const note = Array.from(midiData);
+    const noteObject = {};
 
-  // if (navigator.requestMIDIAccess) {
-    export const onMIDISuccess = (midiAccess) => {
-      
-      midiAccess.inputs.forEach((message) => {
-        message.onmidimessage = getMidiInput;
-      });
+    oscillatorNode.connect(gainNode);
+    gainNode.connect(this.context.destination);
+    oscillatorNode.frequency.value = noteFrequency;
+    gainNode.gain.value = velocityData / 127;
+    oscillatorNode.start();
+    noteObject.oscillator = oscillatorNode;
+    this.noteHistory.push(note);
+    noteObject.note = {
+      data: Array.from(midiData),
+      timeStampOn: midiStamp,
     };
+    this.activeNotes.push(noteObject);
+    // console.log('ON: ', this.activeNotes);
+    // console.log(notes);
+  };
 
-    export const onMIDIFailure = (error) => {
-      console.log('requestMIDIAccess fail', error);
-    };
+  noteOff = (midiData, midiStamp) => {
+    const indexOfNoteToKill = this.activeNotes.findIndex((noteObject) => {
+      return noteObject.note.data[1] === midiData[1];
+    });
+    this.activeNotes[indexOfNoteToKill].oscillator.stop();
+    this.activeNotes.splice(indexOfNoteToKill, 1);
+    // velocityData es 0 no se está pulsando nada
+    // oscillatorNode.frequency.value = 0;
+    // console.log(indexOfNoteToKill);
+    // console.log('OFF: ', activeNotes);
+  };
 
-    const convertNoteDataToFrequency = (noteData) => {
-      const hertz = 400; // hercios
-      const semitones = 12; // semitonos
-      // 69 gives the number of semitones above the C five octaves below middle C
-      return hertz * Math.pow(2, (noteData - 69) / semitones);
-    };
+  getMidiInput = (midiMessage) => {
+    // const midiInstrumentManufacturer = midiMessage.currentTarget.manufacturer;
+    // const midiInstrumentModel = midiMessage.currentTarget.name;
+    console.log(midiMessage);
+    const midiData = midiMessage.data;
+    const midiStamp = midiMessage.timeStamp;
+    const status = midiData[0];
+    const noteData = midiData[1];
+    const velocityData = midiData[2];
 
-    const noteOn = (midiData, midiStamp, noteData, velocityData) => {
-      const noteFreq = convertNoteDataToFrequency(noteData);
-      oscillatorNode.frequency.value = noteFreq;
-      // oscillatorNode crea la onda sine
-      // oscillatorNode.type = 'square';
-      gainNode.gain.value = velocityData / 127;
-      // gainNode amplifica la onda en función de la velocidad
-      const timeStampON = midiStamp;
-      const midiDataArray = Array.from(midiData);
-      notes.push({ midiDataArray, timeStampON });
-      console.log('ARRAY DE NOTAS', notes);
-    };
+    switch (status) {
+      case 144:
+        this.noteOn(midiData, midiStamp, noteData, velocityData);
+        break;
+      case 128:
+        this.noteOff(midiData, midiStamp, velocityData);
+        break;
+      default:
+        console.log('Soy un default :D');
+        break;
+    }
+  };
 
-    const noteOff = (midiStamp) => {
-      // velocityData es 0 no se está pulsando nada
-      oscillatorNode.frequency.value = 0;
-      const timeStampOFF = midiStamp;
-    };
+  onMIDISuccess = (midiAccess) => {
+    midiAccess.inputs.forEach((message) => {
+      message.onmidimessage = this.getMidiInput;
+    });
+  };
 
-    const getMidiInput = (midiMessage) => {
-      const midiInstrumentManufacturer = midiMessage.currentTarget.manufacturer;
-      const midiInstrumentModel = midiMessage.currentTarget.name;
-      const midiData = midiMessage.data;
-      const midiStamp = midiMessage.timeStamp;
-      const status = midiData[0];
-      const noteData = midiData[1];
-      const velocityData = midiData[2];
+  onMIDIFailure = (error) => {
+    console.log('requestMIDIAccess fail', error);
+  };
 
-      switch (status) {
-        case 144:
-          noteOn(midiData, midiStamp, noteData, velocityData);
-          break;
-        case 128:
-          noteOff(midiStamp, velocityData);
-          break;
-        default:
-          console.log('Soy un default :D');
-          break;
-      }
-    };
-  // }
+  updateNoteArrays = () => {
+    console.log('updatenotearrays');
+    return this.activeNotes;
+  }
+}
+
+const midiController = new MidiController();
+
+export default midiController;
