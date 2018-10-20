@@ -11,7 +11,7 @@ import Dash from './pages/Dash';
 import Play from './pages/Play';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
-import Midi from './services/midi-service';
+// import Midi from './services/midi-service';
 
 injectGlobal`
   html {
@@ -32,35 +32,21 @@ injectGlobal`
   }
 `;
 
-const Background = styled.div`
-  transform: skewY(10deg);
-  background-image: linear-gradient(to right, #EF4957 0%, #f9d423 100%);
-`;
-
-const UnSkewY = styled.div`
-  transform: skewY(-10deg);
-`;
-
 class App extends Component {
   componentDidMount() {
     const { checkAuth } = this.props;
     checkAuth();
-    Midi();
   }
 
   renderHome = () => {
     return (
-      <Background>
-        <UnSkewY>
-          <Switch>
-            <AnonRoute exact path="/" component={Home} />
-            <ProtectedRoute path="/dash" component={Dash} />
-            <ProtectedRoute path="/play" component={Play} />
-            <ProtectedRoute path="/profile" component={Profile} />
-            <Route component={NotFound} />
-          </Switch>
-        </UnSkewY>
-      </Background>
+      <Switch>
+        <AnonRoute exact path="/" component={Home} />
+        <ProtectedRoute path="/dash" component={Dash} />
+        <ProtectedRoute path="/play" component={Play} />
+        <ProtectedRoute path="/profile" component={Profile} />
+        <Route component={NotFound} />
+      </Switch>
     );
   };
 
