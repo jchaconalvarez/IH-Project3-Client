@@ -68,10 +68,8 @@ export default class Piano extends Component {
     activeNotes[indexOfNoteToKill].oscillator.stop();
     activeNotes.splice(indexOfNoteToKill, 1);
     this.setState({ activeNotes });
-    // velocityData es 0 no se está pulsando nada
-    // oscillatorNode.frequency.value = 0;
     // console.log(indexOfNoteToKill);
-    console.log('OFF: ', activeNotes);
+    // console.log('OFF: ', activeNotes);
   };
 
   getMidiInput = (midiMessage) => {
@@ -139,12 +137,12 @@ export default class Piano extends Component {
         <button onClick={this.handleRec}>Rec</button>
         <MusicSheet>
           {
-            activeNotes.map((input, index) => {
+            noteHistory.map((input, index) => {
               return (
                 // noteHistory
-                // <p key={index}>{this.translateMidiToNote(input.data[1])}</p>
+                <span key={index}>{this.translateMidiToNote(input.data[1])}</span>
                 // activeNotes
-                <p key={index}>{this.translateMidiToNote(input.note.data[1])}</p>
+                // <span key={index}>{this.translateMidiToNote(input.note.data[1])}</span>
               );
             })
           }
