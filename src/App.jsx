@@ -11,6 +11,7 @@ import Dash from './pages/Dash';
 import Play from './pages/Play';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
+import Midi from './services/midi-service';
 
 injectGlobal`
   html {
@@ -44,6 +45,7 @@ class App extends Component {
   componentDidMount() {
     const { checkAuth } = this.props;
     checkAuth();
+    Midi();
   }
 
   renderHome = () => {
