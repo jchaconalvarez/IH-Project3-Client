@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Board from './Board';
 import MusicSheet from './MusicSheet';
-import midiController from '../../services/midi-service';
 
 const Wrapper = styled.div`
   display: grid;
@@ -43,20 +42,22 @@ export default class Piano extends Component {
     const noteObject = {};
 
     oscillatorNode.connect(gainNode);
+    oscillatorNode.type = 'square';
     gainNode.connect(context.destination);
     oscillatorNode.frequency.value = noteFrequency;
     gainNode.gain.value = velocityData / 127;
     oscillatorNode.start();
     noteObject.oscillator = oscillatorNode;
-    noteHistory.push(note);
-    this.setState({ noteHistory });
     noteObject.note = {
-      data: Array.from(midiData),
+      data: note,
       timeStampOn: midiStamp,
     };
+    // console.log(noteObject.note);
+    noteHistory.push(noteObject.note);
+    // console.log(noteHistory);
     activeNotes.push(noteObject);
-    console.log('ON: ', activeNotes);
-    this.setState({ activeNotes });
+    // console.log('ON: ', activeNotes);
+    this.setState({ activeNotes, noteHistory });
   };
 
   noteOff = (midiData, midiStamp) => {
@@ -125,17 +126,25 @@ export default class Piano extends Component {
   //   this.setState({ activeNotes: midiController.updateNoteArrays() });
   // }
 
+  translateMidiToNote = (midiNote) => {
+    const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    return `${noteNames[midiNote % 12]} ${(Math.trunc(midiNote / 12) - 1)}`;
+  }
+
   render() {
-    const { isPlaying, activeNotes } = this.state;
+    const { activeNotes, noteHistory } = this.state;
     return (
       <React.Fragment>
         <button onClick={this.handleClick}>Play music</button>
         <button onClick={this.handleRec}>Rec</button>
         <MusicSheet>
           {
-            activeNotes.map((input) => {
+            activeNotes.map((input, index) => {
               return (
-                <p>{input.note.data[1]}</p>
+                // noteHistory
+                // <p key={index}>{this.translateMidiToNote(input.data[1])}</p>
+                // activeNotes
+                <p key={index}>{this.translateMidiToNote(input.note.data[1])}</p>
               );
             })
           }
