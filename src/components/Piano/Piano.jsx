@@ -135,7 +135,7 @@ export default class Piano extends Component {
           {
             activeNotes.map((input) => {
               return (
-                <p>{patata.note.data[1]}</p>
+                <p>{input.note.data[1]}</p>
               );
             })
           }
