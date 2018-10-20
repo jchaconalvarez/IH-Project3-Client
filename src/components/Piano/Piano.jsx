@@ -133,9 +133,9 @@ export default class Piano extends Component {
         <button onClick={this.handleRec}>Rec</button>
         <MusicSheet>
           {
-            activeNotes.map((note) => {
+            activeNotes.map((input) => {
               return (
-                <h3>{note.data}</h3>
+                <p>{patata.note.data[1]}</p>
               );
             })
           }
@@ -145,5 +145,5 @@ export default class Piano extends Component {
         </Wrapper>
       </React.Fragment>
     );
-  };
+  }
 }
