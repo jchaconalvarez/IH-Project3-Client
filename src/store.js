@@ -13,10 +13,16 @@ const ui = {
   showLogin: false,
 };
 
+const midi = {
+  isPlaying: false,
+  activeNotes: [],
+  noteHistory: [],
+};
+
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
   combinedReducers,
-  { session, ui },
+  { session, ui, midi },
   composeWithDevTools(applyMiddleware(thunkMiddleware)),
 );
 /* eslint-enable */

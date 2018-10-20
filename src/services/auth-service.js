@@ -20,10 +20,7 @@ class Auth {
 
   me() {
     return this.auth.get('/me')
-      .then(({ data }) => {
-        console.log('auth-service: ', data);
-        return data;
-      });
+      .then(({ data }) => data);
   }
 }
 
