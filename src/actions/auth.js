@@ -55,13 +55,31 @@ export const logIn = ({ email, password }) => (dispatch, getState) => {
     .catch(error => dispatch(logInFailed(error)));
 };
 
+const logOutRequested = () => {
+  return {
+    type: actions.LOG_OUT_REQUESTED,
+  };
+};
+
+const logOutSucceeded = () => {
+  return {
+    type: actions.LOG_OUT_SUCCEEDED,
+  };
+};
+
+export const logOut = () => (dispatch, getState) => {
+  dispatch(logOutRequested());
+  auth.logout()
+    .then(() => dispatch(logOutSucceeded()));
+};
+
 const checkAuthRequested = () => {
   return {
     type: actions.CHECK_AUTH_REQUESTED,
   };
 };
 
-const checkAuthSucceeded = () => {
+const checkAuthSucceeded = (user) => {
   return {
     type: actions.CHECK_AUTH_SUCCEEDED,
   };
@@ -76,6 +94,6 @@ const checkAuthFailed = () => {
 export const checkAuth = () => (dispatch, getState) => {
   dispatch(checkAuthRequested);
   auth.me()
-    .then(() => dispatch(checkAuthSucceeded()))
+    .then(user => dispatch(checkAuthSucceeded(user)))
     .catch(error => dispatch(checkAuthFailed(error)));
 };

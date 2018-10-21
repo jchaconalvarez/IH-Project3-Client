@@ -18,6 +18,7 @@ const AuthReducers = (state = {}, action) => {
       return {
         ...state,
         error: action.error,
+        isLogged: false,
         status: 'loaded',
       };
     }
@@ -39,24 +40,42 @@ const AuthReducers = (state = {}, action) => {
       return {
         ...state,
         error: action.error,
+        isLogged: false,
         status: 'loaded',
       };
     }
-    case 'AUTH_CHECK_REQUESTED': {
+    case 'LOG_OUT_REQUESTED': {
       return {
         ...state,
+        status: 'loading',
       };
     }
-    case 'AUTH_CHECK_SUCCEEDED': {
-      return {
-        ...state,
-        isLogged: true,
-      };
-    }
-    case 'AUTH_CHECK_FAILED': {
+    case 'LOG_OUT_SUCCEEDED': {
       return {
         ...state,
         isLogged: false,
+        status: 'loaded',
+      };
+    }
+    case 'CHECK_AUTH_REQUESTED': {
+      return {
+        ...state,
+        status: 'loading',
+      };
+    }
+    case 'CHECK_AUTH_SUCCEEDED': {
+      return {
+        ...state,
+        user: action.user,
+        isLogged: true,
+        status: 'loaded',
+      };
+    }
+    case 'CHECK_AUTH_FAILED': {
+      return {
+        ...state,
+        isLogged: false,
+        status: 'loaded',
         error: action.error,
       };
     }

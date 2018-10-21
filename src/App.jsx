@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
-import { Switch } from 'react-router-dom';
-import { injectGlobal } from 'styled-components';
+import { connect } from 'react-redux';
+import { Switch, Route, withRouter } from 'react-router-dom';
+import styled, { injectGlobal } from 'styled-components';
 import AnonRoute from './components/AnonRoute';
 import ProtectedRoute from './components/ProtectedRoute';
+import { checkAuth } from './actions/auth';
+import Loading from './components/Loading';
 import Home from './pages/Home';
 import Dash from './pages/Dash';
 import Play from './pages/Play';
 import Profile from './pages/Profile';
 import Lassus from '../src/fonts/Lassus.ttf';
+import NotFound from './pages/NotFound';
+// import Midi from './services/midi-service';
 
 injectGlobal`
   html {
@@ -34,17 +39,42 @@ injectGlobal`
 `;
 
 class App extends Component {
-  render() {
+  componentDidMount() {
+    const { checkAuth } = this.props;
+    checkAuth();
+  }
+
+  renderHome = () => {
     return (
       <Switch>
         <AnonRoute exact path="/" component={Home} />
         <ProtectedRoute path="/dash" component={Dash} />
-        <AnonRoute path="/play" component={Play} />
-        {/* <ProtectedRoute path="/play" component={Play} /> */}
+        <ProtectedRoute path="/play" component={Play} />
         <ProtectedRoute path="/profile" component={Profile} />
+        <Route component={NotFound} />
       </Switch>
+    );
+  };
+
+  render() {
+    const { status } = this.props;
+    return (
+      status === 'loading' ? <Loading /> : this.renderHome()
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    ...state,
+    status: state.session.status,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    checkAuth: () => dispatch(checkAuth()),
+  };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

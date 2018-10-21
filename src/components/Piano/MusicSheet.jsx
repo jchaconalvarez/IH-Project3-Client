@@ -1,24 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
-const Sheets = styled.div`
-  margin: 3% 3% 0 3%;
-  position: absolute;
-  width: 580px;
-  height: 90%;
-  background: #FAFAFA;
-  box-shadow: 0 0 5px rgba(0,0,0,.5);
-`;
-
-const BackOne = styled.div`
-  margin: 3% 3% 0 3%;
-  position: absolute;
-  width: 580px;
-  height: 90%;
-  background: #FAFAFA;
-  box-shadow: 0 0 5px rgba(0,0,0,.5);
-  transform: rotate(-3deg);
+const Sheet = styled.div`
+  background-color: papayawhip;
+  width: 100%;
+  color: tomato;
+  font-size: 2rem;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 0.3rem;
 `;
 
 const BackTwo = styled.div`
@@ -47,14 +38,8 @@ const Wrapper = styled.div`
 
 export const MusicSheet = (props) => {
   return (
-    <Wrapper>
-      <BackOne />
-      <BackTwo />
-      <Sheets>
-        <Content>{props.children}</Content>
-      </Sheets>
-    </Wrapper>
-  )
-};
-
-export default MusicSheet;
+    <Sheet>
+      {props.children}
+    </Sheet>
+  );
+}
