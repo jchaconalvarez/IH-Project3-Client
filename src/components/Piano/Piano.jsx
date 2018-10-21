@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import song from '../../services/song-service';
 import Board from './Board';
 import MusicSheet from './MusicSheet';
 
@@ -16,9 +17,9 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 const context = new AudioContext;
 export default class Piano extends Component {
   state = {
-    isPlaying: false,
     activeNotes: [],
     noteHistory: [],
+    isRecording: false,
   }
 
   componentDidMount() {
@@ -110,42 +111,57 @@ export default class Piano extends Component {
       .catch(this.onMIDIFailure);
   }
 
-  // handleKeyboard = () => {
-  //   if (midiController.updateNoteArrays().length > 0) {
-  //     console.log(midiController.updateNoteArrays());
-  //     // this.setState({ isPlaying: true });
-  //   } else {
-  //     // this.setState({ isPlaying: false });
-  //   }
-  // }
-
-  // handleNotes = () => {
-  //   console.log('buena suerte');
-  //   this.setState({ activeNotes: midiController.updateNoteArrays() });
-  // }
+  handleRecording = () => {
+    const { isRecording, noteHistory } = this.state;
+    console.log('HANDLERECORDING');
+    if (!isRecording) {
+      console.log('HANDLERECORDING: Reset noteHistory');
+      this.setState({ noteHistory: [], isRecording: true });
+    } else {
+      console.log('HANDLERECORDING: Save noteHistory');
+      console.log(noteHistory);
+      song.newSong(noteHistory);
+      this.setState({ isRecording: false });
+    }
+  }
 
   translateMidiToNote = (midiNote) => {
     const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     return `${noteNames[midiNote % 12]} ${(Math.trunc(midiNote / 12) - 1)}`;
   }
 
+  showNotes = () => {
+    const { activeNotes, noteHistory, isRecording } = this.state;
+    if (!isRecording) {
+      return (
+        activeNotes.map((input, index) => {
+          return (
+            // noteHistory
+            // <span key={index}>{this.translateMidiToNote(input.data[1])}</span>
+            // activeNotes
+            <span key={index}>{this.translateMidiToNote(input.note.data[1])}</span>
+          );
+        })
+      );
+    }
+    return (
+      noteHistory.map((input, index) => {
+        return (
+          // noteHistory
+          <span key={index}>{this.translateMidiToNote(input.data[1])}</span>
+        );
+      })
+    );
+  }
+
   render() {
-    const { activeNotes, noteHistory } = this.state;
+    const { activeNotes, noteHistory, isRecording } = this.state;
     return (
       <React.Fragment>
         <button onClick={this.handleClick}>Play music</button>
-        <button onClick={this.handleRec}>Rec</button>
+        <button isRecording={isRecording} onClick={this.handleRecording}>Rec</button>
         <MusicSheet>
-          {
-            noteHistory.map((input, index) => {
-              return (
-                // noteHistory
-                <span key={index}>{this.translateMidiToNote(input.data[1])}</span>
-                // activeNotes
-                // <span key={index}>{this.translateMidiToNote(input.note.data[1])}</span>
-              );
-            })
-          }
+          { this.showNotes() }
         </MusicSheet>
         <Wrapper>
           <Board />
