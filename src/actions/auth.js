@@ -55,6 +55,24 @@ export const logIn = ({ email, password }) => (dispatch, getState) => {
     .catch(error => dispatch(logInFailed(error)));
 };
 
+const logOutRequested = () => {
+  return {
+    type: actions.LOG_OUT_REQUESTED,
+  };
+};
+
+const logOutSucceeded = () => {
+  return {
+    type: actions.LOG_OUT_SUCCEEDED,
+  };
+};
+
+export const logOut = () => (dispatch, getState) => {
+  dispatch(logOutRequested());
+  auth.logout()
+    .then(() => dispatch(logOutSucceeded()));
+};
+
 const checkAuthRequested = () => {
   return {
     type: actions.CHECK_AUTH_REQUESTED,

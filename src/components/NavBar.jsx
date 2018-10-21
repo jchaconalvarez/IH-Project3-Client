@@ -1,14 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logOut } from '../actions/auth';
 
-const NavBar = () => {
-  return (
-    <React.Fragment>
-      <Link to="/play">Play</Link>
-      <Link to="/profile">Profile</Link>
-      <Link to="/logout">Log out</Link>
-    </React.Fragment>
-  );
+class NavBar extends Component {
+
+  handleLogOut = () => {
+    const { logOut } = this.props;
+    logOut();
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        {/* <p>{this.props.user}</p> */}
+        <Link to="/play">Play</Link>
+        <Link to="/profile">Profile</Link>
+        <button type="button" onClick={this.handleLogOut}>Log out</button>
+      </React.Fragment>
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.session.user,
+    isLogged: state.session.isLogged,
+  };
 };
 
-export default NavBar;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logOut: () => dispatch(logOut()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

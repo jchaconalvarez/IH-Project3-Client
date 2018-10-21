@@ -113,13 +113,9 @@ export default class Piano extends Component {
 
   handleRecording = () => {
     const { isRecording, noteHistory } = this.state;
-    console.log('HANDLERECORDING');
     if (!isRecording) {
-      console.log('HANDLERECORDING: Reset noteHistory');
       this.setState({ noteHistory: [], isRecording: true });
     } else {
-      console.log('HANDLERECORDING: Save noteHistory');
-      console.log(noteHistory);
       song.newSong(noteHistory);
       this.setState({ isRecording: false });
     }
@@ -136,9 +132,6 @@ export default class Piano extends Component {
       return (
         activeNotes.map((input, index) => {
           return (
-            // noteHistory
-            // <span key={index}>{this.translateMidiToNote(input.data[1])}</span>
-            // activeNotes
             <span key={index}>{this.translateMidiToNote(input.note.data[1])}</span>
           );
         })
@@ -147,7 +140,6 @@ export default class Piano extends Component {
     return (
       noteHistory.map((input, index) => {
         return (
-          // noteHistory
           <span key={index}>{this.translateMidiToNote(input.data[1])}</span>
         );
       })

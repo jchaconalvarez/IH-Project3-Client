@@ -18,12 +18,13 @@ class Auth {
       .then(({ data }) => data);
   }
 
+  logout() {
+    return this.auth.post('/logout');
+  }
+
   me() {
     return this.auth.get('/me')
-      .then(({ data }) => {
-        console.log('auth-service: ', data);
-        return data;
-      });
+      .then(({ data }) => data);
   }
 }
 
