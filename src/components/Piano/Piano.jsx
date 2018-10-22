@@ -4,19 +4,27 @@ import song from '../../services/song-service';
 import Board from './Board';
 import MusicSheet from './MusicSheet';
 
-const Wrapper = styled.div`
+const SheetContainer = styled.div`
   display: grid;
-  justify-items: center;
-  position: fixed;
-  margin-bottom: 8px;
-  bottom: 0;
-  width: 100%;
+  grid-column: 4 / 9;
+  grid-row: 2 / 9;
+  grid-template-rows: 10px 10fr 1fr;
+  align-content: center;
+`;
+
+const PianoContainer = styled.div`
+  display: grid;
+  grid-column: 3 / 10 ;
+  grid-row: 6 / 9;
+  order: 1;
+  z-index: 1;
 `;
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const context = new AudioContext;
 export default class Piano extends Component {
   state = {
+    midiInstrument: '',
     activeNotes: [],
     noteHistory: [],
     isRecording: false,
@@ -37,8 +45,7 @@ export default class Piano extends Component {
     const oscillatorNode = context.createOscillator();
     const gainNode = context.createGain();
     const noteFrequency = this.convertNoteDataToFrequency(noteData);
-    const { activeNotes } = this.state;
-    const { noteHistory } = this.state;
+    const { activeNotes, noteHistory  } = this.state;
     const note = Array.from(midiData);
     const noteObject = {};
 
@@ -52,6 +59,7 @@ export default class Piano extends Component {
     noteObject.note = {
       data: note,
       timeStampOn: midiStamp,
+      timeStampOff: null,
     };
     console.log(noteObject);
     noteHistory.push(noteObject.note);
@@ -62,20 +70,21 @@ export default class Piano extends Component {
   };
 
   noteOff = (midiData, midiStamp) => {
-    const { activeNotes } = this.state;
+    const { activeNotes, noteHistory } = this.state;
     const indexOfNoteToKill = activeNotes.findIndex((noteObject) => {
+      noteObject.note.timeStampOff = midiStamp
       return noteObject.note.data[1] === midiData[1];
     });
     activeNotes[indexOfNoteToKill].oscillator.stop();
     activeNotes.splice(indexOfNoteToKill, 1);
-    this.setState({ activeNotes });
+    this.setState({ activeNotes, noteHistory });
     // console.log(indexOfNoteToKill);
     // console.log('OFF: ', activeNotes);
   };
 
   getMidiInput = (midiMessage) => {
-    // const midiInstrumentManufacturer = midiMessage.currentTarget.manufacturer;
-    // const midiInstrumentModel = midiMessage.currentTarget.name;
+    const midiInstrumentManufacturer = midiMessage.currentTarget.manufacturer;
+    const midiInstrumentModel = midiMessage.currentTarget.name;
     const midiData = midiMessage.data;
     const midiStamp = midiMessage.timeStamp;
     const status = midiData[0];
@@ -93,6 +102,11 @@ export default class Piano extends Component {
         console.log('Soy un default :D');
         break;
     }
+
+    const { midiInstrument } = this.state;
+    this.setState({
+      midiInstrument: `${midiInstrumentManufacturer} ${midiInstrumentModel}`,
+    })
   };
 
   onMIDISuccess = (midiAccess) => {
@@ -145,19 +159,23 @@ export default class Piano extends Component {
       })
     );
   }
-
+ 
   render() {
-    const { activeNotes, noteHistory, isRecording } = this.state;
+    const { activeNotes, noteHistory, isRecording, midiInstrument } = this.state;
     return (
       <React.Fragment>
-        <button onClick={this.handleClick}>Play music</button>
-        <button isRecording={isRecording} onClick={this.handleRecording}>Rec</button>
-        <MusicSheet>
-          { this.showNotes() }
-        </MusicSheet>
-        <Wrapper>
-          <Board />
-        </Wrapper>
+        <SheetContainer>
+          <MusicSheet>
+            { this.showNotes() }
+          </MusicSheet>
+        </SheetContainer>
+        <PianoContainer>
+        {/* <button isRecording={isRecording} onClick={this.handleRecording}></button> */}
+          <Board
+            isRecording={isRecording}
+            onRecording={this.handleRecording}
+          >{ midiInstrument }</Board>
+        </PianoContainer>
       </React.Fragment>
     );
   }
