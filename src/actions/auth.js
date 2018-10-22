@@ -82,6 +82,7 @@ const checkAuthRequested = () => {
 const checkAuthSucceeded = (user) => {
   return {
     type: actions.CHECK_AUTH_SUCCEEDED,
+    user,
   };
 };
 

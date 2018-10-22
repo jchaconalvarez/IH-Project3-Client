@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import song from '../../services/song-service';
 import Board from './Board';
 import MusicSheet from './MusicSheet';
+import PianoForm from './PianoForm';
 
 const SheetContainer = styled.div`
   display: grid;
@@ -24,6 +25,7 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 const context = new AudioContext();
 export default class Piano extends Component {
   state = {
+    songName: '',
     midiInstrument: '',
     activeNotes: [],
     noteHistory: [],
@@ -45,7 +47,7 @@ export default class Piano extends Component {
     const oscillatorNode = context.createOscillator();
     const gainNode = context.createGain();
     const noteFrequency = this.convertNoteDataToFrequency(noteData);
-    const { activeNotes, noteHistory  } = this.state;
+    const { activeNotes, noteHistory, isRecording  } = this.state;
     const note = Array.from(midiData);
     const noteObject = {};
 
@@ -62,7 +64,7 @@ export default class Piano extends Component {
       timeStampOff: null,
     };
     // console.log(noteObject);
-    noteHistory.push(noteObject.note);
+    isRecording && noteHistory.push(noteObject.note);
     // console.log(noteHistory);
     activeNotes.push(noteObject);
     // console.log('ON: ', activeNotes);
@@ -126,12 +128,13 @@ export default class Piano extends Component {
   }
 
   handleRecording = () => {
-    const { isRecording, noteHistory } = this.state;
+    const { isRecording, noteHistory, songName } = this.state;
     if (!isRecording) {
       console.log('RECORDING');
-      this.setState({ noteHistory: [], isRecording: true });
+      this.setState({ isRecording: true });
     } else {
-      song.newSong(noteHistory);
+      // console.log(noteHistory);
+      song.newSong({ songName, noteHistory });
       console.log('SAVED SONG');
       this.setState({ isRecording: false });
     }
@@ -144,15 +147,15 @@ export default class Piano extends Component {
 
   showNotes = () => {
     const { activeNotes, noteHistory, isRecording } = this.state;
-    if (!isRecording) {
-      return (
-        activeNotes.map((input, index) => {
-          return (
-            <span key={index}>{this.translateMidiToNote(input.note.data[1])}</span>
-          );
-        })
-      );
-    }
+    // if (!isRecording) {
+    //   return (
+    //     activeNotes.map((input, index) => {
+    //       return (
+    //         <span key={index}>{this.translateMidiToNote(input.note.data[1])}</span>
+    //       );
+    //     })
+    //   );
+    // }
     return (
       noteHistory.map((input, index) => {
         return (
@@ -162,10 +165,21 @@ export default class Piano extends Component {
     );
   }
 
+  changeName = (songName) => {
+    console.log('name changed');
+    this.setState({ songName });
+  }
+
+  clearHistory = () => {
+    this.setState({ noteHistory: [] });
+  }
+
   render() {
     const { activeNotes, isRecording, midiInstrument } = this.state;
     return (
       <React.Fragment>
+        <PianoForm changeName={this.changeName} />
+        <button type="button" onClick={this.clearHistory}>Clear</button>
         <SheetContainer>
           <MusicSheet>
             { this.showNotes() }

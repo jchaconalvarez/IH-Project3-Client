@@ -48,14 +48,14 @@ const validateInput = (values) => {
 };
 
 const AuthForm = (props) => {
-  const { initialValues } = props;
+  const { initialValues, sendData } = props;
   return (
     <Formik
       initialValues={initialValues}
       // validate={validateInput}
       onSubmit={(values, actions) => {
         const { email, password } = values;
-        props.sendData({ email, password });
+        sendData({ email, password });
       }}
       render={( isSubmitting ) => {
         return (

@@ -11,7 +11,7 @@ class Song {
     console.log('NEWSONG');
     return this.song.post('/newsong', song)
       .then(({ data }) => {
-        console.log(data);
+        // console.log(data);
         return data;
       });
   }
