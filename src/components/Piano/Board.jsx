@@ -48,14 +48,8 @@ const RecBtn = styled.button`
   border: none;
   border-radius: 50%;
   background: tomato;
-  box-shadow: 0 5px #EF4957;
-
-  &:active {
-    box-shadow:
-      0 0 5px #FFF, 0 0 10px #FFF,
-      0 0 25px red, 0 0 30px red;
-    transform: translateY(5px);
-  }
+  box-shadow: ${props => props.isRecording ? '0 0 5px #FFF, 0 0 10px #FFF, 0 0 25px red, 0 0 30px red' : '0 5px #EF4957'};
+  transform: translateY(${props => props.isRecording ? '5px' : '0'});
 `;
 
 const checkIfActive = (activeNotes, noteNumber) => {
@@ -71,7 +65,7 @@ const Board = (props) => {
   return (
     <BoardStyle>
       <BoardControls>
-        <RecBtn onClick={() => { props.onRecording(); }} />
+        <RecBtn onClick={() => { props.onRecording(); }} isRecording={props.isRecording} />
         <a>{props.children}</a>
       </BoardControls>
       <WhiteKeysGroup>
