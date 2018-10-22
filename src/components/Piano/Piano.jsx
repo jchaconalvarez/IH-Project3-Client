@@ -53,7 +53,7 @@ export default class Piano extends Component {
       data: note,
       timeStampOn: midiStamp,
     };
-    // console.log(noteObject.note);
+    console.log(noteObject);
     noteHistory.push(noteObject.note);
     // console.log(noteHistory);
     activeNotes.push(noteObject);
