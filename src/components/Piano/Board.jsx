@@ -64,6 +64,7 @@ const Board = (props) => {
     <BoardStyle>
       <BoardControls>
         <RecBtn onClick={() => { props.onRecording(); }} />
+        <a>{props.children}</a>
       </BoardControls>
       <WhiteKeysGroup>
         <WhiteKey id="C2" />
