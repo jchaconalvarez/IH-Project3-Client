@@ -61,7 +61,7 @@ export default class Piano extends Component {
       timeStampOn: midiStamp,
       timeStampOff: null,
     };
-    console.log(noteObject);
+    // console.log(noteObject);
     noteHistory.push(noteObject.note);
     // console.log(noteHistory);
     activeNotes.push(noteObject);
@@ -72,7 +72,7 @@ export default class Piano extends Component {
   noteOff = (midiData, midiStamp) => {
     const { activeNotes, noteHistory } = this.state;
     const indexOfNoteToKill = activeNotes.findIndex((noteObject) => {
-      noteObject.note.timeStampOff = midiStamp
+      noteObject.note.timeStampOff = midiStamp;
       return noteObject.note.data[1] === midiData[1];
     });
     activeNotes[indexOfNoteToKill].oscillator.stop();
@@ -106,7 +106,7 @@ export default class Piano extends Component {
     const { midiInstrument } = this.state;
     this.setState({
       midiInstrument: `${midiInstrumentManufacturer} ${midiInstrumentModel}`,
-    })
+    });
   };
 
   onMIDISuccess = (midiAccess) => {
@@ -128,9 +128,11 @@ export default class Piano extends Component {
   handleRecording = () => {
     const { isRecording, noteHistory } = this.state;
     if (!isRecording) {
+      console.log('RECORDING');
       this.setState({ noteHistory: [], isRecording: true });
     } else {
       song.newSong(noteHistory);
+      console.log('SAVED SONG');
       this.setState({ isRecording: false });
     }
   }
@@ -159,9 +161,9 @@ export default class Piano extends Component {
       })
     );
   }
- 
+
   render() {
-    const { activeNotes, noteHistory, isRecording, midiInstrument } = this.state;
+    const { activeNotes, isRecording, midiInstrument } = this.state;
     return (
       <React.Fragment>
         <SheetContainer>
@@ -172,6 +174,7 @@ export default class Piano extends Component {
         <PianoContainer>
         {/* <button isRecording={isRecording} onClick={this.handleRecording}></button> */}
           <Board
+            activeNotes={activeNotes}
             isRecording={isRecording}
             onRecording={this.handleRecording}
           >{ midiInstrument }</Board>

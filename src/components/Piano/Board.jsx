@@ -7,7 +7,7 @@ const BoardStyle = styled.div`
   display: grid;
   grid-template-columns: 10px auto 10px;
   grid-template-rows: 1fr auto auto 30px;
-  background: #f9d423;
+  background: #F9D423;
   border-radius: 12px;
   border-bottom: 8px solid #E2BE09;
 `;
@@ -51,15 +51,23 @@ const RecBtn = styled.button`
   box-shadow: 0 5px #EF4957;
 
   &:active {
-    box-shadow: 
-      0 0 5px #fff, 0 0 10px #fff, 
-      0 0 25px red, 0 0 30px red; 
+    box-shadow:
+      0 0 5px #FFF, 0 0 10px #FFF,
+      0 0 25px red, 0 0 30px red;
     transform: translateY(5px);
   }
 `;
 
+const checkIfActive = (activeNotes, noteNumber) => {
+  return activeNotes.some((key) => {
+    return key.note.data[1] === noteNumber;
+  });
+};
 
 const Board = (props) => {
+  const { activeNotes } = props;
+  const whiteKeys = [36, 38, 40, 41, 43, 45, 47, 48, 50, 52, 53, 55, 57, 59];
+  console.log(activeNotes);
   return (
     <BoardStyle>
       <BoardControls>
@@ -67,32 +75,39 @@ const Board = (props) => {
         <a>{props.children}</a>
       </BoardControls>
       <WhiteKeysGroup>
-        <WhiteKey id="C2" />
-        <WhiteKey id="D2" />
-        <WhiteKey id="E2" />
-        <WhiteKey id="F2" />
-        <WhiteKey id="G2" />
-        <WhiteKey id="A2" />
-        <WhiteKey id="B2" />
-        <WhiteKey id="C3" />
-        <WhiteKey id="D3" />
-        <WhiteKey id="E3" />
-        <WhiteKey id="F3" />
-        <WhiteKey id="G3" />
-        <WhiteKey id="A3" />
-        <WhiteKey id="B3" />
+        {
+          whiteKeys.map((noteNumber) => {
+            return (
+              checkIfActive(activeNotes, noteNumber) ? <WhiteKey active key={noteNumber} /> : <WhiteKey key={noteNumber} />
+            );
+          })
+        }
+        {/* <WhiteKey id="36" />
+        <WhiteKey id="38" />
+        <WhiteKey id="40" />
+        <WhiteKey id="41" />
+        <WhiteKey id="43" />
+        <WhiteKey id="45" />
+        <WhiteKey id="47" />
+        <WhiteKey id="48" />
+        <WhiteKey id="50" />
+        <WhiteKey id="52" />
+        <WhiteKey id="53" />
+        <WhiteKey id="55" />
+        <WhiteKey id="57" />
+        <WhiteKey id="59" /> */}
       </WhiteKeysGroup>
       <BlackKeysGroup>
-        <BlackKey id="C#2" />
-        <BlackKey id="D#2" />
-        <BlackKey id="F#2" />
-        <BlackKey id="G#2" />
-        <BlackKey id="A#2" />
-        <BlackKey id="C#3" />
-        <BlackKey id="D#3" />
-        <BlackKey id="F#3" />
-        <BlackKey id="G#3" />
-        <BlackKey id="A#3" />
+        <BlackKey id="37" />
+        <BlackKey id="39" />
+        <BlackKey id="42" />
+        <BlackKey id="44" />
+        <BlackKey id="46" />
+        <BlackKey id="49" />
+        <BlackKey id="51" />
+        <BlackKey id="54" />
+        <BlackKey id="56" />
+        <BlackKey id="58" />
       </BlackKeysGroup>
     </BoardStyle>
   );
