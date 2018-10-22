@@ -11,9 +11,9 @@ const WhiteKey = styled.div`
     0 0 0 1px inset #D3D3D3,
     0 8px #D3D3D3;
 
-  /* &:active {
+  &:active {
   box-shadow: 0 8px #F8F8F8;
-  } */
+  }
 `;
 
 // export default class WhiteKey extends Component {
