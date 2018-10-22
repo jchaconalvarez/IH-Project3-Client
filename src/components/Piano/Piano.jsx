@@ -4,28 +4,20 @@ import song from '../../services/song-service';
 import Board from './Board';
 import MusicSheet from './MusicSheet';
 
-const Container = styled.div`
+const SheetContainer = styled.div`
   display: grid;
-  grid-template-columns: 50px auto 50px;
-  grid-template-rows: 50px auto 50px;
+  grid-column: 4 / 9;
+  grid-row: 2 / 9;
+  grid-template-rows: 10px 10fr 1fr;
+  align-content: center;
 `;
 
-const Wrapper = styled.div`
-  grid-column-start: 2;
-  grid-column-end: 2;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  position: fixed;
-  margin-bottom: 8px;
-  bottom: 0;
-  width: 100%;
-`;
-
-const WrapperSheet = styled.div`
-  grid-column-start: 2;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 3;
+const PianoContainer = styled.div`
+  display: grid;
+  grid-column: 3 / 10 ;
+  grid-row: 6 / 9;
+  order: 1;
+  z-index: 1;
 `;
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -160,19 +152,23 @@ export default class Piano extends Component {
       })
     );
   }
-
+ 
   render() {
     const { activeNotes, noteHistory, isRecording } = this.state;
     return (
       <React.Fragment>
-        <button onClick={this.handleClick}>Play music</button>
-        <button isRecording={isRecording} onClick={this.handleRecording}>Rec</button>
-        <MusicSheet>
-          { this.showNotes() }
-        </MusicSheet>
-        <Wrapper>
-          <Board />
-        </Wrapper>
+        <SheetContainer>
+          <MusicSheet>
+            { this.showNotes() }
+          </MusicSheet>
+        </SheetContainer>
+        <PianoContainer>
+        {/* <button isRecording={isRecording} onClick={this.handleRecording}></button> */}
+          <Board
+            isRecording={isRecording}
+            onRecording={this.handleRecording}
+          />
+        </PianoContainer>
       </React.Fragment>
     );
   }
