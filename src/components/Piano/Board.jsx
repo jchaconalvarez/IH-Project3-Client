@@ -67,7 +67,7 @@ const checkIfActive = (activeNotes, noteNumber) => {
 const Board = (props) => {
   const { activeNotes } = props;
   const whiteKeys = [36, 38, 40, 41, 43, 45, 47, 48, 50, 52, 53, 55, 57, 59];
-  console.log(activeNotes);
+  const blackKeys = [37, 39, 42, 44, 46, 49, 51, 54, 56, 58];
   return (
     <BoardStyle>
       <BoardControls>
@@ -98,7 +98,14 @@ const Board = (props) => {
         <WhiteKey id="59" /> */}
       </WhiteKeysGroup>
       <BlackKeysGroup>
-        <BlackKey id="37" />
+      {
+        blackKeys.map((noteNumber) => {
+          return (
+            checkIfActive(activeNotes, noteNumber) ? <BlackKey active key={noteNumber} /> : <BlackKey key={noteNumber} />
+          );
+        })
+      }
+        {/* <BlackKey id="37" />
         <BlackKey id="39" />
         <BlackKey id="42" />
         <BlackKey id="44" />
@@ -107,7 +114,7 @@ const Board = (props) => {
         <BlackKey id="51" />
         <BlackKey id="54" />
         <BlackKey id="56" />
-        <BlackKey id="58" />
+        <BlackKey id="58" /> */}
       </BlackKeysGroup>
     </BoardStyle>
   );
