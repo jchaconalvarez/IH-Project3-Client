@@ -21,7 +21,7 @@ const PianoContainer = styled.div`
 `;
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
-const context = new AudioContext;
+const context = new AudioContext();
 export default class Piano extends Component {
   state = {
     midiInstrument: '',
