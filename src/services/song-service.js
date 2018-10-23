@@ -4,30 +4,27 @@ class Song {
   constructor() {
     this.song = axios.create({
       baseURL: 'http://localhost:3001/song',
+      withCredentials: true,
     });
   }
 
   newSong(song) {
-    console.log('NEWSONG');
     return this.song.post('/newsong', song)
-      .then(({ data }) => {
-        console.log(data);
-        return data;
-      });
+      .then(({ data }) => data);
   }
 
   getSong(id) {
-    return this.song.get(`/song/${id}`)
+    return this.song.get(`/${id}`)
       .then(({ data }) => data);
   }
 
   editSong(id, song) {
-    return this.song.post(`/song/${id}`, song)
+    return this.song.put(`/${id}`, song)
       .then(({ data }) => data);
   }
 
   deleteSong(id) {
-    return this.song.delete(`/song/${id}`)
+    return this.song.delete(`/${id}`)
       .then(({ data }) => data);
   }
 }
