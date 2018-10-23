@@ -25,6 +25,7 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 const context = new AudioContext();
 export default class Piano extends Component {
   state = {
+    songId: '',
     songName: '',
     midiInstrument: '',
     activeNotes: [],
@@ -33,6 +34,14 @@ export default class Piano extends Component {
   }
 
   componentDidMount() {
+    const { songName, noteHistory } = this.state;
+    if (noteHistory.length === 0) {
+      console.log('NEWPOTATO');
+      song.newSong({ songName, noteHistory })
+        .then((newSong) => {
+          this.setState({ songId: newSong._id });
+        });
+    }
     this.listenForMIDIAccess();
   }
 
@@ -128,13 +137,13 @@ export default class Piano extends Component {
   }
 
   handleRecording = () => {
-    const { isRecording, noteHistory, songName } = this.state;
+    const { songId, songName ,noteHistory, isRecording } = this.state;
     if (!isRecording) {
       console.log('RECORDING');
       this.setState({ isRecording: true });
     } else {
       // console.log(noteHistory);
-      song.newSong({ songName, noteHistory });
+      song.editSong(songId, { songName, noteHistory });
       console.log('SAVED SONG');
       this.setState({ isRecording: false });
     }
