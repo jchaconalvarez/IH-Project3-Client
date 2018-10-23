@@ -5,7 +5,7 @@ import BlackKey from './BlackKey';
 
 const BoardStyle = styled.div`
   display: grid;
-  grid-template-columns: 10px auto 10px;
+  grid-template-columns: 10px 1fr 10px;
   grid-template-rows: 1fr auto auto 30px;
   background: #F9D423;
   border-radius: 12px;
@@ -76,39 +76,15 @@ const Board = (props) => {
             );
           })
         }
-        {/* <WhiteKey id="36" />
-        <WhiteKey id="38" />
-        <WhiteKey id="40" />
-        <WhiteKey id="41" />
-        <WhiteKey id="43" />
-        <WhiteKey id="45" />
-        <WhiteKey id="47" />
-        <WhiteKey id="48" />
-        <WhiteKey id="50" />
-        <WhiteKey id="52" />
-        <WhiteKey id="53" />
-        <WhiteKey id="55" />
-        <WhiteKey id="57" />
-        <WhiteKey id="59" /> */}
       </WhiteKeysGroup>
       <BlackKeysGroup>
-      {
-        blackKeys.map((noteNumber) => {
-          return (
-            checkIfActive(activeNotes, noteNumber) ? <BlackKey active key={noteNumber} /> : <BlackKey key={noteNumber} />
-          );
-        })
-      }
-        {/* <BlackKey id="37" />
-        <BlackKey id="39" />
-        <BlackKey id="42" />
-        <BlackKey id="44" />
-        <BlackKey id="46" />
-        <BlackKey id="49" />
-        <BlackKey id="51" />
-        <BlackKey id="54" />
-        <BlackKey id="56" />
-        <BlackKey id="58" /> */}
+        {
+          blackKeys.map((noteNumber) => {
+            return (
+              checkIfActive(activeNotes, noteNumber) ? <BlackKey active key={noteNumber} /> : <BlackKey key={noteNumber} />
+            );
+          })
+        }
       </BlackKeysGroup>
     </BoardStyle>
   );

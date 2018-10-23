@@ -17,7 +17,6 @@ const globalStyledComponents = injectGlobal`
   button {
     outline: 0;
   }
-
 `;
 
 export default globalStyledComponents;

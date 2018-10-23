@@ -10,6 +10,7 @@ const Container = styled.div`
   grid-template-columns: repeat(11, 1fr);
   grid-template-rows: repeat(9, 1fr);
   background: linear-gradient(#F9D423,#EF4957);
+}
 `;
 
 const NavbarContainer = styled.div`

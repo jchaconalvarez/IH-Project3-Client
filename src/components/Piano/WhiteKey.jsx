@@ -6,13 +6,14 @@ const WhiteKey = styled.div`
   border-radius: 0 0 5px 5px;
   width: 50px;
   height: 158px;
-  background: ${props => props.active ? 'tomato' : '#F8F8F8'};
-  box-shadow:
-    0 0 0 1px inset #D3D3D3,
-    0 8px #D3D3D3;
+  background: #F8F8F8;
+  /* background: ${props => props.active ? 'tomato' : '#E2BE09'}; */
+  box-shadow: ${props => props.active ? '0 8px #F8F8F8' : '0 0 0 1px inset #D3D3D3,0 8px #D3D3D3' };
+
 
   &:active {
-  box-shadow: 0 8px #F8F8F8;
+  box-shadow: 
+    0 8px #F8F8F8;
   }
 `;
 
