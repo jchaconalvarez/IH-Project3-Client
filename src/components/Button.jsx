@@ -18,7 +18,6 @@ const CardButton = styled.button`
   }
 
   &:focus{
-    /* background-color: #FF7D84; */
     transform: translateY(2px);
     animation: none !important;
   }

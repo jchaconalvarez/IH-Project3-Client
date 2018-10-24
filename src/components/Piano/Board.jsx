@@ -10,6 +10,7 @@ const BoardStyle = styled.div`
   background: #F9D423;
   border-radius: 12px;
   border-bottom: 8px solid #E2BE09;
+  place-items: center;
 `;
 
 const BoardControls = styled.div`
@@ -37,7 +38,8 @@ const BlackKeysGroup = styled.div`
   grid-row: 2;
   justify-content: start;
   align-self: start;
-  margin-left: 35px;
+  /* margin-left: 35px; */
+  margin-left: -10px;
   grid-template-columns: 20px 70px 20px 20px 70px 20px 70px 20px 20px 20px;
   grid-column-gap: 30px;
 `;

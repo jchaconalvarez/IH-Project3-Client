@@ -10,31 +10,40 @@ import {
 } from './AuthCard';
 
 const Background = styled.div`
-  transform: skewY(10deg);
-  background-image: linear-gradient(to right, #EF4957 0%, #f9d423 100%);
+  background: linear-gradient(to right, #EF4957 0%, #f9d423 100%);
+  clip-path: polygon(30% 0, 100% 70%, 100% 100%, 70% 100%, 0 30%, 0 0);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
 `;
 
-const UnSkewY = styled.div`
-  transform: skewY(-10deg);
+const AuthContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 100vh;
+  align-items: center;
+  justify-items: center;
 `;
 
 const Signup = (props) => {
   const { switchForm } = props;
   return (
-    <Background>
-      <UnSkewY>
+    <React.Fragment>
+      <Background />
+      <AuthContainer>
         <CardContainer>
           <CardH1>Sign up</CardH1>
           <CardBody>
             <AuthHandler />
             <CardText>
               Already have an account?
-              <CardLink onClick={switchForm}>Log in!</CardLink>
+              <CardLink onClick={switchForm}> Log in!</CardLink>
             </CardText>
           </CardBody>
         </CardContainer>
-      </UnSkewY>
-    </Background>
+      </AuthContainer>
+    </React.Fragment>
   );
 };
 
