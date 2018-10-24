@@ -10,18 +10,17 @@ const CardButton = styled.button`
   border: 0;
   color: white;
   border-radius: 35px;
-  /* background-color: #EF4957; */
-  /*--------------- NOTE: no se si hacerlo esto o no*/
   background: #F9D423;
   animation: mymove 15s infinite;
   }
     @keyframes mymove {
-        50% {background-color: #EF4957;}
+        50% { background-color: #EF4957; }
   }
-  /*------------------------------------------------*/
 
   &:focus{
-    background-color: #FF7D84;
+    /* background-color: #FF7D84; */
+    transform: translateY(2px);
+    animation: none !important;
   }
 `;
 
