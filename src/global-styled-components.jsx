@@ -7,7 +7,7 @@ const globalStyledComponents = injectGlobal`
   body {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    /* height: 100vh; */
   }
   a {
     color: inherit;
@@ -17,7 +17,6 @@ const globalStyledComponents = injectGlobal`
   button {
     outline: 0;
   }
-
 `;
 
 export default globalStyledComponents;

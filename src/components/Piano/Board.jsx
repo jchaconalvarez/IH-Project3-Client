@@ -5,11 +5,12 @@ import BlackKey from './BlackKey';
 
 const BoardStyle = styled.div`
   display: grid;
-  grid-template-columns: 10px auto 10px;
+  grid-template-columns: 10px 1fr 10px;
   grid-template-rows: 1fr auto auto 30px;
   background: #F9D423;
   border-radius: 12px;
   border-bottom: 8px solid #E2BE09;
+  place-items: center;
 `;
 
 const BoardControls = styled.div`
@@ -37,7 +38,8 @@ const BlackKeysGroup = styled.div`
   grid-row: 2;
   justify-content: start;
   align-self: start;
-  margin-left: 35px;
+  /* margin-left: 35px; */
+  margin-left: -10px;
   grid-template-columns: 20px 70px 20px 20px 70px 20px 70px 20px 20px 20px;
   grid-column-gap: 30px;
 `;
@@ -77,20 +79,6 @@ const Board = (props) => {
             );
           })
         }
-        {/* <WhiteKey id="36" />
-        <WhiteKey id="38" />
-        <WhiteKey id="40" />
-        <WhiteKey id="41" />
-        <WhiteKey id="43" />
-        <WhiteKey id="45" />
-        <WhiteKey id="47" />
-        <WhiteKey id="48" />
-        <WhiteKey id="50" />
-        <WhiteKey id="52" />
-        <WhiteKey id="53" />
-        <WhiteKey id="55" />
-        <WhiteKey id="57" />
-        <WhiteKey id="59" /> */}
       </WhiteKeysGroup>
       <BlackKeysGroup>
         {

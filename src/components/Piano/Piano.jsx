@@ -19,6 +19,7 @@ const PianoContainer = styled.div`
   grid-row: 6 / 9;
   order: 1;
   z-index: 1;
+  align-content: center;
 `;
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;

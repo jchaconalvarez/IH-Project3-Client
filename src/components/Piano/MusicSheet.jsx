@@ -10,7 +10,8 @@ const Sheet = styled.div`
   grid-template-columns: 1fr 10fr 1fr;
   grid-template-rows: 1fr 8fr 2fr;
   box-shadow: 0 0 5px rgba(0,0,0,.5);
-  background: repeating-linear-gradient(#CCC 0, #CCC 5%, #FFFEEA 0, #FFFEEA 50%) 0 / 50px 50px;
+  background: #FFFEEA;
+  /* background: repeating-linear-gradient(#CCC 0, #CCC 5%, #FFFEEA 0, #FFFEEA 50%) 0 / 50px 50px; */
 `;
 
 const SheetTwo = styled.div`
@@ -18,7 +19,8 @@ const SheetTwo = styled.div`
   grid-row: 2;
   transform: rotate(-2deg);
   box-shadow: 0 0 5px rgba(0,0,0,.5);
-  background: repeating-linear-gradient(#CCC 0, #CCC 5%, #FFFEEA 0, #FFFEEA 50%) 0 / 50px 50px;
+  background: #FFFEEA;
+  /* background: repeating-linear-gradient(#CCC 0, #CCC 5%, #FFFEEA 0, #FFFEEA 50%) 0 / 50px 50px; */
 `;
 
 const SheetThree = styled.div`
@@ -26,7 +28,8 @@ const SheetThree = styled.div`
   grid-row: 2;
   transform: rotate(3deg);
   box-shadow: 0 0 5px rgba(0,0,0,.5);
-  background: repeating-linear-gradient(#CCC 0, #CCC 5%, #FFFEEA 0, #FFFEEA 50%) 0 / 50px 50px;
+  background: #FFFEEA;
+  /* background: repeating-linear-gradient(#CCC 0, #CCC 5%, #FFFEEA 0, #FFFEEA 50%) 0 / 50px 50px; */
 `;
 
 const NotesContainer = styled.p`
