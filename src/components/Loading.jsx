@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import LoadingAnimation from './LoadingAnimation';
 
 const Loading = () => {
   return (
-    <div>
+    <React.Fragment>
       <h1>Loading</h1>
-    </div>
+      <LoadingAnimation />
+    </React.Fragment>
   );
 };
 
