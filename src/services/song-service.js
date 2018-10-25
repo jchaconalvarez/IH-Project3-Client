@@ -13,6 +13,11 @@ class Song {
       .then(({ data }) => data);
   }
 
+  getUserSongs() {
+    return this.song.get('/getusersongs')
+      .then(({ data }) => data);
+  }
+
   getSong(id) {
     return this.song.get(`/${id}`)
       .then(({ data }) => data);

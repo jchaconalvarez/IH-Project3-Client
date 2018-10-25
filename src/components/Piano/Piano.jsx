@@ -40,6 +40,7 @@ export default class Piano extends Component {
       console.log('NEWPOTATO');
       song.newSong({ songName, noteHistory })
         .then((newSong) => {
+          console.log('NEWPOTATO: ', newSong);
           this.setState({ songId: newSong._id });
         });
     }
@@ -138,7 +139,7 @@ export default class Piano extends Component {
   }
 
   handleRecording = () => {
-    const { songId, songName ,noteHistory, isRecording } = this.state;
+    const { songId, songName, noteHistory, isRecording } = this.state;
     if (!isRecording) {
       console.log('RECORDING');
       this.setState({ isRecording: true });
@@ -157,15 +158,6 @@ export default class Piano extends Component {
 
   showNotes = () => {
     const { activeNotes, noteHistory, isRecording } = this.state;
-    // if (!isRecording) {
-    //   return (
-    //     activeNotes.map((input, index) => {
-    //       return (
-    //         <span key={index}>{this.translateMidiToNote(input.note.data[1])}</span>
-    //       );
-    //     })
-    //   );
-    // }
     return (
       noteHistory.map((input, index) => {
         return (
