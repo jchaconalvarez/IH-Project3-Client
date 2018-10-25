@@ -156,15 +156,6 @@ export default class Piano extends Component {
 
   showNotes = () => {
     const { activeNotes, noteHistory, isRecording } = this.state;
-    // if (!isRecording) {
-    //   return (
-    //     activeNotes.map((input, index) => {
-    //       return (
-    //         <span key={index}>{this.translateMidiToNote(input.note.data[1])}</span>
-    //       );
-    //     })
-    //   );
-    // }
     return (
       noteHistory.map((input, index) => {
         return (
