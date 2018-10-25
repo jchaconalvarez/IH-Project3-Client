@@ -39,6 +39,7 @@ export default class Piano extends Component {
       console.log('NEWPOTATO');
       song.newSong({ songName, noteHistory })
         .then((newSong) => {
+          console.log('NEWPOTATO: ', newSong);
           this.setState({ songId: newSong._id });
         });
     }
@@ -137,7 +138,7 @@ export default class Piano extends Component {
   }
 
   handleRecording = () => {
-    const { songId, songName ,noteHistory, isRecording } = this.state;
+    const { songId, songName, noteHistory, isRecording } = this.state;
     if (!isRecording) {
       console.log('RECORDING');
       this.setState({ isRecording: true });

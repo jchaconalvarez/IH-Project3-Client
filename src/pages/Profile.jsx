@@ -16,16 +16,16 @@ class Profile extends Component {
 
   render() {
     const { songList } = this.state;
-    console.log('Profile RENDER: ', songList);
     return (
       <React.Fragment>
         <NavBar />
         <ul>
           {
-            songList.map((song, index) => {
+            songList.map((songO, index) => {
+              console.log(songO);
               return (
-                <li>
-                  {index} - {song.name} - {song.noteHistory} - {song.createdAt}
+                <li key={index}>
+                  {index} - {songO.songName} - {songO.created_at}
                 </li>
               );
             })
