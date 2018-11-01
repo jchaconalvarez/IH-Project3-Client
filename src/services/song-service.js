@@ -29,7 +29,7 @@ class Song {
   }
 
   deleteSong(id) {
-    return this.song.delete(`/${id}`)
+    return this.song.delete(`/${id}`, id)
       .then(({ data }) => data);
   }
 }

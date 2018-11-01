@@ -10,7 +10,7 @@ const Bar = styled.span`
   width: 15px;
   height: 0;
   left: 0;
-  bottom: 0;
+  bottom: calc(100vh/2);
   background: linear-gradient(#F9D423,#EF4957);
   animation: growForMe 1s linear infinite;
 

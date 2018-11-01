@@ -10,6 +10,8 @@ const BoardStyle = styled.div`
   background: #F9D423;
   border-radius: 12px;
   border-bottom: 8px solid #E2BE09;
+  /* border-right: 10px solid #F9D423;
+  border-left: 10px solid #F9D423; */
   place-items: center;
 `;
 

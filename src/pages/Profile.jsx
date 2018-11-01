@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import song from '../services/song-service';
 import NavBar from '../components/NavBar';
+import { Link } from 'react-router-dom';
 
 class Profile extends Component {
   state = {
@@ -8,10 +9,19 @@ class Profile extends Component {
   }
 
   componentDidMount() {
+    this.getUserSongs();
+  }
+
+  getUserSongs = () => {
     song.getUserSongs()
       .then((songs) => {
         this.setState({ songList: songs });
       });
+  }
+
+  handleDelete = (songId) => {
+    song.deleteSong(songId);
+    this.getUserSongs();
   }
 
   render() {
@@ -21,12 +31,16 @@ class Profile extends Component {
         <NavBar />
         <ul>
           {
-            songList.map((songO, index) => {
-              console.log(songO);
+            songList.map((songItem, index) => {
               return (
-                <li key={index}>
-                  {index} - {songO.songName} - {songO.created_at}
-                </li>
+                <React.Fragment>
+                  <Link to={`/play/${songItem._id}`}>
+                    <li key={index}>
+                      {index} - {songItem.songName} - {songItem.created_at} 
+                    </li>
+                  </Link>
+                  <button onClick={() => { this.handleDelete(songItem._id) }}>delete</button>
+                </React.Fragment>
               );
             })
           }

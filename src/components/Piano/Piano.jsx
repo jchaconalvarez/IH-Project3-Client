@@ -4,22 +4,23 @@ import song from '../../services/song-service';
 import Board from './Board';
 import MusicSheet from './MusicSheet';
 import PianoForm from './PianoForm';
+import MusicPentagram from './Vex';
 
 const SheetContainer = styled.div`
   display: grid;
-  grid-column: 4 / 9;
-  grid-row: 2 / 9;
+  grid-column: 2;
+  grid-row: 2 / 4;
   grid-template-rows: 10px 10fr 1fr;
   align-content: center;
+  margin: 0 5%;
 `;
 
 const PianoContainer = styled.div`
   display: grid;
-  grid-column: 3 / 10 ;
-  grid-row: 6 / 9;
-  order: 1;
+  grid-column: 2 ;
+  grid-row: 3;
   z-index: 1;
-  align-content: center;
+  align-content: end;
 `;
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -184,6 +185,7 @@ export default class Piano extends Component {
         <button type="button" onClick={this.clearHistory}>Clear</button>
         <SheetContainer>
           <MusicSheet>
+            <MusicPentagram />
             { this.showNotes() }
           </MusicSheet>
         </SheetContainer>

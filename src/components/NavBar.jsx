@@ -15,6 +15,19 @@ const NavBarBtn = styled.div`
   outline: none;
 `;
 
+const NavbarContainer = styled.div`
+ background: rgba(0,0,0,.2);
+  display: grid;
+  grid-column: 1 / -1;
+  grid-row: 1;
+  grid-template-columns: repeat(11, 1fr);
+  align-content: center;
+  justify-items: center;
+  align-self: start;
+  padding: 4px;
+  font-family: 'Raleway', sans-serif;
+`;
+
 class NavBar extends Component {
 
   handleLogOut = () => {
@@ -24,12 +37,12 @@ class NavBar extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <NavbarContainer>
         {/* <p>{this.props.user}</p> */}
         <NavbarItem to="/play">Play</NavbarItem>
         <NavbarItem to="/profile">Profile</NavbarItem>
         <NavBarBtn type="button" onClick={this.handleLogOut}>Log out</NavBarBtn>
-      </React.Fragment>
+      </NavbarContainer>
     );
   }
 }
