@@ -1,34 +1,23 @@
-// import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const WhiteKey = styled.div`
-  border-top: 6px solid #E2BE09;
-  border-radius: 0 0 5px 5px;
   background: ${props => props.active ? 'tomato' : '#F8F8F8'};
-  width: 50px;
-  height: 158px;
-    /*background: #F8F8F8;
-  box-shadow: ${props => props.active ? '0 8px #F8F8F8' : '0 0 0 1px inset #D3D3D3,0 8px #D3D3D3' }; */
+  border-radius: 0.2rem 0 0 0.2rem;
+  width: 4.93rem; /*79px*/
+  height: 1.56rem; /*25px*/
   box-shadow:
-    0 0 0 0.5px inset #D3D3D3,
-    0 8px #D3D3D3;
-
+    0 0 0 0.06rem inset #D3D3D3, 
+    -0.25rem 0 0 0 #D3D3D3;
+  /* justify-self: end; */
 
   &:active {
-  box-shadow: 
-    0 8px #F8F8F8;
+    box-shadow: 
+      -0.2rem 0 0 0 #F8F8F8;
+  }
+
+  @media (max-width: 768px) {
+    width: calc(4.93rem/2);
   }
 `;
-
-// export default class WhiteKey extends Component {
-//   render() {
-//     if (this.props.active) { console.log('active'); }
-//     return (
-//       <React.Fragment>
-//         <Key />
-//       </React.Fragment>
-//     );
-//   };
-// };
 
 export default WhiteKey;

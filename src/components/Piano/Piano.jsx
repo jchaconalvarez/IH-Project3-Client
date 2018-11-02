@@ -1,26 +1,17 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import song from '../../services/song-service';
+import Controls from './Controls';
 import Board from './Board';
-import MusicSheet from './MusicSheet';
 import PianoForm from './PianoForm';
-import MusicPentagram from './Vex';
+import CanvasHere from './CanvasHere';
 
-const SheetContainer = styled.div`
+const PianoWrapper = styled.div`
   display: grid;
-  grid-column: 2;
-  grid-row: 2 / 4;
-  grid-template-rows: 10px 10fr 1fr;
-  align-content: center;
-  margin: 0 5%;
-`;
-
-const PianoContainer = styled.div`
-  display: grid;
-  grid-column: 2 ;
+  grid-column: 1;
   grid-row: 3;
-  z-index: 1;
-  align-content: end;
+  place-items: start end;
+  margin: 0 0 2rem 2rem;
 `;
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -181,22 +172,20 @@ export default class Piano extends Component {
     const { activeNotes, isRecording, midiInstrument } = this.state;
     return (
       <React.Fragment>
-        <PianoForm changeName={this.changeName} />
-        <button type="button" onClick={this.clearHistory}>Clear</button>
-        <SheetContainer>
-          <MusicSheet>
-            <MusicPentagram />
-            { this.showNotes() }
-          </MusicSheet>
-        </SheetContainer>
-        <PianoContainer>
-        {/* <button isRecording={isRecording} onClick={this.handleRecording}></button> */}
-          <Board
-            activeNotes={activeNotes}
-            isRecording={isRecording}
-            onRecording={this.handleRecording}
-          >{ midiInstrument }</Board>
-        </PianoContainer>
+        <Controls
+          activeNotes={activeNotes}
+          isRecording={isRecording}
+          onRecording={this.handleRecording}
+          midiInstrument={midiInstrument}
+          clearHistory={this.clearHistory}
+        >
+          <PianoForm changeName={this.changeName} />
+          {/* <button type="button" onClick={this.clearHistory}>Clear</button> */}
+        </Controls>
+        <PianoWrapper>
+          <Board activeNotes={activeNotes} />
+        </PianoWrapper>
+        <CanvasHere>{ this.showNotes() }</CanvasHere>
       </React.Fragment>
     );
   }

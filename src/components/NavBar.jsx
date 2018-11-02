@@ -16,15 +16,14 @@ const NavBarBtn = styled.div`
 `;
 
 const NavbarContainer = styled.div`
- background: rgba(0,0,0,.2);
+  background: rgba(0,0,0,.2);
   display: grid;
   grid-column: 1 / -1;
   grid-row: 1;
-  grid-template-columns: repeat(11, 1fr);
-  align-content: center;
+  grid-template-columns: repeat(3, 6rem);
   justify-items: center;
-  align-self: start;
-  padding: 4px;
+  justify-content: end;
+  padding: 1rem;
   font-family: 'Raleway', sans-serif;
 `;
 

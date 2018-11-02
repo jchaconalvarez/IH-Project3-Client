@@ -6,7 +6,6 @@ import {
   ErrorMessage
 } from 'formik';
 import styled from 'styled-components';
-import Button from '../Button';
 
 const PianoForm = (props) => {
   const { initialValues, changeName } = props;
@@ -22,7 +21,7 @@ const PianoForm = (props) => {
           return (
             <Form>
               <Field type="text" name="songName" placeholder="Song name" />
-              <Button>Change</Button>
+              <button type="button">Change</button>
             </Form>
           );
         }}
