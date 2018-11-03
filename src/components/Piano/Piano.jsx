@@ -11,6 +11,7 @@ const PianoWrapper = styled.div`
   grid-column: 1;
   grid-row: 3;
   place-items: start end;
+  align-self: start;
   margin: 0 0 2rem 2rem;
 `;
 

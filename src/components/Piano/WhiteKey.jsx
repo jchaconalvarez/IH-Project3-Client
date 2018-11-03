@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const WhiteKey = styled.div`
   background: ${props => props.active ? 'tomato' : '#F8F8F8'};
-  border-radius: 0.2rem 0 0 0.2rem;
+  border-radius: .2rem 0 0 .2rem;
   width: 4.93rem; /*79px*/
   height: 1.56rem; /*25px*/
   box-shadow:

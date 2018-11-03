@@ -7,6 +7,7 @@ const ControlWrapper = styled.div`
   background-color: #F9D423;
   padding: 1rem;
   margin: 2rem 2rem 0 0;
+  border-radius: .5rem .5rem 0 0;
 `;
 
 const RecBtn = styled.button`

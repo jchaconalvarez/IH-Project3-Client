@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const BlackKey = styled.div`
   background: ${props => props.active ? 'tomato' : '#4C4C4C'};
-  border-radius: 0.2rem 0 0 0.2rem;
+  border-radius: .2rem 0 0 .2rem;
   width: 2.65rem; /*42,5px*/
   height: 0.93rem; /*15px*/
   box-shadow:
