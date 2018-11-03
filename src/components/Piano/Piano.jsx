@@ -30,11 +30,13 @@ class Piano extends Component {
     songName: null,
     songBPM: 60,
     midiInstrument: null,
-    timeStamp: null,
+    recStartTimeStamp: 0,
+    recStopTimeStamp: 0,
+    offset: null,
     activeNotes: [],
     noteHistory: [],
     isRecording: false,
-    isPlaying: false,
+    isEditing: false,
   }
 
   // Is called on component mount. Fetches song using id in URL if it already
@@ -46,6 +48,7 @@ class Piano extends Component {
       song.getSong(songId)
         .then((response) => {
           const { songName, noteHistory } = response;
+          // const songTimeStamp = noteHistory[0].timeStampOn - 10;
           this.setState({ songId, songName, noteHistory });
         });
     }
@@ -68,12 +71,14 @@ class Piano extends Component {
   // @param {object} midiData - MIDI event object with all note information.
   // @param {number} midiNote - MIDI note value.
   // @param {number} midiVelocity - MIDI note velocity value to be used by gain node.
-  noteOn = (midiData, midiNote, midiVelocity) => {
+  noteOn = (midiData, midiNote, midiVelocity, isEditing) => {
     const {
+      recStartTimeStamp,
+      recStopTimeStamp,
+      offset,
       activeNotes,
       noteHistory,
       isRecording,
-      isPlaying,
     } = this.state;
 
     // Create oscillator and gain nodes for synth.
@@ -82,9 +87,17 @@ class Piano extends Component {
 
     // Variables used to create noteObject.
     const noteHz = this.convertNoteDataToFrequency(midiNote);
-    const date = new Date();
-    const timeStamp = date.getTime();
-    // const note = Array.from(midiData);
+
+    let noteTimeStamp = new Date().getTime();
+    const localOffset = recStartTimeStamp - recStopTimeStamp;
+    let goalTs = 0;
+    if (isEditing) {
+      goalTs = recStartTimeStamp - localOffset;
+      noteTimeStamp -= goalTs;
+    } else {
+      noteTimeStamp -= recStartTimeStamp;
+    }
+
     const noteObject = {};
 
     // Setup gain node.
@@ -92,7 +105,7 @@ class Piano extends Component {
     gainNode.gain.value = midiVelocity / 127;
 
     // Set up and start oscillator node.
-    oscillatorNode.type = 'triangle';
+    oscillatorNode.type = 'square';
     oscillatorNode.frequency.value = noteHz;
     oscillatorNode.connect(gainNode);
     oscillatorNode.start();
@@ -101,22 +114,32 @@ class Piano extends Component {
     noteObject.oscillator = oscillatorNode;
     noteObject.note = {
       data: midiData,
-      timeStampOn: timeStamp,
+      timeStampOn: noteTimeStamp,
       timeStampOff: null,
     };
     isRecording && noteHistory.push(noteObject.note);
 
     // Push notes to activeNotes and update state.
     activeNotes.push(noteObject);
-    this.setState({ activeNotes, noteHistory });
+    this.setState((prevState) => ({
+      recStartTimestamp: prevState.recStartTimestamp - localOffset,
+      offset: goalTs,
+      activeNotes,
+      noteHistory,
+    }));
   };
 
   // Kills note oscllators and removes notes from activeNotes array.
   // @param {object} midiData - MIDI event object with all note information.
   noteOff = (midiData) => {
-    const { activeNotes, noteHistory } = this.state;
-    const date = new Date();
-    const timeStamp = date.getTime();
+    const {
+      recStartTimeStamp,
+      recStopTimeStamp,
+      offset,
+      activeNotes,
+      noteHistory,
+      isEditing,
+    } = this.state;
 
     // Finds index of note to kill.
     const indexOfNoteToKill = activeNotes.findIndex((noteObject) => {
@@ -124,18 +147,28 @@ class Piano extends Component {
     });
 
     // Stops/disconnects oscillator and removes note from activeNotes array.
-    activeNotes[indexOfNoteToKill].note.timeStampOff = timeStamp;
+    // const date = new Date();
+    // const noteTimeStamp = date.getTime() - recStartTimeStamp;
+    let noteTimeStamp = new Date().getTime();
+    if (isEditing) {
+      noteTimeStamp -= offset;
+    } else {
+      noteTimeStamp -= recStartTimeStamp;
+    }
+
+    activeNotes[indexOfNoteToKill].note.timeStampOff = noteTimeStamp;
     activeNotes[indexOfNoteToKill].oscillator.stop();
     activeNotes[indexOfNoteToKill].oscillator.disconnect();
     activeNotes.splice(indexOfNoteToKill, 1);
 
-    this.setState({ activeNotes, noteHistory });
+    this.setState({ recStartTimeStart: recStartTimeStamp - offset, activeNotes, noteHistory });
   };
 
   // Calls noteOn() or noteOff methods according to MIDI status value.
   // Sets midiInstrument value.
   // @params {object} midiMessage - MIDI event object.
   getMidiInput = (midiMessage) => {
+    const { isEditing } = this.state;
     const {
       manufacturer: midiManufacturer,
       name: midiModel,
@@ -147,7 +180,7 @@ class Piano extends Component {
 
     switch (midiStatus) {
       case 144:
-        this.noteOn(midiData, midiNote, midiVelocity);
+        this.noteOn(midiData, midiNote, midiVelocity, isEditing);
         break;
       case 128:
         this.noteOff(midiData, midiNote, midiVelocity);
@@ -185,18 +218,20 @@ class Piano extends Component {
   // Makes song-service API calls to create/update songs.
   handleRecording = () => {
     const { songId, songName, noteHistory, isRecording } = this.state;
+    const recStartTimeStamp = new Date().getTime();
     if (!isRecording) {
-      const date = new Date();
-      const timeStamp = date.getTime();
       if (!songId) {
         song.newSong({ songName, noteHistory })
           .then((newSong) => {
-            this.setState({ songId: newSong._id, timeStamp, isRecording: true });
+            this.setState({ songId: newSong._id, recStartTimeStamp, isRecording: true });
           });
+      } else {
+        this.setState({ recStartTimeStamp, isRecording: true, isEditing: true });
       }
     } else {
+      const recStopTimeStamp = new Date().getTime();
       song.editSong(songId, { songName, noteHistory });
-      this.setState({ isRecording: false });
+      this.setState({ recStopTimeStamp, isRecording: false, isEditing: true });
     }
   }
 
@@ -209,8 +244,9 @@ class Piano extends Component {
   }
 
   // Shows notes from noteHistory on the music sheet.
+  // @returns {DOM Element}
   showNotes = () => {
-    const { noteHistory, isRecording } = this.state;
+    const { noteHistory } = this.state;
     return (
       noteHistory.map((input, index) => {
         return (
@@ -235,10 +271,13 @@ class Piano extends Component {
   // Plays back song (noteHistory array).
   playSong = () => {
     const {
-      timeStamp,
+      songTimeStamp,
+      editTimeStamp,
       noteHistory,
+      isEditing,
     } = this.state;
-    let songTimeStamp = timeStamp;
+
+    let playbackTimeStamp = 0;
     let noteIndex = 0;
 
     // Delays execution of next line for the duration of a note.
@@ -253,7 +292,7 @@ class Piano extends Component {
       const midiVelocity = note.data[2];
       const noteDuration = note.timeStampOff - note.timeStampOn;
 
-      this.noteOn(midiData, midiNote, midiVelocity);
+      this.noteOn(midiData, midiNote, midiVelocity, isEditing);
       await delay(noteDuration);
       this.noteOff(midiData);
     };
@@ -262,14 +301,15 @@ class Piano extends Component {
     // for a matching (<=) start time. Kills interval when it reaches the end of
     // the noteHistory array.
     const playbackInterval = setInterval(() => {
-      if (noteHistory[noteIndex].timeStampOn <= songTimeStamp) {
+      console.log(playbackTimeStamp);
+      if (noteHistory[noteIndex].timeStampOn <= playbackTimeStamp) {
         playNote(noteHistory[noteIndex]);
         noteIndex++;
       }
       if (noteIndex === noteHistory.length) {
         clearInterval(playbackInterval);
       }
-      songTimeStamp += +10;
+      playbackTimeStamp += +10;
     }, 10);
   }
 
