@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import song from '../services/song-service';
 import NavBar from '../components/NavBar';
-import LoadingAnimation from '../components/LoadingAnimation';
 import { Link } from 'react-router-dom';
 
 class Profile extends Component {
