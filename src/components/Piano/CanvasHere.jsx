@@ -10,11 +10,12 @@ const CanvasWrapper = styled.div`
     repeating-linear-gradient(0deg,transparent,transparent 24px,#ccc 24px,#ccc 24.96px),
     repeating-linear-gradient(-90deg,transparent,transparent 24px,#ccc 24px,#ccc 24.96px);
   background-size: 24.96px 24.96px;
-
 `;
 
 const NotesContainer = styled.p`
   font-size: 1rem;
+  line-height: 1.56rem;
+  margin: 0.09rem;
 `;
 
 const CanvasHere = (props) => {
