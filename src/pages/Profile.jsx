@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import song from '../services/song-service';
 import NavBar from '../components/NavBar';
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
+=======
+import LoadingAnimation from '../components/LoadingAnimation';
+>>>>>>> jchdev
 
 class Profile extends Component {
   state = {
@@ -34,12 +39,12 @@ class Profile extends Component {
             songList.map((songItem, index) => {
               return (
                 <React.Fragment>
-                  <Link to={`/play/${songItem._id}`}>
+                  <Link to={`/song/${songItem._id}`}>
                     <li key={index}>
-                      {index} - {songItem.songName} - {songItem.created_at} 
+                      {index} - {songItem.songName} - {songItem.created_at}
                     </li>
                   </Link>
-                  <button onClick={() => { this.handleDelete(songItem._id) }}>delete</button>
+                  <button type="button" onClick={() => { this.handleDelete(songItem._id); }}>delete</button>
                 </React.Fragment>
               );
             })
