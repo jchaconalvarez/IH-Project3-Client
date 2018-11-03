@@ -212,6 +212,8 @@ notes			[
 
 [Server repository Link](https://github.com/jchaconalvarez/IH-Project3-Server.git)
 
+### Heroku
+
 [Deploy Link](http://heroku.com)
 
 ### Slides
