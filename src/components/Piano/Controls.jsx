@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PianoForm from './PianoForm';
 
 const ControlWrapper = styled.div`
   grid-column: 2;

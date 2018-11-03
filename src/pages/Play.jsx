@@ -10,7 +10,7 @@ const Container = styled.div`
   grid-template-columns: 1fr 10fr;
   grid-template-rows: auto 1fr 6fr;
   /* background: linear-gradient(#F9D423,#EF4957); */
-  background-color: #EF4957;
+  background-color: #353535;
 }
 `;
 

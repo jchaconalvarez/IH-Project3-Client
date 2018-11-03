@@ -4,7 +4,7 @@ import song from '../../services/song-service';
 import Controls from './Controls';
 import Board from './Board';
 import PianoForm from './PianoForm';
-import CanvasHere from './CanvasHere';
+import Display from './Display';
 
 const PianoWrapper = styled.div`
   display: grid;
@@ -186,7 +186,9 @@ export default class Piano extends Component {
         <PianoWrapper>
           <Board activeNotes={activeNotes} />
         </PianoWrapper>
-        <CanvasHere>{ this.showNotes() }</CanvasHere>
+        <Display activeNotes={activeNotes}>
+          { this.showNotes() }
+        </Display>
       </React.Fragment>
     );
   }

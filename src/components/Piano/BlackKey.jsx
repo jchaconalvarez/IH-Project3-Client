@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+const width = '2.63rem';
+const width2 = '5rem';
+
 const BlackKey = styled.div`
   background: ${props => props.active ? 'tomato' : '#4C4C4C'};
   border-radius: .2rem 0 0 .2rem;

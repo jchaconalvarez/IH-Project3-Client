@@ -26,11 +26,14 @@ const checkIfActive = (activeNotes, noteNumber) => {
   });
 };
 
+const handleClick = (noteNumber) => {
+  console.log( noteNumber )
+}
 
 const Board = (props) => {
   const { activeNotes } = props;
-  const whiteKeys = [36, 38, 40, 41, 43, 45, 47, 48, 50, 52, 53, 55, 57, 59, 61, 63, 64, 66];
-  const blackKeys = [37, 39, 42, 44, 46, 49, 51, 54, 56, 58, 60, 62];
+  const whiteKeys = [36, 38, 40, 41, 43, 45, 47, 48, 50, 52, 53, 55, 57, 59, 60, 62, 64, 65];
+  const blackKeys = [37, 39, 42, 44, 46, 49, 51, 54, 56, 58, 61, 63];
   return (
     <React.Fragment>
       <WhiteKeysGroup>
@@ -38,7 +41,8 @@ const Board = (props) => {
           whiteKeys.map((noteNumber) => {
             return (
               checkIfActive(activeNotes, noteNumber)
-                ? <WhiteKey active key={noteNumber} /> : <WhiteKey key={noteNumber} />
+                ? <WhiteKey active key={noteNumber} />
+                : <WhiteKey key={noteNumber} onClick={() => handleClick(noteNumber)} />
             );
           })
         }
@@ -48,7 +52,8 @@ const Board = (props) => {
           blackKeys.map((noteNumber) => {
             return (
               checkIfActive(activeNotes, noteNumber)
-                ? <BlackKey active key={noteNumber} /> : <BlackKey key={noteNumber} />
+                ? <BlackKey active key={noteNumber} />
+                : <BlackKey key={noteNumber} onClick={() => handleClick(noteNumber)} />
             );
           })
         }
