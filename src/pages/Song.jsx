@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
+import song from '../services/song-service';
 import NavBar from '../components/NavBar';
 import Piano from '../components/Piano/Piano';
 
@@ -26,15 +27,25 @@ const NavbarContainer = styled.div`
   border-left: 4px solid #EF4957;
 `;
 
-const Play = () => {
-  return (
-    <Container>
-      <NavbarContainer>
-        <NavBar />
-      </NavbarContainer>
-      <Piano />
-    </Container>
-  );
-};
+class Play extends Component {
+
+  // componentDidMount() {
+  //   const { id } = this.props.match.params;
+  //   if (id) {
+  //     song.getSong(id).
+  //   }
+  // }
+
+  render() {
+    return (
+      <Container>
+        <NavbarContainer>
+          <NavBar />
+        </NavbarContainer>
+        <Piano params={this.props.match.params.id}/>
+      </Container>
+    );
+  }
+}
 
 export default Play;

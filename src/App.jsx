@@ -7,7 +7,7 @@ import { checkAuth } from './actions/auth';
 import Loading from './components/Loading';
 import Home from './pages/Home';
 import Dash from './pages/Dash';
-import Play from './pages/Play';
+import Song from './pages/Song';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import globalStyledComponents from '../src/global-styled-components';
@@ -24,7 +24,8 @@ class App extends Component {
       <Switch>
         <AnonRoute exact path="/" component={Home} />
         <ProtectedRoute path="/dash" component={Dash} />
-        <ProtectedRoute path="/play" component={Play} />
+        <ProtectedRoute exact path="/song" component={Song} />
+        <ProtectedRoute path="/song/:id" component={Song} />
         <ProtectedRoute path="/profile" component={Profile} />
         <Route component={NotFound} />
       </Switch>

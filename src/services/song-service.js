@@ -19,6 +19,7 @@ class Song {
   }
 
   getSong(id) {
+    console.log('service:', id);
     return this.song.get(`/${id}`)
       .then(({ data }) => data);
   }
