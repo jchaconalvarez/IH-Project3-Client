@@ -20,7 +20,7 @@ const NavbarContainer = styled.div`
   display: grid;
   grid-column: 1 / -1;
   grid-row: 1;
-  grid-template-columns: repeat(3, 6rem);
+  grid-template-columns: repeat(4, 6rem);
   justify-items: center;
   justify-content: end;
   padding: 1rem;
@@ -38,8 +38,9 @@ class NavBar extends Component {
     return (
       <NavbarContainer>
         {/* <p>{this.props.user}</p> */}
-        <NavbarItem to="/play">Play</NavbarItem>
+        <NavbarItem to="/song">Song</NavbarItem>
         <NavbarItem to="/profile">Profile</NavbarItem>
+        <NavbarItem to="/dash">Dash</NavbarItem>
         <NavBarBtn type="button" onClick={this.handleLogOut}>Log out</NavBarBtn>
       </NavbarContainer>
     );
