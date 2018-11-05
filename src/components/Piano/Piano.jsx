@@ -21,7 +21,6 @@ class Piano extends Component {
   state = {
     songId: null,
     songName: null,
-    songBPM: 60,
     midiInstrument: null,
     recStartTimeStamp: 0,
     recStopTimeStamp: 0,
@@ -29,7 +28,13 @@ class Piano extends Component {
     activeNotes: [],
     noteHistory: [],
     isRecording: false,
+    isPlaying: true,
     isEditing: false,
+    playback: {
+      interval: null,
+      timeStamp: 0,
+      noteIndex: 0,
+    },
   }
 
   // Is called on component mount. Fetches song using id in URL if it already
@@ -41,7 +46,6 @@ class Piano extends Component {
       song.getSong(songId)
         .then((response) => {
           const { songName, noteHistory } = response;
-          // const songTimeStamp = noteHistory[0].timeStampOn - 10;
           this.setState({ songId, songName, noteHistory });
         });
     }
@@ -68,10 +72,10 @@ class Piano extends Component {
     const {
       recStartTimeStamp,
       recStopTimeStamp,
-      offset,
       activeNotes,
       noteHistory,
       isRecording,
+      playback
     } = this.state;
 
     // Create oscillator and gain nodes for synth.
@@ -114,7 +118,7 @@ class Piano extends Component {
 
     // Push notes to activeNotes and update state.
     activeNotes.push(noteObject);
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       recStartTimestamp: prevState.recStartTimestamp - localOffset,
       offset: goalTs,
       activeNotes,
@@ -127,7 +131,6 @@ class Piano extends Component {
   noteOff = (midiData) => {
     const {
       recStartTimeStamp,
-      recStopTimeStamp,
       offset,
       activeNotes,
       noteHistory,
@@ -154,7 +157,7 @@ class Piano extends Component {
     activeNotes[indexOfNoteToKill].oscillator.disconnect();
     activeNotes.splice(indexOfNoteToKill, 1);
 
-    this.setState({ recStartTimeStart: recStartTimeStamp - offset, activeNotes, noteHistory });
+    this.setState({ activeNotes, noteHistory });
   };
 
   // Calls noteOn() or noteOff methods according to MIDI status value.
@@ -264,14 +267,13 @@ class Piano extends Component {
   // Plays back song (noteHistory array).
   playSong = () => {
     const {
-      songTimeStamp,
-      editTimeStamp,
       noteHistory,
       isEditing,
+      playback,
     } = this.state;
 
-    let playbackTimeStamp = 0;
-    let noteIndex = 0;
+    let localTimeStamp = playback.timeStamp;
+    let { noteIndex } = playback;
 
     // Delays execution of next line for the duration of a note.
     // @param {number} miliseconds - Time to wait in miliseconds.
@@ -290,34 +292,70 @@ class Piano extends Component {
       this.noteOff(midiData);
     };
 
-    // Starts playback interval and checks notes in noteHistory one by one
-    // for a matching (<=) start time. Kills interval when it reaches the end of
-    // the noteHistory array.
-    const playbackInterval = setInterval(() => {
-      console.log(playbackTimeStamp);
-      if (noteHistory[noteIndex].timeStampOn <= playbackTimeStamp) {
+    const playbackSong = () => {
+      if (noteHistory[noteIndex].timeStampOn <= localTimeStamp) {
         playNote(noteHistory[noteIndex]);
         noteIndex++;
       }
       if (noteIndex === noteHistory.length) {
-        clearInterval(playbackInterval);
+        clearInterval(playback.interval);
+        this.setState({
+          playback: {
+            ...playback,
+            interval: 0,
+            timeStamp: 0,
+            noteIndex: 0,
+          },
+        });
+      } else {
+        localTimeStamp += 10;
+        this.setState({
+          playback: {
+            ...playback,
+            timeStamp: localTimeStamp,
+            noteIndex,
+          },
+        });
       }
-      playbackTimeStamp += +10;
-    }, 10);
+    };
+
+    playbackSong();
+  }
+
+  startPlayback = () => {
+    const { playback } = this.state;
+    if (!playback.interval) {
+      const playbackInterval = setInterval(this.playSong, 10);
+      this.setState({
+        playback: {
+          ...playback,
+          interval: playbackInterval,
+        },
+      });
+    } else {
+      clearInterval(playback.interval);
+      this.setState({
+        playback: {
+          ...playback,
+          interval: null,
+        },
+      });
+    }
   }
 
   render() {
-    const { activeNotes, isRecording, midiInstrument } = this.state;
+    const { activeNotes, isRecording, isPlaying, midiInstrument } = this.state;
     return (
       <React.Fragment>
         <Controls
           activeNotes={activeNotes}
           isRecording={isRecording}
-          onRecording={this.handleRecording}
+          isPlaying={isPlaying}
           midiInstrument={midiInstrument}
+          onRecording={this.handleRecording}
           clearHistory={this.clearHistory}
+          playSong={this.startPlayback}
         >
-          <button type="button" onClick={this.playSong}>Play</button>
           <PianoForm changeName={this.changeName} />
           {/* <button type="button" onClick={this.clearHistory}>Clear</button> */}
         </Controls>

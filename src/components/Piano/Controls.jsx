@@ -22,12 +22,21 @@ const RecBtn = styled.button`
 `;
 
 export default function Controls(props) {
+  const {
+    onRecording,
+    isRecording,
+    isPlaying,
+    midiInstrument,
+    playSong,
+    clearHistory
+  } = props;
   return (
     <ControlWrapper>
-      <RecBtn onClick={() => { props.onRecording(); }} isRecording={props.isRecording} />
-      <span> { props.midiInstrument }</span>
+      <RecBtn onClick={onRecording} isRecording={isRecording} />
+      <span> { midiInstrument }</span>
       { props.children }
-      <button type="button" onClick={() => { props.clearHistory(); }}>Clear</button>
+      <button type="button" onClick={playSong}>{isPlaying ? 'Play' : 'Pause'}</button>
+      <button type="button" onClick={clearHistory}>Clear</button>
       <span> ¯\_(ツ)_/¯  </span>
     </ControlWrapper>
   );

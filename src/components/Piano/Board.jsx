@@ -27,8 +27,8 @@ const checkIfActive = (activeNotes, noteNumber) => {
 };
 
 const handleClick = (noteNumber) => {
-  console.log( noteNumber )
-}
+  console.log(noteNumber);
+};
 
 const Board = (props) => {
   const { activeNotes } = props;
