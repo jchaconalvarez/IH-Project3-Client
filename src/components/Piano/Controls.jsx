@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import PianoForm from './PianoForm';
+import Metronome from './Metronome';
 
 const ControlWrapper = styled.div`
   grid-column: 2;
   grid-row: 2;
-  background-color: #F9D423;
+  background-color: #1B998B;
   padding: 1rem;
   margin: 2rem 2rem 0 0;
   border-radius: .5rem .5rem 0 0;
@@ -38,6 +39,7 @@ export default function Controls(props) {
       <button type="button" onClick={playSong}>{isPlaying ? 'Play' : 'Pause'}</button>
       <button type="button" onClick={clearHistory}>Clear</button>
       <span> ¯\_(ツ)_/¯  </span>
+      <Metronome></Metronome>
     </ControlWrapper>
   );
 }
