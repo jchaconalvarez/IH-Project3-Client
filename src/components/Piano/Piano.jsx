@@ -5,6 +5,7 @@ import Controls from './Controls';
 import Board from './Board';
 import PianoForm from './PianoForm';
 import Display from './Display';
+import BtnControl from './BtnControl';
 
 const PianoWrapper = styled.div`
   display: grid;
@@ -183,7 +184,6 @@ class Piano extends Component {
         break;
     }
 
-    const { midiInstrument } = this.state;
     this.setState({
       midiInstrument: `${midiManufacturer} ${midiModel}`,
     });
@@ -306,6 +306,13 @@ class Piano extends Component {
     }, 10);
   }
 
+  // addKeytoActiveNotes = (props) => {
+  //   const { activeNotes } = this.state;
+  //   console.log(props)
+  //   activeNotes.push(props);
+  //   this.setState({activeNotes})
+  // }
+
   render() {
     const { activeNotes, isRecording, midiInstrument } = this.state;
     return (
@@ -316,13 +323,17 @@ class Piano extends Component {
           onRecording={this.handleRecording}
           midiInstrument={midiInstrument}
           clearHistory={this.clearHistory}
+          // addKeytoActiveNotes={this.addKeytoActiveNotes}
         >
           <button type="button" onClick={this.playSong}>Play</button>
           <PianoForm changeName={this.changeName} />
           {/* <button type="button" onClick={this.clearHistory}>Clear</button> */}
         </Controls>
         <PianoWrapper>
-          <Board activeNotes={activeNotes} />
+          <Board 
+            activeNotes={activeNotes}
+            addKeytoActiveNotes={this.addKeytoActiveNotes}
+            />
         </PianoWrapper>
         <Display activeNotes={activeNotes}>
           { this.showNotes() }

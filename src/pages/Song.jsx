@@ -11,8 +11,10 @@ const Container = styled.div`
   grid-template-columns: 1fr 10fr;
   grid-template-rows: auto 1fr 6fr;
   /* background: linear-gradient(#F9D423,#EF4957); */
-  background-color: #353535;
-}
+  /* background-color: #353535; */
+  background: #4c4c4c;
+  background-image: linear-gradient(#353535 12px, transparent 12px), linear-gradient(90deg, #353535 12px, transparent 12px);
+  background-size: 20px 20px;
 `;
 
 class Play extends Component {

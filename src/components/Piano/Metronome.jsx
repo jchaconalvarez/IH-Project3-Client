@@ -2,19 +2,23 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import metronomeSound from './audio/Metronome.wav';
 import metronomeSoundUp from './audio/MetronomeUp.wav';
-
+import BtnControl from './BtnControl';
 
 const MetronomeWrapper = styled.div`
 `;
 
 const Slider = styled.input`
-`;
+  outline: none;
+  opacity: 0.8;
+  cursor: pointer;
 
-const Btn = styled.button`
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 const Tempo = styled.input`
-  width: 2rem;
+  width: 1rem;
 `;
 
 const LightMarker = styled.div`
@@ -103,12 +107,12 @@ export default class Metronome extends Component {
           onChange={this.handleBPMInput}
           />
         <div>{bpm} BPM</div>
-        { counter === 1 ? <LightMarker active /> : <LightMarker /> }
         <Tempo 
           value={tempo}
           onChange={this.handleTempoInput}
-        />
-        <Btn onClick={this.handleTick}>{canTicking ? 'On' : 'Off'}</Btn>
+          />
+        <button onClick={this.handleTick}>{canTicking ? 'Off' : 'On'}</button>
+        { counter === 1 ? <LightMarker active /> : <LightMarker /> }
       </MetronomeWrapper>
     )
   }
