@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const CanvasWrapper = styled.div`
   display: grid;
-  background-color: #4C4C4C;
+  background-color: #6B6A6A;
   grid-column: 2;
   grid-row: 3;
   margin: 0 2rem 2rem 0;
@@ -18,10 +18,21 @@ const CanvasWrapper = styled.div`
 `;
 
 const NotesContainer = styled.p`
-  grid-row: 1;
-  font-size: 0.6rem;
+  font-size: 1rem;
+  color: white;
   /* line-height: 1.56rem;
   margin: 0.09rem; */
+`;
+
+const Li = styled.li`
+  margin: 0;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  background: tomato;
+  width: 5px;
+  height: 5px;
+  list-style: none;
+  float: left;
 `;
 
 const Display = (props) => {
@@ -29,6 +40,15 @@ const Display = (props) => {
     <CanvasWrapper>
       <NotesContainer>
         { props.children }
+        {
+          props.activeNotes.map(() => {
+            return (
+              <ul>
+                <Li></Li>
+              </ul>
+            )
+          })
+        }
       </NotesContainer>
     </CanvasWrapper>
   );

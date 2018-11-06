@@ -10,8 +10,9 @@ import {
 } from './AuthCard';
 
 const Background = styled.div`
-  background: linear-gradient(to right, #EF4957 0%, #f9d423 100%);
-  clip-path: polygon(30% 0, 100% 70%, 100% 100%, 70% 100%, 0 30%, 0 0);
+  /* background: linear-gradient(to right, #EF4957 0%, #f9d423 100%);
+  clip-path: polygon(30% 0, 100% 70%, 100% 100%, 70% 100%, 0 30%, 0 0); */
+  background: linear-gradient(to right, #353535 0%, #4c4c4c 100%);
   width: 100%;
   height: 100%;
   position: absolute;
