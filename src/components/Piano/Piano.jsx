@@ -75,7 +75,6 @@ class Piano extends Component {
       activeNotes,
       noteHistory,
       isRecording,
-      playback
     } = this.state;
 
     // Create oscillator and gain nodes for synth.
@@ -142,9 +141,7 @@ class Piano extends Component {
       return noteObject.note.data[1] === midiData[1];
     });
 
-    // Stops/disconnects oscillator and removes note from activeNotes array.
-    // const date = new Date();
-    // const noteTimeStamp = date.getTime() - recStartTimeStamp;
+    // Updates timeStampOff depending on if editing or not.
     let noteTimeStamp = new Date().getTime();
     if (isEditing) {
       noteTimeStamp -= offset;
@@ -152,6 +149,8 @@ class Piano extends Component {
       noteTimeStamp -= recStartTimeStamp;
     }
 
+    // Sets note timeStampOff, stops oscillator, and removes note from
+    // activeNote array.
     activeNotes[indexOfNoteToKill].note.timeStampOff = noteTimeStamp;
     activeNotes[indexOfNoteToKill].oscillator.stop();
     activeNotes[indexOfNoteToKill].oscillator.disconnect();
@@ -292,6 +291,8 @@ class Piano extends Component {
       this.noteOff(midiData);
     };
 
+    // Calls playNote on appropriate notes
+    // Clears playback interval once end of noteHistory array is reached.
     const playbackSong = () => {
       if (noteHistory[noteIndex].timeStampOn <= localTimeStamp) {
         playNote(noteHistory[noteIndex]);
@@ -322,6 +323,8 @@ class Piano extends Component {
     playbackSong();
   }
 
+  // Starts/stops interval that calls playSong() to start/stop
+  // playback of song.
   startPlayback = () => {
     const { playback } = this.state;
     if (!playback.interval) {
@@ -344,7 +347,12 @@ class Piano extends Component {
   }
 
   render() {
-    const { activeNotes, isRecording, isPlaying, midiInstrument } = this.state;
+    const {
+      activeNotes,
+      isRecording,
+      isPlaying,
+      midiInstrument,
+    } = this.state;
     return (
       <React.Fragment>
         <Controls
