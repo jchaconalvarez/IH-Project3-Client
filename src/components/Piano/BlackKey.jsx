@@ -9,8 +9,8 @@ const BlackKey = styled.div`
   width: 2.65rem; /*42,5px*/
   height: 0.93rem; /*15px*/
   box-shadow:
-  0 0 0 0.06rem inset #353535, 
-  -0.2rem 0 0 0 #353535; 
+  0 0 0 0.06rem inset #353535,
+  -0.2rem 0 0 0 #353535;
   /* justify-self: end; */
 
   &:active {
