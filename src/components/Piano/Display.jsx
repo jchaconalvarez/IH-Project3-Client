@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const CanvasWrapper = styled.div`
@@ -17,41 +17,35 @@ const CanvasWrapper = styled.div`
     1.095rem 0.93rem 0.63rem 0.93rem 1.095rem 1.57rem;
 `;
 
-const NotesContainer = styled.p`
+const NotesContainer = styled.a`
   font-size: 1rem;
   color: white;
   /* line-height: 1.56rem;
   margin: 0.09rem; */
 `;
 
-const Li = styled.li`
-  margin: 0;
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
-  background: tomato;
-  width: 5px;
-  height: 5px;
-  list-style: none;
-  float: left;
-`;
+export default class Display extends Component {
+  componentDidMount() {
+    this.createChild();
+  }
 
-const Display = (props) => {
-  return (
-    <CanvasWrapper>
-      <NotesContainer>
-        { props.children }
-        {
-          props.activeNotes.map(() => {
-            return (
-              <ul>
-                <Li></Li>
-              </ul>
-            )
-          })
-        }
-      </NotesContainer>
-    </CanvasWrapper>
-  );
+  createChild = () => {
+    console.log(this.refs.father)
+    const child = document.createElement('div');
+    child.style.background = 'tomato';
+    child.style.width = '1rem';
+    child.style.height = '1rem';
+    this.refs.father.appendChild(child);
+  }
+
+  render() {
+    return (
+      <CanvasWrapper>
+        <NotesContainer>
+          <div ref='father' />
+        </NotesContainer>
+      </CanvasWrapper>
+    )
+  }
 }
 
-export default Display;
