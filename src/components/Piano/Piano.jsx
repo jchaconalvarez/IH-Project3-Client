@@ -4,7 +4,7 @@ import song from '../../services/song-service';
 import Controls from './Controls';
 import Board from './Board';
 import PianoForm from './PianoForm';
-import Display from './Display';
+import Display from './display/Display';
 import BtnControl from './BtnControl';
 
 const PianoWrapper = styled.div`
