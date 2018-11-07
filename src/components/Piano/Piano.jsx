@@ -356,6 +356,7 @@ class Piano extends Component {
   render() {
     const {
       activeNotes,
+      noteHistory,
       isRecording,
       isPlaying,
       midiInstrument,
@@ -376,13 +377,13 @@ class Piano extends Component {
           {/* <button type="button" onClick={this.clearHistory}>Clear</button> */}
         </Controls>
         <PianoWrapper>
-          <Board 
+          <Board
             activeNotes={activeNotes}
             addKeytoActiveNotes={this.addKeytoActiveNotes}
             />
         </PianoWrapper>
-        <Display activeNotes={activeNotes}>
-          { this.showNotes() }
+        <Display noteHistory={noteHistory}>
+          {/* { this.showNotes() } */}
         </Display>
       </React.Fragment>
     );
