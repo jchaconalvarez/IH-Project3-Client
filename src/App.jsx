@@ -11,7 +11,6 @@ import Song from './pages/Song';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import globalStyledComponents from '../src/global-styled-components';
-// import Midi from './services/midi-service';
 
 class App extends Component {
   componentDidMount() {

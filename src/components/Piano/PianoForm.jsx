@@ -7,6 +7,17 @@ import {
 } from 'formik';
 import styled from 'styled-components';
 
+const NameForm = styled(Form)`
+  grid-area: name;
+  width: 100%;
+`;
+const FieldForm = styled(Field)`
+  width: 70%;
+`;
+const Btn = styled(Form)`
+
+`;
+
 const PianoForm = (props) => {
   const { initialValues, changeName } = props;
   return (
@@ -19,10 +30,10 @@ const PianoForm = (props) => {
         }}
         render={() => {
           return (
-            <Form>
-              <Field type="text" name="songName" placeholder="Song name" />
+            <NameForm>
+              <FieldForm type="text" name="songName" placeholder="Song name" />
               <button type="button">Change</button>
-            </Form>
+            </NameForm>
           );
         }}
       />

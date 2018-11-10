@@ -8,7 +8,7 @@ const WhiteKeysGroup = styled.div`
   display: grid;
   grid-column: 1;
   grid-row: 3;
-  grid-template-rows: repeat(17, 1.56rem);
+  grid-template-rows: repeat(17, 1.55rem);
 `;
 
 const BlackKeysGroup = styled.div`
@@ -16,13 +16,20 @@ const BlackKeysGroup = styled.div`
   display: grid;
   grid-column: 1;
   grid-row: 3;
-  margin-top: calc(1.56rem - (0.93rem/2));
-  grid-template-rows: 1.56rem 3.12rem 1.56rem 1.56rem 3.12rem 1.56rem 3.12rem 1.56rem 1.56rem 3.12rem 1.56rem 1.56rem;
-`;
-
-const Box = styled.a`
-  grid-column: 2;
-  background-color: mediumseagreen;
+  margin-top: 2.48rem; /* 1.56 (w) + 0.93(b)
+  /* margin-top: calc((1.56rem + 1.56rem) - (0.93rem/2)); */
+  grid-template-rows: 
+    1.859999rem 2.79rem 
+    1.705rem 1.705rem 2.79rem
+    1.859999rem 2.79rem
+    1.705rem 1.705rem 2.79rem
+    1.859999rem;
+  /* grid-template-rows: 
+    1.56rem 3.12rem 
+    1.56rem 1.56rem 3.12rem 
+    1.56rem 3.12rem 
+    1.56rem 1.56rem 3.12rem 
+    1.56rem 1.56rem; */
 `;
 
 const checkIfActive = (activeNotes, noteNumber) => {
@@ -31,27 +38,11 @@ const checkIfActive = (activeNotes, noteNumber) => {
   });
 };
 
-// const handleClick = (noteNumber) => {
-//   const AudioContext = window.AudioContext || window.webkitAudioContext;
-//   const context = new AudioContext();
-//   const noteHz = 440 * (2 ** ((noteNumber - 69) / 12));;
-//   const oscillatorNode = context.createOscillator();
-//   const gainNode = context.createGain();
-//   gainNode.connect(context.destination);
-//   oscillatorNode.type = 'square';
-//   oscillatorNode.frequency.value = noteHz;
-//   oscillatorNode.connect(gainNode);
-//   oscillatorNode.start()
-// }
-
 const Board = (props) => {
   const { activeNotes } = props;
   const whiteKeys = [36, 38, 40, 41, 43, 45, 47, 48, 50, 52, 53, 55, 57, 59, 60, 62, 64, 65];
+  // const blackKeys = [37, 39, 42, 44, 46, 49, 51, 54, 56, 58, 61, 63].reverse();
   const blackKeys = [37, 39, 42, 44, 46, 49, 51, 54, 56, 58, 61, 63];
-  
-  // const handleClick = (noteNumber) => {
-  //   props.addKeytoActiveNotes(noteNumber)
-  // }
 
   return (
     <React.Fragment>
@@ -61,8 +52,13 @@ const Board = (props) => {
             return (
               checkIfActive(activeNotes, noteNumber)
                 ? <WhiteKey active key={noteNumber} />
-                : <WhiteKey key={noteNumber} />
-                // : <WhiteKey key={noteNumber} onClick={() => handleClick(noteNumber)} />
+                : (
+                  <WhiteKey
+                    key={noteNumber} 
+                    onMouseDown={() => props.onMouseDown(noteNumber)} 
+                    onMouseUp={() => props.onMouseUp(noteNumber)} 
+                  />
+                )
             );
           })
         }
@@ -73,7 +69,14 @@ const Board = (props) => {
             return (
               checkIfActive(activeNotes, noteNumber)
                 ? <BlackKey active key={noteNumber} />
-                : <BlackKey key={noteNumber} />
+                // : <BlackKey key={noteNumber} />
+                : (
+                  <BlackKey
+                    key={noteNumber}
+                    onMouseDown={() => props.onMouseDown(noteNumber)}
+                    onMouseUp={() => props.onMouseUp(noteNumber)}
+                  />
+                )
             );
           })
         }

@@ -2,96 +2,141 @@ import React from 'react';
 import styled from 'styled-components';
 import PianoForm from './PianoForm';
 import Metronome from './Metronome';
-import BtnControl from './BtnControl';
+import Chronometer from './Chronometer';
 
 const ControlWrapper = styled.div`
+  font-family: 'Raleway', sans-serif;
   grid-column: 2;
   grid-row: 2;
-  background-color: #1B998B;
+  /* background-color: #0F8FAB; */
+  background-color: #4C4C4C;
   padding: 1rem;
   margin: 2rem 2rem 0 0;
   border-radius: .5rem .5rem 0 0;
-  /* display: grid;
-  grid-template-columns: repeat( auto-fit, minmax(5rem, 1fr) );
-  column-gap: 0.5rem; */
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  grid-gap: 0.5rem;
+  display: grid;
+  grid-template-areas:
+    '. name name name midi midi midi midi metronome chrono chrono chrono .'
+    '. device device device device device device device metronome rec play clear.';
+    /* '. name name name midi midi midi midi metronome chrono chrono rec play clear .'
+    '. device device device device device device device metronome audio audio audio audio audio .'; */
+  justify-items: center;
+  align-items: center;
 `;
 
 const RecBtn = styled.button`
+  grid-area: rec;
   width: 25px;
   height: 25px;
   border: none;
   border-radius: 50%;
-  background: tomato;
-  box-shadow: ${props => props.isRecording ? '0 0 5px #FFF, 0 0 10px #FFF, 0 0 25px red, 0 0 30px red' : '0 5px #EF4957'};
+  background: #DBA112;
+  box-shadow: ${props => props.isRecording ? '0 0 5px #FFF, 0 0 10px #FFF, 0 0 25px #C46B00, 0 0 30px #C46B00' : '0 5px #C46B00'};
   transform: translateY(${props => props.isRecording ? '5px' : '0'});
 `;
 
-const InstrumentWrapper = styled.div`
-  width: 20%;
-  height: 20px;
+const ControlBtn = styled.button`
+  grid-area: clear;
+  cursor: pointer;
+  width: 60px;
+  height: 30px;
   text-align: center;
-  font-size: 0.8rem;
   text-shadow: 0 1px #353535;
   color:#F8F8F8;
   border: 1px solid #6B6A6A;
   border-radius: 3px;
   background: linear-gradient(#6B6A6A,#4C4C4C);
+
+  &:active {
+    color: #D3D3D3;
+    background:#4C4C4C;
+    box-shadow: inset 0 0 5px 2px rgba(53,53,53,.5);
+  }
+`;
+
+const InstrumentWrapper = styled.div`
+  grid-area: device;
+  width: 100%;
+  height: 0.9rem;
+  font-size: 0.5rem;
+  text-align: center;
+  /* font-size: 0.8rem;
+  text-shadow: 0 1px #353535;
+  color:#F8F8F8;
+  border: 1px solid #6B6A6A;
+  border-radius: 3px;
+  background: linear-gradient(#6B6A6A,#4C4C4C); */
+  background: #353535;
+  overflow: hidden;
+  border-width: 3px;
+  border-style: solid;
+  border-image: linear-gradient(#6B6A6A 20%, #4C4C4C 80%) 1 100%;
+  padding: 0.3rem;
+  color: white;
+  font-size: 0.8rem;
+  text-shadow:
+    0 0 5px #0F8FAB,
+    0 0 10px #0F8FAB,
+    0 0 15px #0F8FAB,
+    0 0 20px #0F8FAB,
+    0 0 60px #0F8FAB,
+    0 0 70px white,
+    0 0 80px white,
+    0 0 100px white;
 `;
 
 const NoteWrapper = styled.div`
-  width: 80px;
-  height: 20px;
-  text-align: center;
+  grid-area: midi;
+  width: 100%;
+  height: 0.9rem;
   font-size: 0.5rem;
-  color: white;
+  /* color: white;
   border: 1px solid #6B6A6A;
   border-radius: 3px;
-  background: linear-gradient(#6B6A6A,#4C4C4C);
+  background: linear-gradient(#6B6A6A,#4C4C4C); */
+  overflow: hidden;
+  text-align: center;
+  background: #353535;
+  border-width: 3px;
+  border-style: solid;
+  border-image: linear-gradient(#6B6A6A 20%, #4C4C4C 80%) 1 100%;
+  padding: 0.3rem;
+  color: white;
+  font-size: 0.8rem;
 `;
 
 const NoteNum = styled.a`
   font-size: 1rem;
   text-shadow:
-    0 0 5px tomato,
-    0 0 10px tomato,
-    0 0 15px tomato,
-    0 0 20px white,
-    0 0 60px white,
+    0 0 5px #DBA112,
+    0 0 10px #DBA112,
+    0 0 15px #DBA112,
+    0 0 20px #DBA112,
+    0 0 60px #DBA112,
     0 0 70px white,
     0 0 80px white,
     0 0 100px white;
 `;
 
 export default function Controls(props) {
-  const {
-    onRecording,
-    isRecording,
-    isPlaying,
-    midiInstrument,
-    playSong,
-    clearHistory
-  } = props;
+  const { isRecording, midiInstrument, activeNotes, children } = props;
   return (
     <ControlWrapper>
-      <RecBtn onClick={onRecording} isRecording={isRecording} />
+      <RecBtn isRecording={isRecording} onClick={() => { props.onRecording()}} />
       <InstrumentWrapper> { midiInstrument }</InstrumentWrapper>
-      { props.children }
-      <label>Midi</label>
       <NoteWrapper>
         {
-          props.activeNotes.map((noteNum, index) => {
+          activeNotes.map((noteNum, index) => {
             return (
               <NoteNum key={index}>{noteNum.note.data[1]}</NoteNum>
-            )
+            );
           })
         }
       </NoteWrapper>
-      <button type="button" onClick={playSong}>{isPlaying ? 'Play' : 'Pause'}</button>
-      <button type="button" onClick={clearHistory}>Clear</button>
-      <Metronome></Metronome>
+      { children }
+      <ControlBtn type="button" onClick={() => { props.clearHistory(); }}>Clear</ControlBtn>
+      <Metronome />
+      <Chronometer />
     </ControlWrapper>
   );
 }
