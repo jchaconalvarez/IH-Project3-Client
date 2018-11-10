@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 const NoteBox = styled.div`
   width: 1rem;
-  color: mediumaquamarine;
+  height: 1rem;
+  background: red;
 `;
 
 export default NoteBox;

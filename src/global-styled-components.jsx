@@ -1,13 +1,16 @@
 import { injectGlobal } from 'styled-components';
 
 const globalStyledComponents = injectGlobal`
+  @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,,700,800,900');
+
   html {
     font-size: 16px;
   }
   body {
     margin: 0;
     padding: 0;
-    /* height: 100vh; */
+    height: 100vh;
+    font-family: 'Nunito', sans-serif;
   }
   a {
     color: inherit;
@@ -16,6 +19,9 @@ const globalStyledComponents = injectGlobal`
   }
   button {
     outline: 0;
+  }
+  #root {
+    height: inherit;
   }
 `;
 

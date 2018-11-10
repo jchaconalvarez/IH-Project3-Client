@@ -6,6 +6,18 @@ const UiReducers = (state = {}, action) => {
         showLogin: !state.showLogin,
       };
     }
+    case 'SWITCH_TO_LOG_IN': {
+      return {
+        ...state,
+        showLogin: true,
+      };
+    }
+    case 'SWITCH_TO_SIGN_UP': {
+      return {
+        ...state,
+        showLogin: false,
+      };
+    }
     default: {
       return state;
     }

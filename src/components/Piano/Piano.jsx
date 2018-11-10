@@ -3,17 +3,22 @@ import styled from 'styled-components';
 import song from '../../services/song-service';
 import Controls from './Controls';
 import Board from './Board';
-import PianoForm from './PianoForm';
 import Display from './display/Display';
-import BtnControl from './BtnControl';
+
+const Container = styled.div`
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr 10fr;
+`;
 
 const PianoWrapper = styled.div`
   display: grid;
   grid-column: 1;
   grid-row: 3;
-  place-items: start end;
+  place-items: start start;
   align-self: start;
-  margin: 0 0 2rem 2rem;
+  justify-self: end;
+  margin: 0 0 2rem rem;
 `;
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -215,11 +220,16 @@ class Piano extends Component {
     const { songId, songName, noteHistory, isRecording } = this.state;
     const recStartTimeStamp = new Date().getTime();
     if (!isRecording) {
-      if (!songId) {
-        song.newSong({ songName, noteHistory })
-          .then((newSong) => {
-            this.setState({ songId: newSong._id, recStartTimeStamp, isRecording: true });
-          });
+      // if (!songId) {
+      //   song.newSong({ songName, noteHistory })
+      //     .then((newSong) => {
+      //       this.setState({ songId: newSong._id, recStartTimeStamp, isRecording: true });
+      //     });
+      // } else {
+      //   this.setState({ recStartTimeStamp, isRecording: true, isEditing: true });
+      // }
+      if (noteHistory.length === 0) {
+        this.setState({ recStartTimeStamp, isRecording: true });
       } else {
         this.setState({ recStartTimeStamp, isRecording: true, isEditing: true });
       }
@@ -346,13 +356,6 @@ class Piano extends Component {
     }
   }
 
-  // addKeytoActiveNotes = (props) => {
-  //   const { activeNotes } = this.state;
-  //   console.log(props)
-  //   activeNotes.push(props);
-  //   this.setState({activeNotes})
-  // }
-
   render() {
     const {
       activeNotes,
@@ -371,16 +374,13 @@ class Piano extends Component {
           onRecording={this.handleRecording}
           clearHistory={this.clearHistory}
           playSong={this.startPlayback}
-          // addKeytoActiveNotes={this.addKeytoActiveNotes}
-        >
-          <PianoForm changeName={this.changeName} />
-          {/* <button type="button" onClick={this.clearHistory}>Clear</button> */}
-        </Controls>
+          changeName={this.changeName}
+        />
         <PianoWrapper>
           <Board
             activeNotes={activeNotes}
             addKeytoActiveNotes={this.addKeytoActiveNotes}
-            />
+          />
         </PianoWrapper>
         <Display noteHistory={noteHistory}>
           {/* { this.showNotes() } */}

@@ -72,13 +72,14 @@ export default function Controls(props) {
     isPlaying,
     midiInstrument,
     playSong,
-    clearHistory
+    clearHistory,
+    changeName,
   } = props;
   return (
     <ControlWrapper>
       <RecBtn onClick={onRecording} isRecording={isRecording} />
-      <InstrumentWrapper> { midiInstrument }</InstrumentWrapper>
-      { props.children }
+      <InstrumentWrapper>{midiInstrument}</InstrumentWrapper>
+      <PianoForm changeName={changeName} />
       <label>Midi</label>
       <NoteWrapper>
         {

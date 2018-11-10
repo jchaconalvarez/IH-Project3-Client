@@ -15,13 +15,14 @@ const PianoForm = (props) => {
         itinialValues={initialValues}
         onSubmit={(values) => {
           const { songName } = values;
+          console.log('submit');
           changeName(songName);
         }}
         render={() => {
           return (
             <Form>
               <Field type="text" name="songName" placeholder="Song name" />
-              <button type="button">Change</button>
+              <button type="submit">Change</button>
             </Form>
           );
         }}

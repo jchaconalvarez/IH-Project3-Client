@@ -2,20 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CardButton = styled.button`
-  font-family: 'Raleway', sans-serif;
-  font-weight: bold;
-  width: 100px;
-  margin-top: 30%;
-  padding: 10px 0;
-  border: 0;
+  width: 100%;
+  padding: 1rem 0;
+  margin-top: 5rem;
+  border-radius: 5px;
+  background: #0F8FAB;
+  font-size: 1.75rem;
+  font-weight: 700;
   color: white;
-  border-radius: 35px;
-  background: #F9D423;
-  animation: mymove 15s infinite;
+  /* animation: mymove 15s infinite;
   }
     @keyframes mymove {
         50% { background-color: #EF4957; }
-  }
+  } */
 
   &:focus{
     transform: translateY(2px);

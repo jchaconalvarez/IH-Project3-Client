@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { signUp, logIn } from '../actions/auth';
 import AuthForm from './AuthForm';
 
-class AuthHandler extends Component {
+const StyleWrapper = styled.div`
+  margin: 25% 0 25% 0;
+  width: 100%;
+  height: 35rem;
+`;
 
+class AuthHandler extends Component {
   sendData = ({ email, password }) => {
     const { showLogin, signUp, logIn } = this.props;
     console.log('sendData:', email, password);
@@ -12,12 +18,16 @@ class AuthHandler extends Component {
   }
 
   render() {
+    const { showLogin } = this.props;
     const initialValues = {
       email: '',
       password: '',
+      confirmPassword: '',
     };
     return (
-      <AuthForm initialValues={initialValues} sendData={this.sendData} />
+      <StyleWrapper>
+        <AuthForm initialValues={initialValues} sendData={this.sendData} showLogin={showLogin} />
+      </StyleWrapper>
     );
   }
 }
