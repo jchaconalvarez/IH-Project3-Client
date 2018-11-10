@@ -5,9 +5,38 @@ import metronomeSoundUp from './audio/MetronomeUp.wav';
 import BtnControl from './BtnControl';
 
 const MetronomeWrapper = styled.div`
+  grid-area: metronome;
+  margin-left: 0.6rem;
+  width: 6rem;
+  height: 6rem;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(#4C4C4C, #6B6A6A,#4C4C4C);
+  font-family: 'Raleway', sans-serif;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  grid-template-areas: 
+    '. bpm bpm bpm .'
+    '. bpm bpm bpm .'
+    '. bpm bpm bpm .'
+    '. slider slider tempo .'
+    '. btn btn btn .';
+`;
+
+const Bpm = styled.div`
+  grid-area: bpm;
+  color: #ddd;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-bottom: 2px solid ${props => props.active ? '#0F8FAB' : '#DBA112'};
+  cursor: default;
 `;
 
 const Slider = styled.input`
+  grid-area: slider;
+  margin-left: 0.5rem;
+  width: 80%;
   outline: none;
   opacity: 0.8;
   cursor: pointer;
@@ -18,15 +47,51 @@ const Slider = styled.input`
 `;
 
 const Tempo = styled.input`
-  width: 1rem;
-`;
-
-const LightMarker = styled.div`
-  background: ${props => props.active ? 'red' : 'yellow'};
+  grid-area: tempo;
+  margin-right: 0.5rem;
+  border-radius: 50%;
   width: 1rem;
   height: 1rem;
-  border-radius: 50%;
+  color: #ddd;
+  background: linear-gradient(to right, rgba(255,0,0,0), #888787);
+  /* background: #888787; */
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
 `;
+
+const Btn = styled.button`
+  grid-area: btn;
+  color: white;
+  /* background-color: #353535; */
+  border: none;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  cursor: pointer;
+   /* background: repeating-linear-gradient(
+    45deg,
+    rgba(184, 184, 184, .4)10px,
+    #4C4C4C 10px, 
+    rgba(184, 184, 184, .4)30px,
+    #4C4C4C 50px
+  ); */
+  text-shadow: 0 1px #353535;
+  color:#F8F8F8;
+  background: linear-gradient(#4C4C4C, #353535);
+
+  &:active{
+    background-color: #6B6A6A;
+  }
+`;
+
+// const LightMarker = styled.div`
+//   background: ${props => props.active ? 'red' : 'yellow'};
+//   width: 1rem;
+//   height: 1rem;
+//   border-radius: 50%;
+// `;
 
 export default class Metronome extends Component {
   state = {
@@ -40,11 +105,11 @@ export default class Metronome extends Component {
     const { counter, tempo, canTicking } = this.state;
     console.log(counter)
     // mark tempo with different sound when counter is 0
-    if (canTicking){
+    if (canTicking) {
       if (counter % tempo === 0) {
-        new Audio(metronomeSoundUp).play()
+        new Audio(metronomeSoundUp).play();
       } else {
-        new Audio(metronomeSound).play()
+        new Audio(metronomeSound).play();
       }
       this.setState(({
         counter: (counter + 1) % tempo,
@@ -59,12 +124,12 @@ export default class Metronome extends Component {
     if (canTicking) {
       clearInterval(this.timeInterval);
       this.timeInterval = setInterval(
-        this.makeTick, (60 / bpm) * 1000
+        this.makeTick, (60 / bpm) * 1000,
       );
       this.setState({
         counter: 0,
         bpm,
-      })
+      });
     } else {
       this.setState({ bpm });
     }
@@ -77,16 +142,16 @@ export default class Metronome extends Component {
   handleTick = () => {
     const { canTicking, bpm } = this.state;
     if (canTicking) {
-      console.log('stop:', canTicking)
+      console.log('stop:', canTicking);
       clearInterval(this.timeInterval);
-      this.setState({ 
+      this.setState({
         canTicking: false,
         counter: 0,
-      })
+      });
     } else {
-      console.log('start:', canTicking)
+      console.log('start:', canTicking);
       this.timeInterval = setInterval(
-        this.makeTick, (60 / bpm) * 1000
+        this.makeTick, (60 / bpm) * 1000,
       );
       this.setState({
         canTicking: true,
@@ -99,22 +164,21 @@ export default class Metronome extends Component {
     const { bpm, canTicking, tempo, counter } = this.state;
     return (
       <MetronomeWrapper>
-        <Slider 
-          type="range" 
-          min="30" 
-          max="300" 
-          value={bpm} 
+        {counter === 1 ? <Bpm active>{bpm}</Bpm> : <Bpm>{bpm}</Bpm>}
+        <Slider
+          type="range"
+          min="30"
+          max="300"
+          value={bpm}
           onChange={this.handleBPMInput}
-          />
-        <div>{bpm} BPM</div>
-        <Tempo 
+        />
+        <Tempo
           value={tempo}
           onChange={this.handleTempoInput}
-          />
-        <button onClick={this.handleTick}>{canTicking ? 'Off' : 'On'}</button>
-        { counter === 1 ? <LightMarker active /> : <LightMarker /> }
+        />
+        <Btn type="button" onClick={this.handleTick}>{canTicking ? 'OFF' : 'ON'}</Btn>
+        {/* { counter === 1 ? <LightMarker active /> : <LightMarker /> } */}
       </MetronomeWrapper>
-    )
+    );
   }
 }
-

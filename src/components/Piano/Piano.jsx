@@ -5,15 +5,48 @@ import Controls from './Controls';
 import Board from './Board';
 import PianoForm from './PianoForm';
 import Display from './Display';
-import BtnControl from './BtnControl';
 
 const PianoWrapper = styled.div`
   display: grid;
   grid-column: 1;
   grid-row: 3;
-  place-items: start end;
+  place-items: start start;
   align-self: start;
   margin: 0 0 2rem 2rem;
+`;
+
+const ControlBtn = styled.button`
+  grid-area: play;
+  cursor: pointer;
+  width: 60px;
+  height: 30px;
+  text-align: center;
+  text-shadow: 0 1px #353535;
+  color:#F8F8F8;
+  border: 1px solid #6B6A6A;
+  border-radius: 3px;
+  background: linear-gradient(#6B6A6A,#4C4C4C);
+
+  &:active {
+    color: #D3D3D3;
+    background:#4C4C4C;
+    box-shadow: inset 0 0 5px 2px rgba(53,53,53,.5);
+  }
+`;
+
+const PlaySymbol = styled.div`
+  display: inline-block;
+  border-style: solid;
+  border-color: transparent transparent transparent white;
+  box-sizing: border-box;
+  border-width: 0.5rem 0 0.5rem 0.8rem;
+`;
+
+const PauseSymbol = styled.div`
+  display: block;
+  border-color: white;
+  border-style: double;
+  border-width: 0 0 0 0.5rem;
 `;
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -37,7 +70,7 @@ class Piano extends Component {
   // exists.
   // Calls listenForMIDIAccess() to set up MIDI event listening/capture.
   componentDidMount() {
-    const { params: songId } = this.props;
+    const { params: songId, note } = this.props;
     if (songId) {
       song.getSong(songId)
         .then((response) => {
@@ -115,7 +148,7 @@ class Piano extends Component {
 
     // Push notes to activeNotes and update state.
     activeNotes.push(noteObject);
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       recStartTimestamp: prevState.recStartTimestamp - localOffset,
       offset: goalTs,
       activeNotes,
@@ -136,9 +169,7 @@ class Piano extends Component {
     } = this.state;
 
     // Finds index of note to kill.
-    const indexOfNoteToKill = activeNotes.findIndex((noteObject) => {
-      return noteObject.note.data[1] === midiData[1];
-    });
+    const indexOfNoteToKill = activeNotes.findIndex((noteObject) => noteObject.note.data[1] === midiData[1]);
 
     // Stops/disconnects oscillator and removes note from activeNotes array.
     // const date = new Date();
@@ -210,7 +241,9 @@ class Piano extends Component {
   // Starts/stops recording of songs into noteHistory array.
   // Makes song-service API calls to create/update songs.
   handleRecording = () => {
-    const { songId, songName, noteHistory, isRecording } = this.state;
+    const {
+ songId, songName, noteHistory, isRecording 
+} = this.state;
     const recStartTimeStamp = new Date().getTime();
     if (!isRecording) {
       if (!songId) {
@@ -241,11 +274,9 @@ class Piano extends Component {
   showNotes = () => {
     const { noteHistory } = this.state;
     return (
-      noteHistory.map((input, index) => {
-        return (
+      noteHistory.map((input, index) => (
           <span key={index}>{this.translateMidiToNote(input.data[1])}</span>
-        );
-      })
+      ))
     );
   }
 
@@ -275,7 +306,7 @@ class Piano extends Component {
 
     // Delays execution of next line for the duration of a note.
     // @param {number} miliseconds - Time to wait in miliseconds.
-    const delay = (miliseconds) => new Promise(resolve => setTimeout(resolve, miliseconds));
+    const delay = miliseconds => new Promise(resolve => setTimeout(resolve, miliseconds));
 
     // Plays and kills notes at appropriate times.
     // @param {object} note - Note object from noteHistory array.
@@ -306,12 +337,17 @@ class Piano extends Component {
     }, 10);
   }
 
-  // addKeytoActiveNotes = (props) => {
-  //   const { activeNotes } = this.state;
-  //   console.log(props)
-  //   activeNotes.push(props);
-  //   this.setState({activeNotes})
-  // }
+  playUiKeys = (noteNumber) => {
+    console.log('down', noteNumber);
+    // const keyDataOn = [144, noteNumber, 100];
+    // this.noteOn(keyDataOn, keyDataOn[1], keyDataOn[2]);
+  }
+
+  stopUiKeys = (noteNumber) => {
+    console.log('up', noteNumber);
+    // const keyDataOff = [128, noteNumber, 100];
+    // this.noteOff(keyDataOff);
+  }
 
   render() {
     const { activeNotes, isRecording, midiInstrument } = this.state;
@@ -323,17 +359,19 @@ class Piano extends Component {
           onRecording={this.handleRecording}
           midiInstrument={midiInstrument}
           clearHistory={this.clearHistory}
-          // addKeytoActiveNotes={this.addKeytoActiveNotes}
         >
-          <button type="button" onClick={this.playSong}>Play</button>
+          <ControlBtn type="button" onClick={this.playSong}>
+            <PlaySymbol />
+          </ControlBtn>
           <PianoForm changeName={this.changeName} />
           {/* <button type="button" onClick={this.clearHistory}>Clear</button> */}
         </Controls>
         <PianoWrapper>
-          <Board 
+          <Board
             activeNotes={activeNotes}
-            addKeytoActiveNotes={this.addKeytoActiveNotes}
-            />
+            onMouseDown={this.playUiKeys}
+            onMouseUp={this.stopUiKeys}
+          />
         </PianoWrapper>
         <Display activeNotes={activeNotes}>
           { this.showNotes() }

@@ -17,7 +17,7 @@ const NavBarBtn = styled.div`
 
 const NavbarContainer = styled.div`
   /* background: rgba(0,0,0,.2); */
-  background: linear-gradient(135deg, transparent 50%,  #147267 50%);
+  background: linear-gradient(135deg, transparent 50%,  #0F8FAB 50%);
   display: grid;
   grid-column: 1 / -1;
   grid-row: 1;
