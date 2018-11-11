@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import metronomeSound from './audio/Metronome.wav';
-import metronomeSoundUp from './audio/MetronomeUp.wav';
-import BtnControl from './BtnControl';
+import metronomeSound from '../../assets/audio/Metronome.wav';
+import metronomeSoundUp from '../../assets/audio/MetronomeUp.wav';
 
 const MetronomeWrapper = styled.div`
   grid-area: metronome;
@@ -86,13 +85,6 @@ const Btn = styled.button`
   }
 `;
 
-// const LightMarker = styled.div`
-//   background: ${props => props.active ? 'red' : 'yellow'};
-//   width: 1rem;
-//   height: 1rem;
-//   border-radius: 50%;
-// `;
-
 export default class Metronome extends Component {
   state = {
     canTicking: false,
@@ -103,8 +95,6 @@ export default class Metronome extends Component {
 
   makeTick = () => {
     const { counter, tempo, canTicking } = this.state;
-    console.log(counter)
-    // mark tempo with different sound when counter is 0
     if (canTicking) {
       if (counter % tempo === 0) {
         new Audio(metronomeSoundUp).play();
@@ -142,14 +132,12 @@ export default class Metronome extends Component {
   handleTick = () => {
     const { canTicking, bpm } = this.state;
     if (canTicking) {
-      console.log('stop:', canTicking);
       clearInterval(this.timeInterval);
       this.setState({
         canTicking: false,
         counter: 0,
       });
     } else {
-      console.log('start:', canTicking);
       this.timeInterval = setInterval(
         this.makeTick, (60 / bpm) * 1000,
       );
@@ -161,7 +149,12 @@ export default class Metronome extends Component {
   }
 
   render() {
-    const { bpm, canTicking, tempo, counter } = this.state;
+    const {
+      bpm,
+      canTicking,
+      tempo,
+      counter,
+    } = this.state;
     return (
       <MetronomeWrapper>
         {counter === 1 ? <Bpm active>{bpm}</Bpm> : <Bpm>{bpm}</Bpm>}
@@ -177,7 +170,6 @@ export default class Metronome extends Component {
           onChange={this.handleTempoInput}
         />
         <Btn type="button" onClick={this.handleTick}>{canTicking ? 'OFF' : 'ON'}</Btn>
-        {/* { counter === 1 ? <LightMarker active /> : <LightMarker /> } */}
       </MetronomeWrapper>
     );
   }

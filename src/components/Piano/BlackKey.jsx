@@ -2,14 +2,13 @@ import styled from 'styled-components';
 
 const BlackKey = styled.div`
   border-left: 5px solid #0F8FAB;
-  background: ${props => props.active ? 'tomato' : '#4C4C4C'};
+  background: ${props => props.active ? '#DBA112' : '#4C4C4C'};
   border-radius: 0 .2rem .2rem 0;
-  width: 3rem; /*42,5px*/
-  height: 1.75rem; /*15px*/
+  width: 3rem;
+  height: 1.75rem;
   box-shadow:
   0 0 0 0.06rem inset #353535,
   0.2rem 0 0 0 #353535;
-  /* justify-self: end; */
 
   &:active {
     box-shadow:

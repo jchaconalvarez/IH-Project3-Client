@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const ChronoContainer = styled.div`
-  /* margin: auto; */
   grid-area: chrono;
   width: 100%;
 `;
@@ -30,7 +29,6 @@ const Clock = styled.div`
     0 0 80px white,
     0 0 100px white;
 `;
-
 
 export default class Chronometer extends Component {
   state = {
@@ -65,7 +63,6 @@ export default class Chronometer extends Component {
   }
 
   formatValues(value) {
-    // return this.value < 10 ? 0 + value : value;
     return value < 10 ? '0' + value : value;
   }
 

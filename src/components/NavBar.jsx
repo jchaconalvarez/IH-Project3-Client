@@ -16,7 +16,6 @@ const NavBarBtn = styled.div`
 `;
 
 const NavbarContainer = styled.div`
-  /* background: rgba(0,0,0,.2); */
   background: linear-gradient(135deg, transparent 50%,  #0F8FAB 50%);
   display: grid;
   grid-column: 1 / -1;
@@ -38,7 +37,6 @@ class NavBar extends Component {
   render() {
     return (
       <NavbarContainer>
-        {/* <p>{this.props.user}</p> */}
         <NavbarItem to="/song">Song</NavbarItem>
         <NavbarItem to="/profile">Profile</NavbarItem>
         <NavbarItem to="/dash">Dash</NavbarItem>

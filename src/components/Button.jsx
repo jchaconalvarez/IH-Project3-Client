@@ -10,11 +10,6 @@ const CardButton = styled.button`
   font-size: 1.75rem;
   font-weight: 700;
   color: white;
-  /* animation: mymove 15s infinite;
-  }
-    @keyframes mymove {
-        50% { background-color: #EF4957; }
-  } */
 
   &:focus{
     transform: translateY(2px);
