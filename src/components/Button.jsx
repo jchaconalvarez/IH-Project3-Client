@@ -7,7 +7,7 @@ const CardButton = styled.button`
   margin-top: 5rem;
   border-radius: 5px;
   background: #0F8FAB;
-  font-size: 1.75rem;
+  font-size:1.75rem;
   font-weight: 700;
   color: white;
 

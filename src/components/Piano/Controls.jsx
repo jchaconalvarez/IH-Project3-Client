@@ -36,7 +36,7 @@ const RecBtn = styled.button`
 `;
 
 const ControlBtn = styled.button`
-  grid-area: ${props => props.area === 'clear'? 'clear' : 'play'};
+  grid-area: ${props => props.area === 'clear' ? 'clear' : 'play'};
   cursor: pointer;
   width: 60px;
   height: 30px;

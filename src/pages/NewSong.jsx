@@ -10,9 +10,15 @@ import song from '../services/song-service';
 import NavBar from '../components/NavBar';
 
 const Wrapper = styled.div`
-  height: 100%;
   display: grid;
   place-items: center center;
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  top: 25%;
+  bottom: 25%;
+  margin: auto;
+  background: red;
 `;
 
 const NewSong = (props) => {
