@@ -51,42 +51,13 @@ const BlackKeysGroup = styled.div`
     3.75rem
     3.75rem
     5.75rem;
-
-  /* grid-template-rows:
-    repeat(
-      2,
-      3.75rem
-      4rem
-      5.8rem
-      3.75rem
-      3.75rem
-      5.75rem
-    ); */
-`;
-
-const Box = styled.a`
-  grid-column: 2;
-  background-color: mediumseagreen;
 `;
 
 const checkIfActive = (activeNotes, noteNumber) => {
   return activeNotes.some((key) => {
-    return key.note.data[1] === noteNumber
+    return key.note.data[1] === noteNumber;
   });
 };
-
-// const handleClick = (noteNumber) => {
-//   const AudioContext = window.AudioContext || window.webkitAudioContext;
-//   const context = new AudioContext();
-//   const noteHz = 440 * (2 ** ((noteNumber - 69) / 12));;
-//   const oscillatorNode = context.createOscillator();
-//   const gainNode = context.createGain();
-//   gainNode.connect(context.destination);
-//   oscillatorNode.type = 'square';
-//   oscillatorNode.frequency.value = noteHz;
-//   oscillatorNode.connect(gainNode);
-//   oscillatorNode.start()
-// }
 
 const Board = (props) => {
   const { activeNotes } = props;
@@ -107,7 +78,14 @@ const Board = (props) => {
               checkIfActive(activeNotes, noteNumber)
                 ? <WhiteKey active key={noteNumber} note={noteNumber} />
                 : <WhiteKey key={noteNumber} note={noteNumber} />
-                // : <WhiteKey key={noteNumber} onClick={() => handleClick(noteNumber)} />
+                // ? <WhiteKey active key={noteNumber} />
+                // : (
+                //   <WhiteKey
+                //     key={noteNumber}
+                //     onMouseDown={() => props.onMouseDown(noteNumber)}
+                //     onMouseUp={() => props.onMouseUp(noteNumber)}
+                //   />
+                // )
             );
           })
         }
@@ -118,7 +96,13 @@ const Board = (props) => {
             return (
               checkIfActive(activeNotes, noteNumber)
                 ? <BlackKey active key={noteNumber} />
-                : <BlackKey key={noteNumber} />
+                : (
+                  <BlackKey
+                    key={noteNumber}
+                    // onMouseDown={() => props.onMouseDown(noteNumber)}
+                    // onMouseUp={() => props.onMouseUp(noteNumber)}
+                  />
+                )
             );
           })
         }

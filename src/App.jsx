@@ -11,8 +11,7 @@ import NewSong from './pages/NewSong';
 import Song from './pages/Song';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
-import globalStyledComponents from '../src/global-styled-components';
-// import Midi from './services/midi-service';
+import globalStyledComponent from './global-styled-components';
 
 class App extends Component {
   componentDidMount() {
@@ -26,7 +25,7 @@ class App extends Component {
         <AnonRoute exact path="/" component={Home} />
         <ProtectedRoute path="/dash" component={Dash} />
         <ProtectedRoute path="/newsong" component={NewSong} />
-        <ProtectedRoute exact path="/song" component={Song} />
+        {/* <ProtectedRoute exact path="/song" component={Song} /> */}
         <ProtectedRoute path="/song/:id" component={Song} />
         <ProtectedRoute path="/profile" component={Profile} />
         <Route component={NotFound} />

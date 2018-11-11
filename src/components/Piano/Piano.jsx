@@ -34,7 +34,6 @@ class Piano extends Component {
     activeNotes: [],
     noteHistory: [],
     isRecording: false,
-    isPlaying: true,
     isEditing: false,
     playback: {
       interval: null,
@@ -47,7 +46,7 @@ class Piano extends Component {
   // exists.
   // Calls listenForMIDIAccess() to set up MIDI event listening/capture.
   componentDidMount() {
-    const { params: songId } = this.props;
+    const { params: songId, note } = this.props;
     if (songId) {
       song.getSong(songId)
         .then((response) => {
@@ -58,6 +57,10 @@ class Piano extends Component {
     this.listenForMIDIAccess();
   }
 
+  componentWillUnmount() {
+    const { playback } = this.state;
+    clearInterval(playback.interval);
+  }
   // MIDI LOGIC
 
   // Converts MIDI note value to Hz for oscillator.
@@ -143,9 +146,7 @@ class Piano extends Component {
     } = this.state;
 
     // Finds index of note to kill.
-    const indexOfNoteToKill = activeNotes.findIndex((noteObject) => {
-      return noteObject.note.data[1] === midiData[1];
-    });
+    const indexOfNoteToKill = activeNotes.findIndex((noteObject) => noteObject.note.data[1] === midiData[1]);
 
     // Updates timeStampOff depending on if editing or not.
     let noteTimeStamp = new Date().getTime();
@@ -217,17 +218,18 @@ class Piano extends Component {
   // Starts/stops recording of songs into noteHistory array.
   // Makes song-service API calls to create/update songs.
   handleRecording = () => {
-    const { songId, songName, noteHistory, isRecording } = this.state;
+    const {
+      songId,
+      songName,
+      noteHistory,
+      isRecording,
+      isEditing,
+    } = this.state;
+
     const recStartTimeStamp = new Date().getTime();
+
     if (!isRecording) {
-      // if (!songId) {
-      //   song.newSong({ songName, noteHistory })
-      //     .then((newSong) => {
-      //       this.setState({ songId: newSong._id, recStartTimeStamp, isRecording: true });
-      //     });
-      // } else {
-      //   this.setState({ recStartTimeStamp, isRecording: true, isEditing: true });
-      // }
+      console.log('START: ', recStartTimeStamp, 'isEditing: ', isEditing);
       if (noteHistory.length === 0) {
         this.setState({ recStartTimeStamp, isRecording: true });
       } else {
@@ -235,8 +237,10 @@ class Piano extends Component {
       }
     } else {
       const recStopTimeStamp = new Date().getTime();
+      console.log('STOP: ', recStopTimeStamp);
+      console.log('TS: ', recStopTimeStamp - recStartTimeStamp);
       song.editSong(songId, { songName, noteHistory });
-      this.setState({ recStopTimeStamp, isRecording: false, isEditing: true });
+      this.setState({ recStopTimeStamp, isRecording: false });
     }
   }
 
@@ -253,11 +257,9 @@ class Piano extends Component {
   showNotes = () => {
     const { noteHistory } = this.state;
     return (
-      noteHistory.map((input, index) => {
-        return (
+      noteHistory.map((input, index) => (
           <span key={index}>{this.translateMidiToNote(input.data[1])}</span>
-        );
-      })
+      ))
     );
   }
 
@@ -286,7 +288,7 @@ class Piano extends Component {
 
     // Delays execution of next line for the duration of a note.
     // @param {number} miliseconds - Time to wait in miliseconds.
-    const delay = (miliseconds) => new Promise(resolve => setTimeout(resolve, miliseconds));
+    const delay = miliseconds => new Promise(resolve => setTimeout(resolve, miliseconds));
 
     // Plays and kills notes at appropriate times.
     // @param {object} note - Note object from noteHistory array.
@@ -337,6 +339,7 @@ class Piano extends Component {
   // playback of song.
   startPlayback = () => {
     const { playback } = this.state;
+    console.log('startPlayback');
     if (!playback.interval) {
       const playbackInterval = setInterval(this.playSong, 10);
       this.setState({
@@ -361,7 +364,6 @@ class Piano extends Component {
       activeNotes,
       noteHistory,
       isRecording,
-      isPlaying,
       midiInstrument,
     } = this.state;
     return (
@@ -369,17 +371,19 @@ class Piano extends Component {
         <Controls
           activeNotes={activeNotes}
           isRecording={isRecording}
-          isPlaying={isPlaying}
           midiInstrument={midiInstrument}
           onRecording={this.handleRecording}
           clearHistory={this.clearHistory}
-          playSong={this.startPlayback}
+          startPlayback={this.startPlayback}
           changeName={this.changeName}
-        />
+        >
+          {/* <PianoForm changeName={this.changeName} /> */}
+        </Controls>
         <PianoWrapper>
           <Board
             activeNotes={activeNotes}
-            addKeytoActiveNotes={this.addKeytoActiveNotes}
+            // onMouseDown={this.playUiKeys}
+            // onMouseUp={this.stopUiKeys}
           />
         </PianoWrapper>
         <Display noteHistory={noteHistory}>

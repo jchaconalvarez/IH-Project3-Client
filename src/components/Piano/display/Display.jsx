@@ -27,7 +27,7 @@ const CanvasWrapper = styled.div`
 
 export default class Display extends Component {
   state = {
-    numberOfKeys: 30,
+    numberOfKeys: 24,
   };
 
   createRows = () => {

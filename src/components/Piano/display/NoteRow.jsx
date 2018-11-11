@@ -6,7 +6,6 @@ const NoteRowStyle = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: repeat(auto-fill, 2rem);
-  /* height: 1.75rem; */
   height: ${props => props.type === 'black' ? '1.75rem' : '2.03rem'};
   background: ${props => props.type === 'black' ? '#33333333' : 'none'};
 `;
@@ -41,7 +40,7 @@ class NoteRow extends Component {
           noteHistory
           && noteHistory.map((box) => {
             if (box.data[1] === note) {
-              return <NoteBox />;
+              return <NoteBox key={box.timeStampOn} />;
             }
           })
         }

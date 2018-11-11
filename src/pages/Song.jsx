@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import song from '../services/song-service';
 import NavBar from '../components/NavBar';
 import Piano from '../components/Piano/Piano';
 
@@ -10,22 +9,10 @@ const Container = styled.div`
   height: 100vh;
   grid-template-columns: 1fr 10fr;
   grid-template-rows: auto 1fr 6fr;
-  /* background: linear-gradient(#F9D423,#EF4957); */
-  /* background-color: #353535; */
-  background: #4c4c4c;
-  background-image: linear-gradient(#353535 12px, transparent 12px), linear-gradient(90deg, #353535 12px, transparent 12px);
-  background-size: 20px 20px;
+  background: #DADADA;
 `;
 
-class Play extends Component {
-
-  // componentDidMount() {
-  //   const { id } = this.props.match.params;
-  //   if (id) {
-  //     song.getSong(id).
-  //   }
-  // }
-
+class Song extends Component {
   render() {
     return (
       <Container>
@@ -36,4 +23,4 @@ class Play extends Component {
   }
 }
 
-export default Play;
+export default Song;
