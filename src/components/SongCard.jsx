@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-// import Button from './Button';
 
 const SongCardWrapper = styled.div`
   display: grid;
@@ -31,14 +30,14 @@ const Button = styled.button`
   font-weight: 700;
   color: #0F8FAB;
 
-  &:focus{
+  &:focus {
     transform: translateY(2px);
     animation: none !important;
   }
 `;
 
 const SongCard = (props) => {
-  const { index, songItem, handleDelete } = props;
+  const { songItem, handleDelete } = props;
   const { _id, songName, created_at } = songItem;
   const dayAndMonth = created_at.slice(5, 10);
   const year = created_at.slice(0, 4);

@@ -140,7 +140,6 @@ class Profile extends Component {
               })
             }
           </SongsWrapper>
-
         </Wrapper>
       </Container>
     );

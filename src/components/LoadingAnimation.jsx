@@ -1,57 +1,53 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const LoadingBars = styled.div`
-  width: 100px;
-`;
-
 const Bar = styled.span`
   position: absolute;
-  width: 15px;
+  width: 2rem;
   height: 0;
-  left: 0;
-  bottom: calc(100vh/2);
-  background: linear-gradient(#F9D423,#EF4957);
-  animation: growForMe 1s linear infinite;
+  left: 32%;
+  bottom: 30%;
+  background: linear-gradient(#F0F0F0, #0F8FAB);
+  animation: grow 1.5s linear infinite;
 
   &:nth-child(2) {
-    left: 20px;
+    left: 36%;
     animation-delay: .2s;
   }
   &:nth-child(3) {
-    left: 40px;
+    left: 40%;
     animation-delay: .3s;
   }
   &:nth-child(4) {
-    left: 60px;
+    left: 44%;
     animation-delay: .1s;
   }
   &:nth-child(5) {
-    left: 80px;
+    left: 48%;
     animation-delay: .4s;
   }
     &:nth-child(6) {
-    left: 100px;
+    left: 52%;
     animation-delay: .2s;
   }
   &:nth-child(7) {
-    left: 120px;
+    left: 56%;
     animation-delay: .3s;
   }
   &:nth-child(8) {
-    left: 140px;
+    left: 60%;
     animation-delay: .1s;
   }
 
-  @keyframes growForMe {
-    from { height: 60px }
+  @keyframes grow {
+    from { height: 40% }
   }
 `;
 
 
 const Loading = () => {
   return (
-    <LoadingBars>
+    <React.Fragment>
       <Bar />
       <Bar />
       <Bar />
@@ -60,7 +56,7 @@ const Loading = () => {
       <Bar />
       <Bar />
       <Bar />
-    </LoadingBars>
+    </React.Fragment>
   );
 };
 

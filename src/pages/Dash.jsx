@@ -6,7 +6,7 @@ import NavBar from '../components/NavBar';
 import SongCard from '../components/SongCard';
 
 const Container = styled.div`
-  background: linear-gradient(to top, #313131 0%, #383838 100%);;
+  background: linear-gradient(to top, #313131 0%, #383838 100%);
   height: 100vh;
 `;
 
