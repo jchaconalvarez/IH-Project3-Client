@@ -8,8 +8,8 @@ class Profile {
     });
   }
 
-  getProfile(id) {
-    return this.profile.get(`/${id}`)
+  getProfile() {
+    return this.profile.get('/getprofile')
       .then(({ data }) => data);
   }
 
@@ -21,4 +21,4 @@ class Profile {
 
 const profile = new Profile();
 
-export default Profile;
+export default profile;

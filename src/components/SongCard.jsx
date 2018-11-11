@@ -49,8 +49,7 @@ const SongCard = (props) => {
         <Link to={`/song/${_id}`}>
           <h3>{songName}</h3>
         </Link>
-        <p>Created at: {`${dayAndMonth}-${year}`}</p>
-        {/* <Button card type="button" onClick={() => { handleDelete(_id); }}>Delete</Button> */}
+        <p>{`${dayAndMonth}-${year}`}</p>
         <Button card type="button" onClick={() => { handleDelete(_id); }}>Delete</Button>
       </SongCardInfo>
     </SongCardWrapper>

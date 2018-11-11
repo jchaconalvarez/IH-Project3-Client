@@ -70,7 +70,7 @@ class Dash extends Component {
               return (
                 <React.Fragment>
                   <SongCard
-                    key={songItem.created_at}
+                    key={songItem._id}
                     index={index}
                     songItem={songItem}
                     handleDelete={this.handleDelete}
