@@ -27,10 +27,6 @@ const BlackKeysGroup = styled.div`
   grid-column: 1;
   grid-row: 3;
   align-items: flex-end;
-<<<<<<< HEAD
-
-=======
->>>>>>> 2b33acf1547b07853bbba252d4eade377e493d63
   grid-template-rows:
     3.75rem
     4rem

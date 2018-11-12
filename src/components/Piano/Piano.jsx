@@ -382,10 +382,7 @@ class Piano extends Component {
           startPlayback={this.startPlayback}
           clearHistory={this.clearHistory}
           changeName={this.changeName}
-<<<<<<< HEAD
           translateMidiToNote={this.translateMidiToNote}
-=======
->>>>>>> 2b33acf1547b07853bbba252d4eade377e493d63
         />
         <PianoWrapper>
           <Board activeNotes={activeNotes} />
