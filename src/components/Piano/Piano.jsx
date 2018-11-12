@@ -377,9 +377,7 @@ class Piano extends Component {
           startPlayback={this.startPlayback}
           changeName={this.changeName}
           translateMidiToNote={this.translateMidiToNote}
-        >
-          {/* <PianoForm changeName={this.changeName} /> */}
-        </Controls>
+        />
         <PianoWrapper>
           <Board
             activeNotes={activeNotes}
@@ -387,9 +385,7 @@ class Piano extends Component {
             // onMouseUp={this.stopUiKeys}
           />
         </PianoWrapper>
-        <Display noteHistory={noteHistory}>
-          {/* { this.showNotes() } */}
-        </Display>
+        <Display noteHistory={noteHistory} />
       </React.Fragment>
     );
   }

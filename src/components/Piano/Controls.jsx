@@ -59,6 +59,13 @@ const PlaySymbol = styled.div`
   border-width: 0.5rem 0 0.5rem 0.8rem;
 `;
 
+const PauseSymbol = styled.div`
+  height: 20px;
+  background: #FFF;
+  -webkit-clip-path: polygon(30% 0, 30% 100%, 40% 100%, 40% 0, 60% 0, 60% 100%, 30% 100%, 70% 100%, 70% 0);
+clip-path: polygon(30% 0, 30% 100%, 40% 100%, 40% 0, 60% 0, 60% 100%, 30% 100%, 70% 100%, 70% 0);
+`;
+
 const InstrumentWrapper = styled.div`
   grid-area: device;
   width: 32rem;
@@ -107,6 +114,7 @@ const NoteWrapper = styled.div`
 
 const Note = styled.a`
   font-size: 1rem;
+  margin-right: 0.2rem;
   text-shadow:
     0 0 5px #DBA112,
     0 0 10px #DBA112,
@@ -116,9 +124,6 @@ const Note = styled.a`
     0 0 70px white,
     0 0 80px white,
     0 0 100px white;
-  &::after {
-    content: '-'
-  }
 `;
 
 export default function Controls(props) {
@@ -130,6 +135,7 @@ export default function Controls(props) {
     startPlayback,
     clearHistory,
     translateMidiToNote,
+    noteHistory,
   } = props;
   return (
     <ControlWrapper>
@@ -153,10 +159,12 @@ export default function Controls(props) {
           })
         }
       </NoteWrapper>
-      <ControlBtn area="play" type="button" onClick={startPlayback}><PlaySymbol /></ControlBtn>
+      <ControlBtn area="play" type="button" onClick={startPlayback}>
+        {<PlaySymbol /> && <PauseSymbol />}
+      </ControlBtn>
       <ControlBtn area="clear" type="button" onClick={clearHistory}>Clear</ControlBtn>
       <Metronome />
-      <Chronometer />
+      <Chronometer isRecording={isRecording} />
     </ControlWrapper>
   );
 }

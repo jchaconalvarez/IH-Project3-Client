@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 const ChronoContainer = styled.div`
   grid-area: chrono;
-  width: 100%;
+  width: 18rem;
 `;
 
 const Clock = styled.div`
-  text-align: center;
-  width: 100%;
+  /* text-align: start; */
+  padding-left: 2rem;
   font-family: 'Orbitron', sans-serif;
   letter-spacing: 0.5rem;
   background: #353535;
@@ -16,6 +16,7 @@ const Clock = styled.div`
   border-style: solid;
   border-image: linear-gradient(#6B6A6A 20%, #4C4C4C 80%) 1 100%;
   padding: 0.3rem;
+  padding-left: 3rem;
   overflow: hidden;
   color: white;
   font-size: 0.8rem;
@@ -34,6 +35,10 @@ export default class Chronometer extends Component {
   state = {
     currentCount: 0,
     canStartCount: true,
+  }
+
+  componentDidMount() {
+    this.handleStop();
   }
 
   runTime() {
@@ -87,13 +92,14 @@ export default class Chronometer extends Component {
   render() {
     const { minutes, seconds, miliseconds } = this.transformTime();
     const { canStartCount } = this.state;
+    const { isRecording } = this.props;
     return (
       <ChronoContainer>
         <Clock>
           {minutes} : {seconds} : {miliseconds }
         </Clock>
-        {/* <button type="button" onClick={() => { this.handleStart(); }}>{canStartCount ? 'Start' : 'Pause'}</button>
-        <button type="button" onClick={() => { this.handleStop(); }}>Stop</button> */}
+        {isRecording && canStartCount ? this.handleStart() : ''}
+        {!isRecording && !canStartCount ? this.handleStart() : ''}
       </ChronoContainer>
     );
   }
