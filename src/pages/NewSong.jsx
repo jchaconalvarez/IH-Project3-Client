@@ -80,8 +80,8 @@ const NewSong = (props) => {
           render={() => {
             return (
               <Form>
-                <CardInput type="text" name="songName" placeholder="New Song Name" />
-                <Button type="submit">Create Song</Button>
+                <CardInput type="text" name="songName" placeholder="New song name" />
+                <Button type="submit">Create song</Button>
               </Form>
             );
           }}

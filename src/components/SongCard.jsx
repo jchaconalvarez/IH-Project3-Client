@@ -10,7 +10,7 @@ const SongCardWrapper = styled.div`
   width: 15rem;
   border-radius: 5px;
   place-self: stretch;
-  
+
   &:hover {
     transform: scale(1.3);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
