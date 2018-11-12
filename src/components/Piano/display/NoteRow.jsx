@@ -5,6 +5,7 @@ import NoteBox from './NoteBox';
 const NoteRowStyle = styled.div`
   display: grid;
   width: 100%;
+  align-items: center;
   grid-template-columns: repeat(auto-fill, 2rem);
   height: ${props => props.type === 'black' ? '1.75rem' : '2.03rem'};
   background: ${props => props.type === 'black' ? '#33333333' : 'none'};

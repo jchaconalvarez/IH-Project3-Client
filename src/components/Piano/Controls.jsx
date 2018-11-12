@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import PianoForm from './PianoForm';
 import Metronome from './Metronome';
 import Chronometer from './Chronometer';
 
@@ -13,14 +12,12 @@ const ControlWrapper = styled.div`
   padding: 1rem;
   margin: 2rem 2rem 0 0;
   border-radius: .5rem .5rem 0 0;
-  grid-gap: 0.5rem;
+  /* grid-gap: 0.5rem; */
   display: grid;
   grid-template-areas:
-    '. name name name midi midi midi midi metronome chrono chrono chrono .'
-    '. device device device device device device device metronome rec play clear.';
-    /* '. name name name midi midi midi midi metronome chrono chrono rec play clear .'
-    '. device device device device device device device metronome audio audio audio audio audio .'; */
-  justify-items: center;
+    '. device device metronome chrono chrono chrono .'
+    '. midi note metronome rec play clear .';
+  justify-items: stretch;
   align-items: center;
 `;
 
@@ -31,7 +28,7 @@ const RecBtn = styled.button`
   border: none;
   border-radius: 50%;
   background: #DBA112;
-  box-shadow: ${props => props.isRecording ? '0 0 5px #FFF, 0 0 10px #FFF, 0 0 25px #C46B00, 0 0 30px #C46B00' : '0 5px #C46B00'};
+  box-shadow: ${props => props.isRecording ? '0 0 5px #FFF, 0 0 10px #FFF, 0 0 25px #C46B0040, 0 0 30px #C46B0040' : '0 5px #C46B0040'};
   transform: translateY(${props => props.isRecording ? '5px' : '0'});
 `;
 
@@ -64,16 +61,10 @@ const PlaySymbol = styled.div`
 
 const InstrumentWrapper = styled.div`
   grid-area: device;
-  width: 100%;
+  width: 32rem;
   height: 0.9rem;
   font-size: 0.5rem;
   text-align: center;
-  /* font-size: 0.8rem;
-  text-shadow: 0 1px #353535;
-  color:#F8F8F8;
-  border: 1px solid #6B6A6A;
-  border-radius: 3px;
-  background: linear-gradient(#6B6A6A,#4C4C4C); */
   background: #353535;
   overflow: hidden;
   border-width: 3px;
@@ -91,17 +82,18 @@ const InstrumentWrapper = styled.div`
     0 0 70px white,
     0 0 80px white,
     0 0 100px white;
+
+  &::before {
+    content: 'Device: ';
+    text-shadow: none;
+  }
 `;
 
 const NoteWrapper = styled.div`
-  grid-area: midi;
-  width: 100%;
+  grid-area: ${props => props.area === 'note' ? 'note' : 'midi'};;
+  width: 12.5rem;
   height: 0.9rem;
   font-size: 0.5rem;
-  /* color: white;
-  border: 1px solid #6B6A6A;
-  border-radius: 3px;
-  background: linear-gradient(#6B6A6A,#4C4C4C); */
   overflow: hidden;
   text-align: center;
   background: #353535;
@@ -113,7 +105,7 @@ const NoteWrapper = styled.div`
   font-size: 0.8rem;
 `;
 
-const NoteNum = styled.a`
+const Note = styled.a`
   font-size: 1rem;
   text-shadow:
     0 0 5px #DBA112,
@@ -124,6 +116,9 @@ const NoteNum = styled.a`
     0 0 70px white,
     0 0 80px white,
     0 0 100px white;
+  &::after {
+    content: '-'
+  }
 `;
 
 export default function Controls(props) {
@@ -134,18 +129,26 @@ export default function Controls(props) {
     midiInstrument,
     startPlayback,
     clearHistory,
-    changeName,
+    translateMidiToNote,
   } = props;
   return (
     <ControlWrapper>
       <RecBtn onClick={onRecording} isRecording={isRecording} />
       <InstrumentWrapper>{midiInstrument}</InstrumentWrapper>
-      <PianoForm changeName={changeName} />
-      <NoteWrapper>
+      <NoteWrapper area="midi">
         {
           activeNotes.map((noteNum, index) => {
             return (
-              <NoteNum key={index}>{noteNum.note.data[1]}</NoteNum>
+              <Note key={index}>{noteNum.note.data[1]}</Note>
+            );
+          })
+        }
+      </NoteWrapper>
+      <NoteWrapper area="note">
+        {
+          activeNotes.map((noteNum, index) => {
+            return (
+              <Note key={index}>{translateMidiToNote(noteNum.note.data[1])} </Note>
             );
           })
         }

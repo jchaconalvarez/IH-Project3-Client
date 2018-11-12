@@ -5,7 +5,7 @@ import metronomeSoundUp from '../../assets/audio/MetronomeUp.wav';
 
 const MetronomeWrapper = styled.div`
   grid-area: metronome;
-  margin-left: 0.6rem;
+  /* margin-left: 0.2rem; */
   width: 6rem;
   height: 6rem;
   border: none;

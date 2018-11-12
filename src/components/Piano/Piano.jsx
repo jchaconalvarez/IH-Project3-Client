@@ -376,6 +376,7 @@ class Piano extends Component {
           clearHistory={this.clearHistory}
           startPlayback={this.startPlayback}
           changeName={this.changeName}
+          translateMidiToNote={this.translateMidiToNote}
         >
           {/* <PianoForm changeName={this.changeName} /> */}
         </Controls>

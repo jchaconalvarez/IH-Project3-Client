@@ -14,8 +14,8 @@ const WhiteKey = styled.div`
     ? '3.375': '3.25'
   };
   box-shadow:
-    0 0 0 0.06rem inset #D3D3D3,
-    0.25rem 0 0 0 #D3D3D3;
+    0 0 0 0.06rem inset #BABABA,
+    0.25rem 0 0 0 #BABABA;
 
   &:active {
     box-shadow:
