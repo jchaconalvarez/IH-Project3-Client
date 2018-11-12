@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { logOut } from '../actions/auth';
 
-const NavbarItem = styled(Link)`
+const NavbarItem = styled(NavLink)`
   color: #FFF;
   font-size: 1rem;
 `;

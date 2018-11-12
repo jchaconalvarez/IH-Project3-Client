@@ -31,7 +31,12 @@ class Dash extends Component {
   }
 
   componentDidMount() {
+    console.log('DASH DID MOUNT');
     this.getUserSongs();
+  }
+
+  componentWillUnmount() {
+    console.log('DASH WILL UNMOUNT');
   }
 
   getUserSongs = () => {
@@ -60,14 +65,12 @@ class Dash extends Component {
           {
             songList.map((songItem, index) => {
               return (
-                <React.Fragment>
-                  <SongCard
-                    key={songItem.created_at}
-                    index={index}
-                    songItem={songItem}
-                    handleDelete={this.handleDelete}
-                  />
-                </React.Fragment>
+                <SongCard
+                  key={songItem.created_at}
+                  index={index}
+                  songItem={songItem}
+                  handleDelete={this.handleDelete}
+                />
               );
             })
           }

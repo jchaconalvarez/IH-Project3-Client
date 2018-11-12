@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Link } from 'react-router-dom';
 
 const ProtectedRoute = (props) => {
   const { component: Comp, isLogged, ...rest } = props;
