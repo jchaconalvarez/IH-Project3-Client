@@ -31,7 +31,7 @@ const NewSongCard = styled.div`
   border-radius: 5px;
   height: 10rem;
   width: 15rem;
-  
+
   &:hover {
     transform: rotate(180deg)
   }

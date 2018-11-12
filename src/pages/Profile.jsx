@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import shortid from 'shortid';
 import song from '../services/song-service';
 import user from '../services/profile-service';
 import NavBar from '../components/NavBar';
@@ -126,16 +127,14 @@ class Profile extends Component {
             {
               songList.map((songItem) => {
                 return (
-                  <React.Fragment>
-                    <ItemCard>
-                      <Link to={`/song/${songItem._id}`}>
-                        <Item key={songItem._id}>
-                          <p>{songItem.songName}</p>
-                        </Item>
-                      </Link>
-                        <Button type="button" onClick={() => { this.handleDelete(songItem._id); }}>Delete</Button>
-                    </ItemCard>
-                  </React.Fragment>
+                  <ItemCard key={shortid.generate()}>
+                    <Link to={`/song/${songItem._id}`}>
+                      <Item key={songItem._id}>
+                        <p>{songItem.songName}</p>
+                      </Item>
+                    </Link>
+                      <Button type="button" onClick={() => { this.handleDelete(songItem._id); }}>Delete</Button>
+                  </ItemCard>
                 );
               })
             }
