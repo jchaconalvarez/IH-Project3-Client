@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import shortid from 'shortid';
 import WhiteKey from './WhiteKey';
 import BlackKey from './BlackKey';
 
@@ -28,15 +29,6 @@ const BlackKeysGroup = styled.div`
   grid-column: 1;
   grid-row: 3;
   align-items: flex-end;
-  /* margin-top: calc(1.56rem - (0.93rem/2)); */
-  /* grid-template-rows: 1.56rem 3.12rem 1.56rem 1.56rem 3.12rem 1.56rem 3.12rem 1.56rem 1.56rem 3.12rem 1.56rem 1.56rem; */
-  /* margin-top: 2.48rem; */
-/* grid-template-rows:
-  1.859999rem 2.79rem
-    1.705rem 1.705rem 2.79rem
-    1.859999rem 2.79rem
-    1.705rem 1.705rem 2.79rem
-    1.859999rem 2.79rem; */
 
   grid-template-rows:
     3.75rem
@@ -62,12 +54,6 @@ const checkIfActive = (activeNotes, noteNumber) => {
 const Board = (props) => {
   const { activeNotes } = props;
   const whiteKeys = [36, 38, 40, 41, 43, 45, 47, 48, 50, 52, 53, 55, 57, 59, 60, 62, 64, 65];
-  // const blackKeys = [37, 39, 42, 44, 46, 49, 51, 54, 56, 58, 61, 63];
-  // const handleClick = (noteNumber) => {
-  //   props.addKeytoActiveNotes(noteNumber)
-  // }
-
-  // const whiteKeys = [36, 38, 40, 41, 43, 45, 47, 48];
   const blackKeys = [37, 39, 42, 44, 46, 49, 51, 54, 56, 58];
   return (
     <React.Fragment>
@@ -75,17 +61,9 @@ const Board = (props) => {
         {
           whiteKeys.map((noteNumber) => {
             return (
-              checkIfActive(activeNotes, noteNumber)
-                ? <WhiteKey active key={noteNumber} note={noteNumber} />
-                : <WhiteKey key={noteNumber} note={noteNumber} />
-                // ? <WhiteKey active key={noteNumber} />
-                // : (
-                //   <WhiteKey
-                //     key={noteNumber}
-                //     onMouseDown={() => props.onMouseDown(noteNumber)}
-                //     onMouseUp={() => props.onMouseUp(noteNumber)}
-                //   />
-                // )
+              checkIfActive(noteNumber)
+                ? <WhiteKey active key={shortid.generate()} note={noteNumber} />
+                : <WhiteKey key={shortid.generate()} note={noteNumber} />
             );
           })
         }
@@ -95,14 +73,8 @@ const Board = (props) => {
           blackKeys.map((noteNumber) => {
             return (
               checkIfActive(activeNotes, noteNumber)
-                ? <BlackKey active key={noteNumber} />
-                : (
-                  <BlackKey
-                    key={noteNumber}
-                    // onMouseDown={() => props.onMouseDown(noteNumber)}
-                    // onMouseUp={() => props.onMouseUp(noteNumber)}
-                  />
-                )
+                ? <BlackKey active key={shortid.generate()} />
+                : <BlackKey key={shortid.generate()} />
             );
           })
         }

@@ -4,7 +4,6 @@ import DisplayWrapper from './DisplayWrapper';
 import NoteRow from './NoteRow';
 import NoteBox from './NoteBox';
 
-
 const CanvasWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;

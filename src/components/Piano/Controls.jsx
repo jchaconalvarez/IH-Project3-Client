@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import shortid from 'shortid';
 import Metronome from './Metronome';
 import Chronometer from './Chronometer';
 
@@ -28,7 +29,7 @@ const RecBtn = styled.button`
   border: none;
   border-radius: 50%;
   background: #DBA112;
-  box-shadow: ${props => props.isRecording ? '0 0 5px #FFF, 0 0 10px #FFF, 0 0 25px #C46B0040, 0 0 30px #C46B0040' : '0 5px #C46B0040'};
+  box-shadow: ${props => props.isRecording ? '0 0 5px #FFF, 0 0 10px #FFF, 0 0 25px #C46B00, 0 0 30px #C46B00' : '0 5px #C46B00'};
   transform: translateY(${props => props.isRecording ? '5px' : '0'});
 `;
 
@@ -63,7 +64,7 @@ const PauseSymbol = styled.div`
   height: 20px;
   background: #FFF;
   -webkit-clip-path: polygon(30% 0, 30% 100%, 40% 100%, 40% 0, 60% 0, 60% 100%, 30% 100%, 70% 100%, 70% 0);
-clip-path: polygon(30% 0, 30% 100%, 40% 100%, 40% 0, 60% 0, 60% 100%, 30% 100%, 70% 100%, 70% 0);
+  clip-path: polygon(30% 0, 30% 100%, 40% 100%, 40% 0, 60% 0, 60% 100%, 30% 100%, 70% 100%, 70% 0);
 `;
 
 const InstrumentWrapper = styled.div`
@@ -135,7 +136,6 @@ export default function Controls(props) {
     startPlayback,
     clearHistory,
     translateMidiToNote,
-    noteHistory,
   } = props;
   return (
     <ControlWrapper>
@@ -143,18 +143,20 @@ export default function Controls(props) {
       <InstrumentWrapper>{midiInstrument}</InstrumentWrapper>
       <NoteWrapper area="midi">
         {
-          activeNotes.map((noteNum, index) => {
+          activeNotes.map((noteNum) => {
             return (
-              <Note key={index}>{noteNum.note.data[1]}</Note>
+              <Note key={shortid.generate()}>{noteNum.note.data[1]}</Note>
             );
           })
         }
       </NoteWrapper>
       <NoteWrapper area="note">
         {
-          activeNotes.map((noteNum, index) => {
+          activeNotes.map((noteNum) => {
             return (
-              <Note key={index}>{translateMidiToNote(noteNum.note.data[1])} </Note>
+              <Note key={shortid.generate()}>
+                {translateMidiToNote(noteNum.note.data[1])}
+              </Note>
             );
           })
         }
