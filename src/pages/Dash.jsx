@@ -43,7 +43,12 @@ class Dash extends Component {
   }
 
   componentDidMount() {
+    console.log('DASH DID MOUNT');
     this.getUserSongs();
+  }
+
+  componentWillUnmount() {
+    console.log('DASH WILL UNMOUNT');
   }
 
   getUserSongs = () => {
@@ -73,7 +78,11 @@ class Dash extends Component {
             songList.map((songItem, index) => {
               return (
                 <SongCard
+<<<<<<< HEAD
                   key={songItem._id}
+=======
+                  key={songItem.created_at}
+>>>>>>> 2b33acf1547b07853bbba252d4eade377e493d63
                   index={index}
                   songItem={songItem}
                   handleDelete={this.handleDelete}

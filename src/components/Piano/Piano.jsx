@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import song from '../../services/song-service';
 import Controls from './Controls';
@@ -25,6 +26,7 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 const context = new AudioContext();
 class Piano extends Component {
   state = {
+    midiAccess: null,
     songId: null,
     songName: null,
     midiInstrument: null,
@@ -46,21 +48,21 @@ class Piano extends Component {
   // exists.
   // Calls listenForMIDIAccess() to set up MIDI event listening/capture.
   componentDidMount() {
-    const { params: songId, note } = this.props;
-    if (songId) {
-      song.getSong(songId)
-        .then((response) => {
-          const { songName, noteHistory } = response;
-          this.setState({ songId, songName, noteHistory });
-        });
-    }
+    console.log('PIANO WILL MOUNT');
     this.listenForMIDIAccess();
   }
 
+  // Is called on component unmount. Clears playback interval if not already clear.
   componentWillUnmount() {
-    const { playback } = this.state;
+    const { playback, midiAccess } = this.state;
     clearInterval(playback.interval);
+    console.log('PIANO WILL UNMOUNT');
+    midiAccess.inputs.forEach((message) => {
+      message.onmidimessage = null;
+    });
   }
+
+
   // MIDI LOGIC
 
   // Converts MIDI note value to Hz for oscillator.
@@ -77,6 +79,7 @@ class Piano extends Component {
   // @param {object} midiData - MIDI event object with all note information.
   // @param {number} midiNote - MIDI note value.
   // @param {number} midiVelocity - MIDI note velocity value to be used by gain node.
+  // @param {boolean} isEditing - false on first record, true from then on.
   noteOn = (midiData, midiNote, midiVelocity, isEditing) => {
     const {
       recStartTimeStamp,
@@ -85,6 +88,7 @@ class Piano extends Component {
       noteHistory,
       isRecording,
     } = this.state;
+    // const { context } = this.props;
 
     // Create oscillator and gain nodes for synth.
     const oscillatorNode = context.createOscillator();
@@ -94,8 +98,9 @@ class Piano extends Component {
     const noteHz = this.convertNoteDataToFrequency(midiNote);
 
     let noteTimeStamp = new Date().getTime();
-    const localOffset = recStartTimeStamp - recStopTimeStamp;
+    const localOffset = recStartTimeStamp - recStopTimeStamp; // SHOULDN'T THIS BE THE OTHER WAY AROUND?
     let goalTs = 0;
+
     if (isEditing) {
       goalTs = recStartTimeStamp - localOffset;
       noteTimeStamp -= goalTs;
@@ -126,6 +131,7 @@ class Piano extends Component {
 
     // Push notes to activeNotes and update state.
     activeNotes.push(noteObject);
+    // console.log(noteHistory);
     this.setState(prevState => ({
       recStartTimestamp: prevState.recStartTimestamp - localOffset,
       offset: goalTs,
@@ -171,6 +177,7 @@ class Piano extends Component {
   // @params {object} midiMessage - MIDI event object.
   getMidiInput = (midiMessage) => {
     const { isEditing } = this.state;
+    const { songId } = this.props;
     const {
       manufacturer: midiManufacturer,
       name: midiModel,
@@ -185,7 +192,7 @@ class Piano extends Component {
         this.noteOn(midiData, midiNote, midiVelocity, isEditing);
         break;
       case 128:
-        this.noteOff(midiData, midiNote, midiVelocity);
+        this.noteOff(midiData);
         break;
       default:
         console.log('Soy un default :D');
@@ -210,8 +217,11 @@ class Piano extends Component {
 
   // Listens for MIDI access (events).
   listenForMIDIAccess = () => {
-    navigator.requestMIDIAccess({ sysex: false })
-      .then(this.onMIDISuccess)
+    window.navigator.requestMIDIAccess({ sysex: false })
+      .then((midiAccess) => {
+        this.onMIDISuccess(midiAccess);
+        this.setState({ midiAccess });
+      })
       .catch(this.onMIDIFailure);
   }
 
@@ -223,22 +233,17 @@ class Piano extends Component {
       songName,
       noteHistory,
       isRecording,
-      isEditing,
     } = this.state;
 
     const recStartTimeStamp = new Date().getTime();
-
     if (!isRecording) {
-      console.log('START: ', recStartTimeStamp, 'isEditing: ', isEditing);
       if (noteHistory.length === 0) {
-        this.setState({ recStartTimeStamp, isRecording: true });
+        this.setState({ recStartTimeStamp, isRecording: true, isEditing: false });
       } else {
         this.setState({ recStartTimeStamp, isRecording: true, isEditing: true });
       }
     } else {
       const recStopTimeStamp = new Date().getTime();
-      console.log('STOP: ', recStopTimeStamp);
-      console.log('TS: ', recStopTimeStamp - recStartTimeStamp);
       song.editSong(songId, { songName, noteHistory });
       this.setState({ recStopTimeStamp, isRecording: false });
     }
@@ -284,6 +289,7 @@ class Piano extends Component {
     } = this.state;
 
     let localTimeStamp = playback.timeStamp;
+    console.log(localTimeStamp);
     let { noteIndex } = playback;
 
     // Delays execution of next line for the duration of a note.
@@ -315,13 +321,12 @@ class Piano extends Component {
         this.setState({
           playback: {
             ...playback,
-            interval: 0,
+            interval: null,
             timeStamp: 0,
             noteIndex: 0,
           },
         });
       } else {
-        localTimeStamp += 10;
         this.setState({
           playback: {
             ...playback,
@@ -332,6 +337,7 @@ class Piano extends Component {
       }
     };
 
+    localTimeStamp += 50;
     playbackSong();
   }
 
@@ -341,7 +347,7 @@ class Piano extends Component {
     const { playback } = this.state;
     console.log('startPlayback');
     if (!playback.interval) {
-      const playbackInterval = setInterval(this.playSong, 10);
+      const playbackInterval = setInterval(this.playSong, 50);
       this.setState({
         playback: {
           ...playback,
@@ -370,20 +376,19 @@ class Piano extends Component {
       <React.Fragment>
         <Controls
           activeNotes={activeNotes}
-          isRecording={isRecording}
           midiInstrument={midiInstrument}
+          isRecording={isRecording}
           onRecording={this.handleRecording}
-          clearHistory={this.clearHistory}
           startPlayback={this.startPlayback}
+          clearHistory={this.clearHistory}
           changeName={this.changeName}
+<<<<<<< HEAD
           translateMidiToNote={this.translateMidiToNote}
+=======
+>>>>>>> 2b33acf1547b07853bbba252d4eade377e493d63
         />
         <PianoWrapper>
-          <Board
-            activeNotes={activeNotes}
-            // onMouseDown={this.playUiKeys}
-            // onMouseUp={this.stopUiKeys}
-          />
+          <Board activeNotes={activeNotes} />
         </PianoWrapper>
         <Display noteHistory={noteHistory} />
       </React.Fragment>
