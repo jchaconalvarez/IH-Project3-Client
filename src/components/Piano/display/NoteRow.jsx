@@ -21,16 +21,16 @@ class NoteRow extends Component {
     return false;
   }
 
-  renderNoteBox = () => {
-    const { note, noteHistory } = this.props;
-    if (this.checkRow()) {
-      noteHistory.map((box) => {
-        if (box.data[1] === note) {
-          return <p>HOLA</p>;
-        }
-      });
-    }
-  }
+  // renderNoteBox = () => {
+  //   const { note, noteHistory } = this.props;
+  //   noteHistory
+  //   && noteHistory.map((box, index) => {
+  //     if (box.data[1] === note) {
+  //       console.log('hello!', box);
+  //       return <NoteBox key={index} />;
+  //     }
+  //   });
+  // }
 
   render() {
     const { type, note, noteHistory } = this.props;
@@ -38,9 +38,9 @@ class NoteRow extends Component {
       <NoteRowStyle type={type}>
         {
           noteHistory
-          && noteHistory.map((box) => {
+          && noteHistory.map((box, index) => {
             if (box.data[1] === note) {
-              return <NoteBox key={box.timeStampOn} />;
+              return <NoteBox key={index} />;
             }
           })
         }
