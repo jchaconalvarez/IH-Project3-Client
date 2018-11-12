@@ -31,6 +31,10 @@ const NewSongCard = styled.div`
   border-radius: 5px;
   height: 10rem;
   width: 15rem;
+  
+  &:hover {
+    transform: rotate(180deg)
+  }
 `;
 
 class Dash extends Component {
@@ -68,14 +72,12 @@ class Dash extends Component {
           {
             songList.map((songItem, index) => {
               return (
-                <React.Fragment>
-                  <SongCard
-                    key={songItem._id}
-                    index={index}
-                    songItem={songItem}
-                    handleDelete={this.handleDelete}
-                  />
-                </React.Fragment>
+                <SongCard
+                  key={songItem._id}
+                  index={index}
+                  songItem={songItem}
+                  handleDelete={this.handleDelete}
+                />
               );
             })
           }

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import shortid from 'shortid';
 import WhiteKey from './WhiteKey';
 import BlackKey from './BlackKey';
 
@@ -9,7 +8,6 @@ const WhiteKeysGroup = styled.div`
   display: grid;
   grid-column: 1;
   grid-row: 3;
-  /* grid-template-rows: repeat(17, 1.56rem); */
   grid-template-rows:
     repeat(
       2,
@@ -61,9 +59,9 @@ const Board = (props) => {
         {
           whiteKeys.map((noteNumber) => {
             return (
-              checkIfActive(noteNumber)
-                ? <WhiteKey active key={shortid.generate()} note={noteNumber} />
-                : <WhiteKey key={shortid.generate()} note={noteNumber} />
+              checkIfActive(activeNotes, noteNumber)
+                ? <WhiteKey active key={noteNumber} note={noteNumber} />
+                : <WhiteKey key={noteNumber} note={noteNumber} />
             );
           })
         }
@@ -73,8 +71,8 @@ const Board = (props) => {
           blackKeys.map((noteNumber) => {
             return (
               checkIfActive(activeNotes, noteNumber)
-                ? <BlackKey active key={shortid.generate()} />
-                : <BlackKey key={shortid.generate()} />
+                ? <BlackKey active key={noteNumber} />
+                : <BlackKey key={noteNumber} />
             );
           })
         }

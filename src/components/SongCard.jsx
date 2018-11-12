@@ -3,12 +3,18 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SongCardWrapper = styled.div`
+  margin-bottom: 2rem;
   display: grid;
   background: #EEE;
   height: 10rem;
   width: 15rem;
   border-radius: 5px;
   place-self: stretch;
+  
+  &:hover {
+    transform: scale(1.3);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
 `;
 
 const SongCardImg = styled.img`
