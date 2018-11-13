@@ -86,9 +86,10 @@ const checkAuthSucceeded = (user) => {
   };
 };
 
-const checkAuthFailed = () => {
+const checkAuthFailed = (error) => {
   return {
     type: actions.CHECK_AUTH_FAILED,
+    error,
   };
 };
 

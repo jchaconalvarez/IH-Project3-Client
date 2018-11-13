@@ -3,8 +3,7 @@ import axios from 'axios';
 class Auth {
   constructor() {
     this.auth = axios.create({
-      // baseURL: 'http://localhost:3001/auth',
-      baseURL: `${process.env.BACKEND_BASEURL}/auth`,
+      baseURL: `${process.env.REACT_APP_BACKEND_BASEURL}/auth`,
       withCredentials: true,
     });
   }
