@@ -67,9 +67,6 @@ const EditProfile = (props) => {
             {errors.email && touched.email && <div>{errors.email}</div>}
           </CardFields>
           <CardFields>
-            <CardInput type="password" name="password" placeholder="*****"/>
-          </CardFields>
-          <CardFields>
             <Button type="submit">Edit</Button>
           </CardFields>
         </StyledForm>
