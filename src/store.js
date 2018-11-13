@@ -7,6 +7,7 @@ const session = {
   user: null,
   isLogged: false,
   status: 'loading',
+  error: null,
 };
 
 const ui = {

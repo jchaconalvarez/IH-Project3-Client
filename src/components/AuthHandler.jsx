@@ -18,7 +18,7 @@ class AuthHandler extends Component {
   }
 
   render() {
-    const { showLogin } = this.props;
+    const { showLogin, error } = this.props;
     const initialValues = {
       email: '',
       password: '',
@@ -26,7 +26,7 @@ class AuthHandler extends Component {
     };
     return (
       <StyleWrapper>
-        <AuthForm initialValues={initialValues} sendData={this.sendData} showLogin={showLogin} />
+        <AuthForm initialValues={initialValues} sendData={this.sendData} showLogin={showLogin} error={error} />
       </StyleWrapper>
     );
   }
@@ -37,6 +37,7 @@ const mapStateToProps = (state) => {
     user: state.session.user,
     isLogged: state.session.isLogged,
     showLogin: state.ui.showLogin,
+    error: state.session.error,
   };
 };
 

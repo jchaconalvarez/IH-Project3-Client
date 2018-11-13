@@ -10,12 +10,7 @@ import Button from './Button';
 
 const CardFields = styled.div`
   margin: 15% 0 0 0 ;
-  /* &:first-child {
-    margin-top: 25%;
-  }
-  &:nth-last-child(2) {
-    margin-bottom: 25%;
-  } */
+  text-align: center;
 `;
 
 const StyledForm = styled(Form)`
@@ -52,11 +47,32 @@ const CardInput = styled(Field)`
   }
 `;
 
-const renderConfirm = () => {
+const AuthErrorMessage = styled.div`
+  position: absolute;
+  padding: 0.5rem 0;
+  width: 24%;
+  color: white;
+  text-align: center;
+  background: lightcoral;
+  border-radius: 5px;
+  animation-name: fade-out;
+  animation-delay: 5000ms;
+  animation-duration: 3000ms;
+  animation-fill-mode: forwards;
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+`;
+
+const renderError = (error) => {
   return (
     <CardFields>
-      <CardInput type="password" name="confirmPassword" placeholder="Confirm password" />
-      <ErrorMessage name="confirmPassword" component="p" />
+      <AuthErrorMessage>{error.error}</AuthErrorMessage>
     </CardFields>
   );
 };
@@ -72,7 +88,7 @@ const validateInput = (values) => {
 };
 
 const AuthForm = (props) => {
-  const { initialValues, sendData, showLogin } = props;
+  const { initialValues, sendData, showLogin, error } = props;
   return (
     <Formik
       initialValues={initialValues}
@@ -92,7 +108,7 @@ const AuthForm = (props) => {
               <CardInput type="password" name="password" placeholder="Password" />
               <ErrorMessage name="password" component="p" />
             </CardFields>
-            { !showLogin && renderConfirm() }
+            { error && renderError(error) }
             <CardFields>
               <Button>{ !showLogin ? 'Sign Up' : 'Log In' }</Button>
             </CardFields>
