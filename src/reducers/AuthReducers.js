@@ -83,7 +83,7 @@ const AuthReducers = (state = {}, action) => {
         ...state,
         isLogged: false,
         status: 'loaded',
-        error: action.error,
+        error: null,
       };
     }
     default: {
