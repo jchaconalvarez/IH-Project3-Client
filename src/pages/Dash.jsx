@@ -7,7 +7,7 @@ import SongCard from '../components/SongCard';
 
 const Container = styled.div`
   background: linear-gradient(to top, #313131 0%, #383838 100%);
-  height: 100vh;
+  height: 100%;
 `;
 
 const SongGrid = styled.div`

@@ -14,7 +14,6 @@ Web based DAW.
 -  **Play music:** As a user I can use a MIDI keyboard to play music.
 -  **See Notes:** As a user I can see the music notation while I'm playing.
 -  **Save composition:** As a user I can save my song.
--  **See compositions:**
 -  **Edit composition:** As a user I can edit my song.
 -  **Delete composition:** As a user I can delete a song that I created.
 -  **See profile:** As a user I can see my profile.
@@ -84,9 +83,10 @@ Web based DAW.
 - Sign up Form component
 - Log in Form component
 - Song Card component
-- Note component
-- Key component
 - Piano component
+- Board component
+- Key component
+- Display component
 
 ## Services
 
@@ -101,6 +101,9 @@ Web based DAW.
   - song.create()
   - song.detail()
   - song.edit()
+- Profile Service
+  - profile.get()
+  - profile.edit()
 
 # Server
 
@@ -109,9 +112,8 @@ Web based DAW.
 User model
 
 ```
-username		String 						// required
-email			String 						// required & unique
-password		String 						// required
+email			String
+password		String
 songs			[ObjectID<Song>]
 ```
 
@@ -120,16 +122,8 @@ Song model
 ```
 player			ObjectID<User>
 songName		String
-
-instrument		String
-notes			[
-					{
-    					midiMessage: [Number]
-    					note: Number,
-    					duration: Number,
-    					velocity: Number,
-					}
-				]
+noteHistory:		{Object}
+timpeStamp:		Number
 ```
 
 ## API Endpoints (backend routes)
@@ -164,41 +158,8 @@ notes			[
   - body: (empty)
   - 204
 - GET /play
-- POST /play
-
-
-
-
-
-- POST /user/me/favorite
-  - body:
-    - restaurantId
-  - validation
-    - id is valid (404)
-    - id exists (404)
-  - add to favorites if not there yet
-  - updates user in session
-- DELETE /user/me/favorite/:restaurantId
-  - validation
-    - id is valid (404)
-    - id exists (404)
-  - body: (empty - the user is already stored in the session)
-  - remove from favorites
-  - updates user in session
-- GET /restaurant?terms=foo
-  - use search criteria if terms provided
-  - 200 with array of restaurants
-- POST /restaurant
-  - body:
-    - name
-    - phone
-    - address
-  - validation
-    - fields not empty
-  - create restaurant
-  - 200 with restaurant object
-- GET /restaurant/:id
-
+- GET /profile
+- Get /dash
 
 ## Links
 
@@ -216,6 +177,10 @@ notes			[
 
 [Deploy Link](http://heroku.com)
 
+### Firebase
+
+[Deploy Link](https://firebase.google.com)
+
 ### Slides
 
-[Slides Link](http://slides.com)
+[Slides Link](https://slides.com/jchaconalvarez/midiact#/)
