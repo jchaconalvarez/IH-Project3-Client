@@ -6,7 +6,7 @@ class Profile {
   constructor() {
     this.profile = axios.create({
       // baseURL: 'http://localhost:3001/profile',
-      baseURL: `${process.env.HEROKU_URI}/profile`,
+      baseURL: `${process.env.BACKEND_BASEURL}/profile`,
       withCredentials: true,
     });
   }
