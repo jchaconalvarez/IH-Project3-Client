@@ -6,7 +6,8 @@ class Song {
   constructor() {
     this.song = axios.create({
       // baseURL: 'http://localhost:3001/song',
-      baseURL: `${process.env.HEROKU_URI}/song`,
+      // baseURL: `${process.env.HEROKU_URI}/song`,
+      baseURL: 'https://minimidi-server.herokuapp.com/',
       withCredentials: true,
     });
   }
