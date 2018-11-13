@@ -50,8 +50,8 @@ const checkIfActive = (activeNotes, noteNumber) => {
 
 const Board = (props) => {
   const { activeNotes } = props;
-  const whiteKeys = [36, 38, 40, 41, 43, 45, 47, 48, 50, 52, 53, 55, 57, 59, 60, 62, 64, 65];
-  const blackKeys = [37, 39, 42, 44, 46, 49, 51, 54, 56, 58];
+  const whiteKeys = [36, 38, 40, 41, 43, 45, 47, 48, 50, 52, 53, 55, 57, 59, 60, 62, 64, 65].reverse();
+  const blackKeys = [37, 39, 42, 44, 46, 49, 51, 54, 56, 58].reverse();
   return (
     <React.Fragment>
       <WhiteKeysGroup>

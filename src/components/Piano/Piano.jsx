@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 import song from '../../services/song-service';
 import Controls from './Controls';
 import Board from './Board';
 import Display from './display/Display';
-
-const Container = styled.div`
-  display: grid;
-  justify-items: center;
-  grid-template-columns: 1fr 10fr;
-`;
 
 const PianoWrapper = styled.div`
   display: grid;
@@ -27,11 +20,11 @@ const context = new AudioContext();
 class Piano extends Component {
   state = {
     midiAccess: null,
-    songId: null,
-    songName: null,
     midiInstrument: null,
+    originalRecTimeStamp: 0,
     recStartTimeStamp: 0,
     recStopTimeStamp: 0,
+    goalTimeStamp: 0,
     offset: null,
     activeNotes: [],
     noteHistory: [],
@@ -84,11 +77,11 @@ class Piano extends Component {
     const {
       recStartTimeStamp,
       recStopTimeStamp,
+      goalTimeStamp,
       activeNotes,
       noteHistory,
       isRecording,
     } = this.state;
-    // const { context } = this.props;
 
     // Create oscillator and gain nodes for synth.
     const oscillatorNode = context.createOscillator();
@@ -98,14 +91,27 @@ class Piano extends Component {
     const noteHz = this.convertNoteDataToFrequency(midiNote);
 
     let noteTimeStamp = new Date().getTime();
-    const localOffset = recStartTimeStamp - recStopTimeStamp; // SHOULDN'T THIS BE THE OTHER WAY AROUND?
+    const localOffset = recStartTimeStamp - recStopTimeStamp;
+    console.log('LOCALOFFSET: ', localOffset);
     let goalTs = 0;
 
     if (isEditing) {
+      console.log('---');
+      console.log('IS EDITING');
+      console.log('NOTETS: ', noteTimeStamp);
+      console.log('RECSTARTTS: ', recStartTimeStamp, 'GOALTS: ', goalTimeStamp);
+
       goalTs = recStartTimeStamp - localOffset;
-      noteTimeStamp -= goalTs;
+      noteTimeStamp -= localOffset;
+
+      console.log('TSON: ', noteTimeStamp);
+
+
+      console.log('goalTs: ', goalTs);
+      console.log('---');
     } else {
-      noteTimeStamp -= recStartTimeStamp;
+      console.log('IS NOT EDITING');
+      console.log('NOTETS: ', noteTimeStamp);
     }
 
     const noteObject = {};
@@ -115,7 +121,7 @@ class Piano extends Component {
     gainNode.gain.value = midiVelocity / 127;
 
     // Set up and start oscillator node.
-    oscillatorNode.type = 'square';
+    oscillatorNode.type = 'sine';
     oscillatorNode.frequency.value = noteHz;
     oscillatorNode.connect(gainNode);
     oscillatorNode.start();
@@ -131,10 +137,9 @@ class Piano extends Component {
 
     // Push notes to activeNotes and update state.
     activeNotes.push(noteObject);
-    // console.log(noteHistory);
     this.setState(prevState => ({
       recStartTimestamp: prevState.recStartTimestamp - localOffset,
-      offset: goalTs,
+      offset: localOffset,
       activeNotes,
       noteHistory,
     }));
@@ -144,7 +149,6 @@ class Piano extends Component {
   // @param {object} midiData - MIDI event object with all note information.
   noteOff = (midiData) => {
     const {
-      recStartTimeStamp,
       offset,
       activeNotes,
       noteHistory,
@@ -152,14 +156,14 @@ class Piano extends Component {
     } = this.state;
 
     // Finds index of note to kill.
-    const indexOfNoteToKill = activeNotes.findIndex((noteObject) => noteObject.note.data[1] === midiData[1]);
+    const indexOfNoteToKill = activeNotes.findIndex(
+      noteObject => noteObject.note.data[1] === midiData[1],
+    );
 
     // Updates timeStampOff depending on if editing or not.
     let noteTimeStamp = new Date().getTime();
     if (isEditing) {
       noteTimeStamp -= offset;
-    } else {
-      noteTimeStamp -= recStartTimeStamp;
     }
 
     // Sets note timeStampOff, stops oscillator, and removes note from
@@ -177,7 +181,6 @@ class Piano extends Component {
   // @params {object} midiMessage - MIDI event object.
   getMidiInput = (midiMessage) => {
     const { isEditing } = this.state;
-    const { songId } = this.props;
     const {
       manufacturer: midiManufacturer,
       name: midiModel,
@@ -229,21 +232,31 @@ class Piano extends Component {
   // Makes song-service API calls to create/update songs.
   handleRecording = () => {
     const {
-      songId,
-      songName,
       noteHistory,
       isRecording,
+      recStopTimeStamp,
+      goalTimeStamp,
     } = this.state;
+    const { songId, songName } = this.props;
 
     const recStartTimeStamp = new Date().getTime();
     if (!isRecording) {
       if (noteHistory.length === 0) {
-        this.setState({ recStartTimeStamp, isRecording: true, isEditing: false });
+        console.log('START: ', recStartTimeStamp);
+        this.setState({ originalRecTimeStamp: recStartTimeStamp, recStartTimeStamp, isRecording: true, isEditing: false });
       } else {
-        this.setState({ recStartTimeStamp, isRecording: true, isEditing: true });
+        console.log('START (EDIT): ', recStartTimeStamp - recStopTimeStamp);
+        this.setState(prevState => ({
+          recStartTimeStamp,
+          goalTimeStamp: prevState.goalTimeStamp + (recStartTimeStamp - recStopTimeStamp),
+          isRecording: true,
+          isEditing: true,
+        }));
       }
     } else {
       const recStopTimeStamp = new Date().getTime();
+      console.log('STOP: ', recStopTimeStamp);
+      console.log(noteHistory);
       song.editSong(songId, { songName, noteHistory });
       this.setState({ recStopTimeStamp, isRecording: false });
     }
@@ -283,13 +296,17 @@ class Piano extends Component {
   // Plays back song (noteHistory array).
   playSong = () => {
     const {
+      originalRecTimeStamp,
       noteHistory,
       isEditing,
       playback,
     } = this.state;
 
     let localTimeStamp = playback.timeStamp;
-    console.log(localTimeStamp);
+    if (localTimeStamp === 0) {
+      localTimeStamp = originalRecTimeStamp;
+    }
+    console.log('LOCALTS: ', localTimeStamp);
     let { noteIndex } = playback;
 
     // Delays execution of next line for the duration of a note.

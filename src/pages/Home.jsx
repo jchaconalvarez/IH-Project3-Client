@@ -56,12 +56,12 @@ const FormSelectors = styled.a`
 `;
 
 const Home = (props) => {
-  const { showLogin, switchToLogIn, switchToSignUp } = props;
+  const { showLogin, switchToLogIn, switchToSignUp, error } = props;
   return (
     <Container>
       <LogoContainer>
         <Logo src={minimidiLogo} />
-        <h1 style={{ fontWeight: '900' }}>minimidi</h1>
+        <h1>minimidi</h1>
       </LogoContainer>
       <AuthContainer>
         <FormSelectorContainer>

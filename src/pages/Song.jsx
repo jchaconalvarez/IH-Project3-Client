@@ -26,11 +26,12 @@ class Song extends Component {
 
     console.log('SONG WILL MOUNT');
 
-    if (songId) {
+    // if (songId) {
       song.getSong(songId)
         .then((response) => {
           const { songName, noteHistory } = response;
           let isEditing = false;
+          console.log(response);
           if (noteHistory.length > 0) { isEditing = true; }
           this.setState({
             songId,
@@ -39,7 +40,7 @@ class Song extends Component {
             isEditing,
           });
         });
-    }
+    // }
   }
 
   componentWillUnmount() {

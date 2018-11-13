@@ -4,6 +4,7 @@ const AuthReducers = (state = {}, action) => {
       return {
         ...state,
         status: 'loading',
+        error: null,
       };
     }
     case 'SIGN_UP_SUCCEEDED': {
@@ -12,20 +13,22 @@ const AuthReducers = (state = {}, action) => {
         user: action.user,
         isLogged: true,
         status: 'loaded',
+        error: null,
       };
     }
     case 'SIGN_UP_FAILED': {
       return {
         ...state,
-        error: action.error,
         isLogged: false,
         status: 'loaded',
+        error: action.error.response.data,
       };
     }
     case 'LOG_IN_REQUESTED': {
       return {
         ...state,
         status: 'loading',
+        error: null,
       };
     }
     case 'LOG_IN_SUCCEEDED': {
@@ -34,20 +37,22 @@ const AuthReducers = (state = {}, action) => {
         user: action.user,
         isLogged: true,
         status: 'loaded',
+        error: null,
       };
     }
     case 'LOG_IN_FAILED': {
       return {
         ...state,
-        error: action.error,
         isLogged: false,
         status: 'loaded',
+        error: action.error.response.data,
       };
     }
     case 'LOG_OUT_REQUESTED': {
       return {
         ...state,
         status: 'loading',
+        error: null,
       };
     }
     case 'LOG_OUT_SUCCEEDED': {
@@ -55,12 +60,14 @@ const AuthReducers = (state = {}, action) => {
         ...state,
         isLogged: false,
         status: 'loaded',
+        error: null,
       };
     }
     case 'CHECK_AUTH_REQUESTED': {
       return {
         ...state,
         status: 'loading',
+        error: null,
       };
     }
     case 'CHECK_AUTH_SUCCEEDED': {
@@ -76,7 +83,7 @@ const AuthReducers = (state = {}, action) => {
         ...state,
         isLogged: false,
         status: 'loaded',
-        error: action.error,
+        error: null,
       };
     }
     default: {
