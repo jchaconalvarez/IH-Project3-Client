@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+require('dotenv').config();
 class Profile {
   constructor() {
     this.profile = axios.create({
-      baseURL: 'http://localhost:3001/profile',
+      // baseURL: 'http://localhost:3001/profile',
+      baseURL: `${process.env.HEROKU_URI}/profile`,
       withCredentials: true,
     });
   }

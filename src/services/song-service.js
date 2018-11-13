@@ -1,9 +1,12 @@
 import axios from 'axios';
 
+require('dotenv').config();
+
 class Song {
   constructor() {
     this.song = axios.create({
-      baseURL: 'http://localhost:3001/song',
+      // baseURL: 'http://localhost:3001/song',
+      baseURL: `${process.env.HEROKU_URI}/song`,
       withCredentials: true,
     });
   }
