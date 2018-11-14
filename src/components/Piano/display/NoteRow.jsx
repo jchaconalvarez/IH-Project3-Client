@@ -6,7 +6,7 @@ const NoteRowStyle = styled.div`
   display: grid;
   width: 100%;
   align-items: center;
-  grid-template-columns: repeat(auto-fill, 2rem);
+  grid-template-columns: repeat(auto-fill, 1rem);
   height: ${props => props.type === 'black' ? '1.75rem' : '2.03rem'};
   background: ${props => props.type === 'black' ? '#33333333' : 'none'};
 `;
@@ -22,26 +22,15 @@ class NoteRow extends Component {
     return false;
   }
 
-  // renderNoteBox = () => {
-  //   const { note, noteHistory } = this.props;
-  //   noteHistory
-  //   && noteHistory.map((box, index) => {
-  //     if (box.data[1] === note) {
-  //       console.log('hello!', box);
-  //       return <NoteBox key={index} />;
-  //     }
-  //   });
-  // }
-
   render() {
-    const { type, note, noteHistory } = this.props;
+    const { type, note, noteHistory, originalRecTimeStamp } = this.props;
     return (
       <NoteRowStyle type={type}>
         {
           noteHistory
           && noteHistory.map((box, index) => {
             if (box.data[1] === note) {
-              return <NoteBox key={index} />;
+              return <NoteBox key={index} margin={index} />;
             }
           })
         }

@@ -41,8 +41,8 @@ class Piano extends Component {
   // exists.
   // Calls listenForMIDIAccess() to set up MIDI event listening/capture.
   componentDidMount() {
-    const { noteHistory } = this.props;
-    console.log('PIANO WILL MOUNT');
+    const { noteHistory } = this.state;
+    const { previousHistory } = this.props;
     this.listenForMIDIAccess();
   }
 
@@ -394,6 +394,7 @@ class Piano extends Component {
       noteHistory,
       isRecording,
       midiInstrument,
+      originalRecTimeStamp,
     } = this.state;
     return (
       <React.Fragment>
@@ -410,7 +411,7 @@ class Piano extends Component {
         <PianoWrapper>
           <Board activeNotes={activeNotes} />
         </PianoWrapper>
-        <Display noteHistory={noteHistory} />
+        <Display noteHistory={noteHistory} originalRecTimeStamp={originalRecTimeStamp} />
       </React.Fragment>
     );
   }
