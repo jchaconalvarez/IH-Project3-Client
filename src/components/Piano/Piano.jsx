@@ -42,12 +42,6 @@ class Piano extends Component {
   // exists.
   // Calls listenForMIDIAccess() to set up MIDI event listening/capture.
   componentDidMount() {
-<<<<<<< HEAD
-    const { noteHistory } = this.props;
-=======
-    const { noteHistory } = this.state;
-    const { previousHistory } = this.props;
->>>>>>> dev
     this.listenForMIDIAccess();
   }
 
