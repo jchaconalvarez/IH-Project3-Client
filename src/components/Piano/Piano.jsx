@@ -41,6 +41,7 @@ class Piano extends Component {
   // exists.
   // Calls listenForMIDIAccess() to set up MIDI event listening/capture.
   componentDidMount() {
+    const { noteHistory } = this.props;
     console.log('PIANO WILL MOUNT');
     this.listenForMIDIAccess();
   }
@@ -237,13 +238,18 @@ class Piano extends Component {
       recStopTimeStamp,
       goalTimeStamp,
     } = this.state;
-    const { songId, songName } = this.props;
+    const { songId, songName, noteHistory: previousHistory } = this.props;
 
     const recStartTimeStamp = new Date().getTime();
     if (!isRecording) {
-      if (noteHistory.length === 0) {
+      if (previousHistory.length === 0) {
         console.log('START: ', recStartTimeStamp);
-        this.setState({ originalRecTimeStamp: recStartTimeStamp, recStartTimeStamp, isRecording: true, isEditing: false });
+        this.setState({
+          originalRecTimeStamp: recStartTimeStamp,
+          recStartTimeStamp,
+          isRecording: true,
+          isEditing: false,
+        });
       } else {
         console.log('START (EDIT): ', recStartTimeStamp - recStopTimeStamp);
         this.setState(prevState => ({

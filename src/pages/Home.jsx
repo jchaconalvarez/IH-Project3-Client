@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { switchToLogIn, switchToSignUp } from '../actions/ui';
-import AuthHandler from '../components/AuthHandler';
+import AuthHandler from '../components/Auth/AuthHandler';
 import backgroundPattern from '../assets/img/pattern-waves.png';
 import minimidiLogo from '../assets/img/logo-minimidi.png';
 
@@ -15,9 +15,8 @@ const Container = styled.div`
 
 const LogoContainer = styled.div`
   height: inherit;
-  /* padding-top: %; */
   display: grid;
-  grid-template-rows: 2fr 1fr 3fr
+  grid-template-rows: 2fr 1fr 3fr;
   place-items: center center;
   background-image: url(${backgroundPattern});
   background-repeat: repeat;

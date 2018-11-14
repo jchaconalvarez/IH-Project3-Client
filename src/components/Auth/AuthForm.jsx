@@ -1,10 +1,10 @@
 import React from 'react';
 import { Formik, ErrorMessage } from 'formik';
-import StyledForm from './Forms/StyledForm';
-import CardInput from './Forms/CardInput';
-import CardFields from './Forms/CardFields';
-import AuthErrorMessage from './Forms/AuthErrorMessage';
-import Button from './Button';
+import StyledForm from '../Forms/StyledForm';
+import CardInput from '../Forms/CardInput';
+import CardFields from '../Forms/CardFields';
+import AuthErrorMessage from '../Forms/AuthErrorMessage';
+import Button from '../Button';
 
 const renderError = (error) => {
   return (

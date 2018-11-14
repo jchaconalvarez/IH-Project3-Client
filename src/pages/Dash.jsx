@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import song from '../services/song-service';
 import NavBar from '../components/NavBar';
 import SongCard from '../components/SongCard';
+import Loading from '../components/Loading';
 
 const Container = styled.div`
   background: linear-gradient(to top, #313131 0%, #383838 100%);
@@ -40,21 +41,18 @@ const NewSongCard = styled.div`
 class Dash extends Component {
   state = {
     songList: [],
+    status: 'loading',
   }
 
   componentDidMount() {
-    console.log('DASH DID MOUNT');
     this.getUserSongs();
-  }
-
-  componentWillUnmount() {
-    console.log('DASH WILL UNMOUNT');
   }
 
   getUserSongs = () => {
     song.getUserSongs()
       .then((songs) => {
-        this.setState({ songList: songs });
+        console.log(songs);
+        this.setState({ songList: songs, status: 'loaded' });
       });
   }
 
@@ -64,30 +62,38 @@ class Dash extends Component {
   }
 
   render() {
-    const { songList } = this.state;
+    const { songList, status } = this.state;
     return (
-      <Container>
-        <NavBar />
-        <SongGrid>
-          <Link to="/newsong">
-            <NewSongCard>
-              <ClipPath />
-            </NewSongCard>
-          </Link>
-          {
-            songList.map((songItem, index) => {
-              return (
-                <SongCard
-                  key={songItem.created_at}
-                  index={index}
-                  songItem={songItem}
-                  handleDelete={this.handleDelete}
-                />
-              );
-            })
-          }
-        </SongGrid>
-      </Container>
+      <React.Fragment>
+        {
+          status === 'loading'
+            ? <Loading />
+            : (
+              <Container>
+                <NavBar />
+                <SongGrid>
+                  <Link to="/newsong">
+                    <NewSongCard>
+                      <ClipPath />
+                    </NewSongCard>
+                  </Link>
+                  {
+                    songList.map((songItem, index) => {
+                      return (
+                        <SongCard
+                          key={songItem.created_at}
+                          index={index}
+                          songItem={songItem}
+                          handleDelete={this.handleDelete}
+                        />
+                      );
+                    })
+                  }
+                </SongGrid>
+              </Container>
+            )
+        }
+      </React.Fragment>
     );
   }
 }
