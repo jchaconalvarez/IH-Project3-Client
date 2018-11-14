@@ -31,6 +31,16 @@ const RecBtn = styled.button`
   transform: translateY(${props => props.isRecording ? '5px' : '0'});
 `;
 
+const DisableRecBtn = styled.button`
+  grid-area: rec;
+  width: 25px;
+  height: 25px;
+  border: none;
+  border-radius: 50%;
+  background: #0F8FAB;
+  transform: translateY(5px);
+`;
+
 const ControlBtn = styled.button`
   grid-area: ${props => props.area === 'clear' ? 'clear' : 'play'};
   cursor: pointer;
@@ -48,6 +58,19 @@ const ControlBtn = styled.button`
     background:#4C4C4C;
     box-shadow: inset 0 0 5px 2px rgba(53,53,53,.5);
   }
+`;
+
+const DisableBtn = styled.button`
+  grid-area: ${props => props.area === 'clear' ? 'clear' : 'play'};
+  width: 60px;
+  height: 30px;
+  text-align: center;
+  text-shadow: 0 1px #353535;
+  border: 1px solid #6B6A6A;
+  border-radius: 3px;
+  color: #D3D3D3;
+  background:#4C4C4C;
+  box-shadow: inset 0 0 5px 2px rgba(53,53,53,.5);
 `;
 
 const PlaySymbol = styled.div`
@@ -138,7 +161,11 @@ export default function Controls(props) {
   } = props;
   return (
     <ControlWrapper>
-      <RecBtn onClick={onRecording} isRecording={isRecording} />
+      {
+        !isPlayingBack
+          ? <RecBtn onClick={onRecording} isRecording={isRecording} />
+          : <DisableRecBtn />
+      }
       <InstrumentWrapper>{midiInstrument}</InstrumentWrapper>
       <NoteWrapper area="midi">
         {
@@ -160,10 +187,21 @@ export default function Controls(props) {
           })
         }
       </NoteWrapper>
-      <ControlBtn area="play" type="button" onClick={startPlayback}>
-        {isPlayingBack ? <PauseSymbol /> : <PlaySymbol />}
-      </ControlBtn>
-      <ControlBtn area="clear" type="button" onClick={clearHistory}>Clear</ControlBtn>
+      {
+        !isRecording
+          ? (
+            <ControlBtn area="play" type="button" onClick={startPlayback}>
+              {isPlayingBack ? <PauseSymbol /> : <PlaySymbol />}
+            </ControlBtn>
+          )
+          : <DisableBtn area="play">-</DisableBtn>
+  }
+      {
+        !isRecording && !isPlayingBack
+          ? <ControlBtn area="clear" type="button" onClick={clearHistory}>Clear</ControlBtn>
+          : <DisableBtn area="clear">-</DisableBtn>
+      }
+      {/* <ControlBtn area="clear" type="button" onClick={clearHistory}>Clear</ControlBtn> */}
       <Metronome />
       <Chronometer isRecording={isRecording} />
     </ControlWrapper>

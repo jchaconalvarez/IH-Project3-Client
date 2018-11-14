@@ -28,7 +28,6 @@ class Song extends Component {
     song.getSong(songId)
       .then((response) => {
         const { songName, noteHistory } = response;
-        console.log(response);
         let isEditing = false;
         if (noteHistory.length > 0) { isEditing = true; }
         this.setState({
