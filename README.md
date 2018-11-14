@@ -175,11 +175,11 @@ timpeStamp:		Number
 
 ### Heroku
 
-[Deploy Link](http://heroku.com)
+[Deploy Link](https://minimidi-server.herokuapp.com)
 
 ### Firebase
 
-[Deploy Link](https://firebase.google.com)
+[Deploy Link](https://minimidi-client.firebaseapp.com/)
 
 ### Slides
 
