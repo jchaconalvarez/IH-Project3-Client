@@ -26,7 +26,6 @@ const PianoForm = (props) => {
         itinialValues={initialValues}
         onSubmit={(values) => {
           const { songName } = values;
-          console.log('submit');
           changeName(songName);
         }}
         render={() => {

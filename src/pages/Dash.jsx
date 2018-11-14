@@ -51,7 +51,6 @@ class Dash extends Component {
   getUserSongs = () => {
     song.getUserSongs()
       .then((songs) => {
-        console.log(songs);
         this.setState({ songList: songs, status: 'loaded' });
       });
   }

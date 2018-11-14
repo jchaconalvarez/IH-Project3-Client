@@ -8,12 +8,10 @@ const ControlWrapper = styled.div`
   font-family: 'Raleway', sans-serif;
   grid-column: 2;
   grid-row: 2;
-  /* background-color: #0F8FAB; */
   background-color: #4C4C4C;
   padding: 1rem;
   margin: 2rem 2rem 0 0;
   border-radius: .5rem .5rem 0 0;
-  /* grid-gap: 0.5rem; */
   display: grid;
   grid-template-areas:
     '. device device metronome chrono chrono chrono .'

@@ -43,7 +43,6 @@ class Piano extends Component {
   // Calls listenForMIDIAccess() to set up MIDI event listening/capture.
   componentDidMount() {
     const { noteHistory } = this.props;
-    console.log('PIANO WILL MOUNT');
     this.listenForMIDIAccess();
   }
 
@@ -51,7 +50,6 @@ class Piano extends Component {
   componentWillUnmount() {
     const { playback, midiAccess } = this.state;
     clearInterval(playback.interval);
-    console.log('PIANO WILL UNMOUNT');
     midiAccess.inputs.forEach((message) => {
       message.onmidimessage = null;
     });
@@ -94,27 +92,12 @@ class Piano extends Component {
 
     let noteTimeStamp = new Date().getTime();
     const localOffset = recStartTimeStamp - recStopTimeStamp;
-    console.log('LOCALOFFSET: ', localOffset);
     let goalTs = 0;
 
     if (isEditing) {
-      console.log('---');
-      console.log('IS EDITING');
-      console.log('NOTETS: ', noteTimeStamp);
-      console.log('RECSTARTTS: ', recStartTimeStamp, 'GOALTS: ', goalTimeStamp);
-
       goalTs = recStartTimeStamp - localOffset;
       noteTimeStamp -= localOffset;
-
-      console.log('TSON: ', noteTimeStamp);
-
-
-      console.log('goalTs: ', goalTs);
-      console.log('---');
-    } else {
-      console.log('IS NOT EDITING');
-      console.log('NOTETS: ', noteTimeStamp);
-    }
+    };
 
     const noteObject = {};
 
@@ -244,7 +227,6 @@ class Piano extends Component {
     const recStartTimeStamp = new Date().getTime();
     if (!isRecording) {
       if (previousHistory.length === 0) {
-        console.log('START: ', recStartTimeStamp);
         this.setState({
           originalRecTimeStamp: recStartTimeStamp,
           recStartTimeStamp,
@@ -252,7 +234,6 @@ class Piano extends Component {
           isEditing: false,
         });
       } else {
-        console.log('START (EDIT): ', recStartTimeStamp - recStopTimeStamp);
         this.setState(prevState => ({
           recStartTimeStamp,
           goalTimeStamp: prevState.goalTimeStamp + (recStartTimeStamp - recStopTimeStamp),
@@ -262,8 +243,6 @@ class Piano extends Component {
       }
     } else {
       const recStopTimeStamp = new Date().getTime();
-      console.log('STOP: ', recStopTimeStamp);
-      console.log(noteHistory);
       song.editSong(songId, { songName, noteHistory });
       this.setState({ recStopTimeStamp, isRecording: false });
     }
@@ -291,7 +270,6 @@ class Piano extends Component {
   // Changes the current name of the song by changing the state.
   // @param {string} songName - New name of the song from form.
   changeName = (songName) => {
-    console.log('name changed');
     this.setState({ songName });
   }
 
@@ -313,7 +291,7 @@ class Piano extends Component {
     if (localTimeStamp === 0) {
       localTimeStamp = originalRecTimeStamp;
     }
-    console.log('LOCALTS: ', localTimeStamp);
+
     let { noteIndex } = playback;
 
     // Delays execution of next line for the duration of a note.
@@ -370,7 +348,6 @@ class Piano extends Component {
   // playback of song.
   startPlayback = () => {
     const { playback } = this.state;
-    console.log('startPlayback');
     if (!playback.interval) {
       const playbackInterval = setInterval(this.playSong, 50);
       this.setState({

@@ -47,10 +47,6 @@ export default class Chronometer extends Component {
     this.setState({ currentCount });
   }
 
-  // IDEA:
-  // await 3 sec before start to rec??
-  // setTimeout(() => { /*setinterval here*/ }, 3000);
-
   handleStart() {
     const { canStartCount } = this.state;
     if (canStartCount) {

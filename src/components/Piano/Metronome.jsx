@@ -5,7 +5,6 @@ import metronomeSoundUp from '../../assets/audio/MetronomeUp.wav';
 
 const MetronomeWrapper = styled.div`
   grid-area: metronome;
-  /* margin-left: 0.2rem; */
   width: 6rem;
   height: 6rem;
   border: none;
@@ -53,7 +52,6 @@ const Tempo = styled.input`
   height: 1rem;
   color: #ddd;
   background: linear-gradient(to right, rgba(255,0,0,0), #888787);
-  /* background: #888787; */
   border: none;
   text-align: center;
   text-decoration: none;
@@ -63,19 +61,11 @@ const Tempo = styled.input`
 const Btn = styled.button`
   grid-area: btn;
   color: white;
-  /* background-color: #353535; */
   border: none;
   width: 100%;
   height: 100%;
   text-align: center;
   cursor: pointer;
-   /* background: repeating-linear-gradient(
-    45deg,
-    rgba(184, 184, 184, .4)10px,
-    #4C4C4C 10px, 
-    rgba(184, 184, 184, .4)30px,
-    #4C4C4C 50px
-  ); */
   text-shadow: 0 1px #353535;
   color:#F8F8F8;
   background: linear-gradient(#4C4C4C, #353535);
@@ -108,7 +98,6 @@ export default class Metronome extends Component {
   }
 
   handleBPMInput = (e) => {
-    // this.setState({ bpm: e.target.value });
     const { canTicking } = this.state;
     const bpm = e.target.value;
     if (canTicking) {
@@ -126,7 +115,7 @@ export default class Metronome extends Component {
   };
 
   handleTempoInput = (e) => {
-    this.setState({ tempo: e.target.value })
+    this.setState({ tempo: e.target.value });
   }
 
   handleTick = () => {

@@ -22,17 +22,6 @@ class NoteRow extends Component {
     return false;
   }
 
-  // renderNoteBox = () => {
-  //   const { note, noteHistory } = this.props;
-  //   noteHistory
-  //   && noteHistory.map((box, index) => {
-  //     if (box.data[1] === note) {
-  //       console.log('hello!', box);
-  //       return <NoteBox key={index} />;
-  //     }
-  //   });
-  // }
-
   render() {
     const { type, note, noteHistory } = this.props;
     return (

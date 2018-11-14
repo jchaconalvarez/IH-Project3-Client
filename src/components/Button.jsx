@@ -18,9 +18,10 @@ const CardButton = styled.button`
 `;
 
 export default function Button(props) {
+  const { children } = props;
   return (
     <CardButton type="submit">
-      {props.children}
+      {children}
     </CardButton>
   );
 }

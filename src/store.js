@@ -22,8 +22,8 @@ const store = createStore(
 );
 /* eslint-enable */
 
-store.subscribe(() => {
-  console.log('Store changed!', store.getState());
-});
+// store.subscribe(() => {
+//   console.log('Store changed!', store.getState());
+// });
 
 export default store;
