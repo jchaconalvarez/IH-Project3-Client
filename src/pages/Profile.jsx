@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import shortid from 'shortid';
-import song from '../services/song-service';
 import user from '../services/profile-service';
 import NavBar from '../components/NavBar';
 import EditProfile from '../components/EditProfile';
@@ -59,7 +56,7 @@ class Profile extends Component {
         <NavBar />
         <Wrapper>
           <Title>Your profile</Title>
-          <EditProfile {...this.state} />
+          <EditProfile editProfile={user.editProfile} {...this.state} />
         </Wrapper>
       </Container>
     );
