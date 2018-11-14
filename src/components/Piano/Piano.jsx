@@ -380,11 +380,8 @@ class Piano extends Component {
       noteHistory,
       isRecording,
       midiInstrument,
-<<<<<<< HEAD
       isPlayingBack,
-=======
       originalRecTimeStamp,
->>>>>>> dev
     } = this.state;
     return (
       <React.Fragment>
