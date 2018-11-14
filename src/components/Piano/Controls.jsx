@@ -136,6 +136,7 @@ export default function Controls(props) {
     startPlayback,
     clearHistory,
     translateMidiToNote,
+    isPlayingBack,
   } = props;
   return (
     <ControlWrapper>
@@ -162,7 +163,7 @@ export default function Controls(props) {
         }
       </NoteWrapper>
       <ControlBtn area="play" type="button" onClick={startPlayback}>
-        {<PlaySymbol /> && <PauseSymbol />}
+        {isPlayingBack ? <PauseSymbol /> : <PlaySymbol />}
       </ControlBtn>
       <ControlBtn area="clear" type="button" onClick={clearHistory}>Clear</ControlBtn>
       <Metronome />

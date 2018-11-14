@@ -30,6 +30,7 @@ class Piano extends Component {
     noteHistory: [],
     isRecording: false,
     isEditing: false,
+    isPlayingBack: false,
     playback: {
       interval: null,
       timeStamp: 0,
@@ -342,6 +343,7 @@ class Piano extends Component {
       if (noteIndex === noteHistory.length) {
         clearInterval(playback.interval);
         this.setState({
+          isPlayingBack: false,
           playback: {
             ...playback,
             interval: null,
@@ -372,6 +374,7 @@ class Piano extends Component {
     if (!playback.interval) {
       const playbackInterval = setInterval(this.playSong, 50);
       this.setState({
+        isPlayingBack: true,
         playback: {
           ...playback,
           interval: playbackInterval,
@@ -380,6 +383,7 @@ class Piano extends Component {
     } else {
       clearInterval(playback.interval);
       this.setState({
+        isPlayingBack: false,
         playback: {
           ...playback,
           interval: null,
@@ -394,6 +398,7 @@ class Piano extends Component {
       noteHistory,
       isRecording,
       midiInstrument,
+      isPlayingBack,
     } = this.state;
     return (
       <React.Fragment>
@@ -401,6 +406,7 @@ class Piano extends Component {
           activeNotes={activeNotes}
           midiInstrument={midiInstrument}
           isRecording={isRecording}
+          isPlayingBack={isPlayingBack}
           onRecording={this.handleRecording}
           startPlayback={this.startPlayback}
           clearHistory={this.clearHistory}
