@@ -42,7 +42,7 @@ const AuthForm = (props) => {
               <ErrorMessage name="email" component="p" />
             </CardFields>
             <CardFields authForm>
-              <CardInput type="password" name="password" placeholder="Password" />
+              <CardInput type="password" name="password" placeholder="Password" required />
               <ErrorMessage name="password" component="p" />
             </CardFields>
             { error && renderError(error) }

@@ -42,6 +42,13 @@ class Piano extends Component {
   // exists.
   // Calls listenForMIDIAccess() to set up MIDI event listening/capture.
   componentDidMount() {
+    const { noteHistory } = this.state;
+    const { noteHistory: oldHistory } = this.props;
+    if (noteHistory.length === 0) {
+      this.setState({
+        noteHistory: oldHistory,
+      });
+    }
     this.listenForMIDIAccess();
   }
 
@@ -225,7 +232,7 @@ class Piano extends Component {
 
     const recStartTimeStamp = new Date().getTime();
     if (!isRecording) {
-      if (previousHistory.length === 0) {
+      if (noteHistory.length === 0) {
         this.setState({
           originalRecTimeStamp: recStartTimeStamp,
           recStartTimeStamp,
@@ -238,6 +245,7 @@ class Piano extends Component {
           goalTimeStamp: prevState.goalTimeStamp + (recStartTimeStamp - recStopTimeStamp),
           isRecording: true,
           isEditing: true,
+          noteHistory,
         }));
       }
     } else {
