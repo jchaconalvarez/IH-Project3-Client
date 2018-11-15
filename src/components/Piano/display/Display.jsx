@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import DisplayWrapper from './DisplayWrapper';
 import NoteRow from './NoteRow';
-import NoteBox from './NoteBox';
 
 const CanvasWrapper = styled.div`
   display: grid;
@@ -11,27 +10,29 @@ const CanvasWrapper = styled.div`
   background-color: #6B6A6A;
   grid-column: 2;
   margin: 0 2rem 2rem 0;
-  padding-top: 0.13rem;
+  /* padding-top: 1.1rem; */
   overflow-x: scroll;
 `;
 
 export default class Display extends Component {
   state = {
-    numberOfKeys: 24,
+    numberOfKeys: 26,
   };
 
   createRows = () => {
     const { numberOfKeys } = this.state;
     const array = [];
     for (let i = 0; i < numberOfKeys; i++) {
-      array[i] = i + 48;
-
+      array[i] = 85 - i;
     }
     return array;
   };
 
   checkNoteType = (noteNumber) => {
-    const blackKeys = [49, 51, 54, 56, 58, 61, 63, 66, 68, 70];
+    const blackKeys = [
+      85, 82, 80, 78, 75, 73,
+      70, 68, 66, 63, 61,
+    ];
     return blackKeys.some((key) => {
       return key === noteNumber;
     });

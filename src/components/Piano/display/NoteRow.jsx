@@ -26,6 +26,7 @@ class NoteRow extends Component {
     const { type, note, noteHistory, originalRecTimeStamp } = this.props;
     return (
       <NoteRowStyle type={type}>
+        <span>{note}</span>
         {
           noteHistory
           && noteHistory.map((box, index) => {
