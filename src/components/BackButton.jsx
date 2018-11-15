@@ -4,18 +4,18 @@ import styled from 'styled-components';
 
 const Btn = styled.button`
   grid-row: 4;
-  width: 30%;
-  padding: 1rem 0;
+  padding: 0.5rem 3rem;
   border-radius: 5px;
-  background: #0F8FAB;
+  background: transparent;
+  border: 2px solid #0F8FAB;
   font-size: 1.75rem;
-  font-weight: 700;
-  color: white;
+  font-weight: 500;
+  color: #0F8FAB;
 `;
 
 const Back = ({ history }) => {
   return (
-    history.length > 1 && <Btn onClick={history.goBack}>Go back</Btn>
+    history.length > 1 && <Btn onClick={history.goBack}>GO BACK</Btn>
   );
 };
 
