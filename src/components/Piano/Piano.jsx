@@ -43,10 +43,14 @@ class Piano extends Component {
   // Calls listenForMIDIAccess() to set up MIDI event listening/capture.
   componentDidMount() {
     const { noteHistory } = this.state;
-    const { noteHistory: oldHistory } = this.props;
+    const {
+      noteHistory: loadedHistory,
+      originalRecTimeStamp: loadedOriginalRecTimeStamp,
+    } = this.props;
     if (noteHistory.length === 0) {
       this.setState({
-        noteHistory: oldHistory,
+        noteHistory: loadedHistory,
+        originalRecTimeStamp: loadedOriginalRecTimeStamp,
       });
     }
     this.listenForMIDIAccess();
@@ -83,7 +87,7 @@ class Piano extends Component {
     const {
       recStartTimeStamp,
       recStopTimeStamp,
-      goalTimeStamp,
+      // goalTimeStamp,
       activeNotes,
       noteHistory,
       isRecording,
@@ -98,12 +102,12 @@ class Piano extends Component {
 
     let noteTimeStamp = new Date().getTime();
     const localOffset = recStartTimeStamp - recStopTimeStamp;
-    let goalTs = 0;
+    // let goalTs = 0;
 
     if (isEditing) {
-      goalTs = recStartTimeStamp - localOffset;
+      // goalTs = recStartTimeStamp - localOffset;
       noteTimeStamp -= localOffset;
-    };
+    }
 
     const noteObject = {};
 
@@ -112,7 +116,7 @@ class Piano extends Component {
     gainNode.gain.value = midiVelocity / 127;
 
     // Set up and start oscillator node.
-    oscillatorNode.type = 'sine';
+    oscillatorNode.type = 'square';
     oscillatorNode.frequency.value = noteHz;
     oscillatorNode.connect(gainNode);
     oscillatorNode.start();
@@ -226,13 +230,15 @@ class Piano extends Component {
       noteHistory,
       isRecording,
       recStopTimeStamp,
-      goalTimeStamp,
+      // goalTimeStamp,
+      originalRecTimeStamp,
     } = this.state;
-    const { songId, songName, noteHistory: previousHistory } = this.props;
+    const { songId, songName } = this.props;
 
     const recStartTimeStamp = new Date().getTime();
     if (!isRecording) {
       if (noteHistory.length === 0) {
+        console.log('NEW SONG');
         this.setState({
           originalRecTimeStamp: recStartTimeStamp,
           recStartTimeStamp,
@@ -240,6 +246,7 @@ class Piano extends Component {
           isEditing: false,
         });
       } else {
+        console.log('EDITING');
         this.setState(prevState => ({
           recStartTimeStamp,
           goalTimeStamp: prevState.goalTimeStamp + (recStartTimeStamp - recStopTimeStamp),
@@ -250,7 +257,8 @@ class Piano extends Component {
       }
     } else {
       const recStopTimeStamp = new Date().getTime();
-      song.editSong(songId, { songName, noteHistory });
+      console.log('SONG SAVED');
+      song.editSong(songId, { songName, originalRecTimeStamp, noteHistory });
       this.setState({ recStopTimeStamp, isRecording: false });
     }
   }
@@ -263,35 +271,18 @@ class Piano extends Component {
     return `${noteNames[midiNote % 12]} ${(Math.trunc(midiNote / 12) - 1)}`;
   }
 
-  // Shows notes from noteHistory on the music sheet.
-  // @returns {DOM Element}
-  showNotes = () => {
-    const { noteHistory } = this.state;
-    return (
-      noteHistory.map((input, index) => (
-          <span key={index}>{this.translateMidiToNote(input.data[1])}</span>
-      ))
-    );
-  }
-
-  // Changes the current name of the song by changing the state.
-  // @param {string} songName - New name of the song from form.
-  changeName = (songName) => {
-    this.setState({ songName });
-  }
-
   // Clears current noteHistory array by changing state.
   clearHistory = () => {
     this.setState({ noteHistory: [] });
   }
 
   // Plays back song (noteHistory array).
-  playSong = () => {
+  playSong = (noteHistory) => {
     const {
-      originalRecTimeStamp,
-      noteHistory,
       isEditing,
       playback,
+      originalRecTimeStamp,
+      offset,
     } = this.state;
 
     let localTimeStamp = playback.timeStamp;
@@ -354,25 +345,27 @@ class Piano extends Component {
   // Starts/stops interval that calls playSong() to start/stop
   // playback of song.
   startPlayback = () => {
-    const { playback } = this.state;
-    if (!playback.interval) {
-      const playbackInterval = setInterval(this.playSong, 50);
-      this.setState({
-        isPlayingBack: true,
-        playback: {
-          ...playback,
-          interval: playbackInterval,
-        },
-      });
-    } else {
-      clearInterval(playback.interval);
-      this.setState({
-        isPlayingBack: false,
-        playback: {
-          ...playback,
-          interval: null,
-        },
-      });
+    const { noteHistory, playback } = this.state;
+    if (noteHistory.length > 0) {
+      if (!playback.interval) {
+        const playbackInterval = setInterval(() => { this.playSong(noteHistory); }, 50);
+        this.setState({
+          isPlayingBack: true,
+          playback: {
+            ...playback,
+            interval: playbackInterval,
+          },
+        });
+      } else {
+        clearInterval(playback.interval);
+        this.setState({
+          isPlayingBack: false,
+          playback: {
+            ...playback,
+            interval: null,
+          },
+        });
+      }
     }
   }
 

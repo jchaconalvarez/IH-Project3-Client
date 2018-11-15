@@ -11,11 +11,12 @@ const WhiteKeysGroup = styled.div`
   grid-template-rows:
     repeat(
       2,
-      3.25rem
-      3.25rem
       3.375rem
       3.25rem
       3.375rem
+      3.25rem
+      3.375rem
+      3.25rem
       3.25rem
       3.375rem
     );
@@ -28,18 +29,17 @@ const BlackKeysGroup = styled.div`
   grid-row: 3;
   align-items: flex-end;
   grid-template-rows:
+    7rem
     3.75rem
-    4rem
+    3.75rem
     5.8rem
-    3.75rem
-    3.75rem
-    5.75rem
-    3.75rem
+    4rem
     6rem
     3.75rem
     3.75rem
+    5.8rem
     3.75rem
-    5.75rem;
+    4rem;
 `;
 
 const checkIfActive = (activeNotes, noteNumber) => {
@@ -51,12 +51,13 @@ const checkIfActive = (activeNotes, noteNumber) => {
 const Board = (props) => {
   const { activeNotes } = props;
   const whiteKeys = [
-    48, 50, 52, 53, 55, 57, 59, 60, 62, 64, 65,
-    67, 69, 71, 72, 74, 76, 77, 79, 81, 83, 84,
+    84, 83, 81, 79, 77,
+    76, 74, 72, 71, 69,
+    67, 65, 64, 62, 60,
   ];
   const blackKeys = [
-    49, 51, 54, 56, 58,
-    61, 63, 66, 68, 70,
+    82, 80, 78, 75, 73,
+    70, 68, 66, 63, 61,
   ];
   return (
     <React.Fragment>
