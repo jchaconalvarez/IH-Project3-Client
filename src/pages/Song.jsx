@@ -27,12 +27,13 @@ class Song extends Component {
     const { id: songId } = this.props.match.params;
     song.getSong(songId)
       .then((response) => {
-        const { songName, noteHistory } = response;
+        const { songName, originalRecTimeStamp, noteHistory } = response;
         let isEditing = false;
         if (noteHistory.length > 0) { isEditing = true; }
         this.setState({
           songId,
           songName,
+          originalRecTimeStamp,
           noteHistory,
           isEditing,
           status: 'loaded',
@@ -42,10 +43,12 @@ class Song extends Component {
 
   render() {
     const {
+      songName,
+      originalRecTimeStamp,
       noteHistory,
       isEditing,
-      songName,
-      status } = this.state;
+      status,
+    } = this.state;
     const { id } = this.props.match.params;
     return (
       <Container>
@@ -53,7 +56,14 @@ class Song extends Component {
         {
           status === 'loading'
             ? <Loading />
-            : <Piano songId={id} noteHistory={noteHistory} isEditing={isEditing} songName={songName} />
+            : (
+              <Piano songId={id}
+                originalRecTimeStamp={originalRecTimeStamp}
+                noteHistory={noteHistory}
+                isEditing={isEditing}
+                songName={songName}
+              />
+            )
         }
       </Container>
     );

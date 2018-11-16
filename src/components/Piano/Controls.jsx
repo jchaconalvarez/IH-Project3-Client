@@ -201,7 +201,6 @@ export default function Controls(props) {
           ? <ControlBtn area="clear" type="button" onClick={clearHistory}>Clear</ControlBtn>
           : <DisableBtn area="clear">-</DisableBtn>
       }
-      {/* <ControlBtn area="clear" type="button" onClick={clearHistory}>Clear</ControlBtn> */}
       <Metronome />
       <Chronometer isRecording={isRecording} />
     </ControlWrapper>

@@ -8,9 +8,8 @@ const WhiteKey = styled.div`
   width: 6.5rem;
   border-left: 5px solid #0F8FAB;
   height: ${
-    props => props.note === 40
-    || props.note === 43
-    || props.note === 47
+    props => props.note === 64
+    || props.note === 76
     ? '3.375': '3.25'
   };
   box-shadow:
