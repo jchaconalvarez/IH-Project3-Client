@@ -10,7 +10,6 @@ const CanvasWrapper = styled.div`
   background-color: #6B6A6A;
   grid-column: 2;
   margin: 0 2rem 2rem 0;
-  /* padding-top: 1.1rem; */
   overflow-x: scroll;
 `;
 
@@ -39,7 +38,7 @@ export default class Display extends Component {
   };
 
   render() {
-    const { noteHistory, originalRecTimeStamp } = this.props;
+    const { noteHistory, translateMidiToNote } = this.props;
     return (
       <CanvasWrapper>
         {
@@ -52,7 +51,7 @@ export default class Display extends Component {
                     key={note}
                     note={note}
                     noteHistory={noteHistory}
-                    originalRecTimeStamp={originalRecTimeStamp}
+                    translateMidiToNote={translateMidiToNote}
                   />
                 )
                 : (
@@ -60,7 +59,7 @@ export default class Display extends Component {
                     key={note}
                     note={note}
                     noteHistory={noteHistory}
-                    originalRecTimeStamp={originalRecTimeStamp}
+                    translateMidiToNote={translateMidiToNote}
                   />
                 )
             );

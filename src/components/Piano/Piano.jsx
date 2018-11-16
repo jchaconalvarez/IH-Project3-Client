@@ -87,7 +87,6 @@ class Piano extends Component {
     const {
       recStartTimeStamp,
       recStopTimeStamp,
-      // goalTimeStamp,
       activeNotes,
       noteHistory,
       isRecording,
@@ -102,12 +101,27 @@ class Piano extends Component {
 
     let noteTimeStamp = new Date().getTime();
     const localOffset = recStartTimeStamp - recStopTimeStamp;
-    // let goalTs = 0;
 
     if (isEditing) {
-      // goalTs = recStartTimeStamp - localOffset;
+      const editingOffset = noteTimeStamp - recStartTimeStamp;
+
+
+      console.log('RSTART: ', recStartTimeStamp.toString().slice(-6));
+      console.log('RSTOP: ', recStopTimeStamp.toString().slice(-6));
+      console.log('NOTETS: ', noteTimeStamp.toString().slice(-6));
+      console.log('LOCAL OFFSET: ', localOffset);
+      console.log('============================');
+      console.log('EDITING OFFSET: ', editingOffset);
+      console.log('ORIGINAL RSTART: ', recStartTimeStamp);
+      console.log('EDITED RSTART: ', recStopTimeStamp);
+      // console.log('EXPECTEDTS: ', recStopTimeStamp);
+      console.log('============================');
+
+      // noteTimeStamp = recStopTimeStamp + editingOffset;
       noteTimeStamp -= localOffset;
     }
+
+    console.log('FINALTS: ', noteTimeStamp);
 
     const noteObject = {};
 
@@ -133,7 +147,7 @@ class Piano extends Component {
     // Push notes to activeNotes and update state.
     activeNotes.push(noteObject);
     this.setState(prevState => ({
-      recStartTimestamp: prevState.recStartTimestamp - localOffset,
+      // recStartTimestamp: prevState.recStartTimestamp - localOffset,
       offset: localOffset,
       activeNotes,
       noteHistory,
@@ -232,13 +246,15 @@ class Piano extends Component {
       recStopTimeStamp,
       // goalTimeStamp,
       originalRecTimeStamp,
+      offset,
     } = this.state;
     const { songId, songName } = this.props;
 
-    const recStartTimeStamp = new Date().getTime();
     if (!isRecording) {
+      const recStartTimeStamp = new Date().getTime();
       if (noteHistory.length === 0) {
         console.log('NEW SONG');
+        console.log('ORIGINALTS, RSTARTTS SET: ', recStartTimeStamp.toString().slice(-6));
         this.setState({
           originalRecTimeStamp: recStartTimeStamp,
           recStartTimeStamp,
@@ -246,10 +262,13 @@ class Piano extends Component {
           isEditing: false,
         });
       } else {
+        const recStartTimeStamp = new Date().getTime();
         console.log('EDITING');
+        console.log('RSTART UPDATED: ', recStartTimeStamp.toString().slice(-6));
+        console.log('HANDLE REC RSTOP: ', recStopTimeStamp);
         this.setState(prevState => ({
           recStartTimeStamp,
-          goalTimeStamp: prevState.goalTimeStamp + (recStartTimeStamp - recStopTimeStamp),
+          // goalTimeStamp: prevState.goalTimeStamp + (recStartTimeStamp - recStopTimeStamp),
           isRecording: true,
           isEditing: true,
           noteHistory,
@@ -258,6 +277,8 @@ class Piano extends Component {
     } else {
       const recStopTimeStamp = new Date().getTime();
       console.log('SONG SAVED');
+      console.log('RSTOP SET/UPDATED: ', recStopTimeStamp.toString().slice(-6));
+      console.log('NOTEHISTORY: ', noteHistory);
       song.editSong(songId, { songName, originalRecTimeStamp, noteHistory });
       this.setState({ recStopTimeStamp, isRecording: false });
     }
@@ -268,7 +289,7 @@ class Piano extends Component {
   // @returns {string}
   translateMidiToNote = (midiNote) => {
     const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-    return `${noteNames[midiNote % 12]} ${(Math.trunc(midiNote / 12) - 1)}`;
+    return `${noteNames[midiNote % 12]}${(Math.trunc(midiNote / 12) - 1)}`;
   }
 
   // Clears current noteHistory array by changing state.
@@ -282,7 +303,6 @@ class Piano extends Component {
       isEditing,
       playback,
       originalRecTimeStamp,
-      offset,
     } = this.state;
 
     let localTimeStamp = playback.timeStamp;
@@ -308,6 +328,8 @@ class Piano extends Component {
       await delay(noteDuration);
       this.noteOff(midiData);
     };
+
+    console.log('LOCALTS: ', localTimeStamp.toString().slice(-6));
 
     // Calls playNote on appropriate notes
     // Clears playback interval once end of noteHistory array is reached.
@@ -394,7 +416,11 @@ class Piano extends Component {
         <PianoWrapper>
           <Board activeNotes={activeNotes} />
         </PianoWrapper>
-        <Display noteHistory={noteHistory} originalRecTimeStamp={originalRecTimeStamp} />
+        <Display
+          noteHistory={noteHistory}
+          originalRecTimeStamp={originalRecTimeStamp}
+          translateMidiToNote={this.translateMidiToNote}
+        />
       </React.Fragment>
     );
   }

@@ -47,7 +47,7 @@ class Song extends Component {
       originalRecTimeStamp,
       noteHistory,
       isEditing,
-      status
+      status,
     } = this.state;
     const { id } = this.props.match.params;
     return (
@@ -56,7 +56,14 @@ class Song extends Component {
         {
           status === 'loading'
             ? <Loading />
-            : <Piano songId={id} originalRecTimeStamp={originalRecTimeStamp} noteHistory={noteHistory} isEditing={isEditing} songName={songName} />
+            : (
+              <Piano songId={id}
+                originalRecTimeStamp={originalRecTimeStamp}
+                noteHistory={noteHistory}
+                isEditing={isEditing}
+                songName={songName}
+              />
+            )
         }
       </Container>
     );
