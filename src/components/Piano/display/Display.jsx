@@ -38,7 +38,7 @@ export default class Display extends Component {
   };
 
   render() {
-    const { noteHistory, translateMidiToNote } = this.props;
+    const { noteHistory, translateMidiToNote, originalRecTimeStamp } = this.props;
     return (
       <CanvasWrapper>
         {
@@ -52,6 +52,7 @@ export default class Display extends Component {
                     note={note}
                     noteHistory={noteHistory}
                     translateMidiToNote={translateMidiToNote}
+                    originalRecTimeStamp={originalRecTimeStamp}
                   />
                 )
                 : (
@@ -60,6 +61,7 @@ export default class Display extends Component {
                     note={note}
                     noteHistory={noteHistory}
                     translateMidiToNote={translateMidiToNote}
+                    originalRecTimeStamp={originalRecTimeStamp}
                   />
                 )
             );

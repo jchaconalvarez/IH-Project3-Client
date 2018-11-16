@@ -25,7 +25,7 @@ class NoteRow extends Component {
   }
 
   render() {
-    const { type, note, noteHistory, translateMidiToNote } = this.props;
+    const { type, note, noteHistory, translateMidiToNote, originalRecTimeStamp } = this.props;
     return (
       <NoteRowStyle type={type}>
         <span>{ translateMidiToNote(note) }</span>
@@ -34,7 +34,9 @@ class NoteRow extends Component {
           noteHistory
           && noteHistory.map((box, index) => {
             if (box.data[1] === note) {
-              return <NoteBox key={index} margin={index} />;
+              const duration = box.timeStampOff - box.timeStampOn;
+              const margin = box.timeStampOn - originalRecTimeStamp;
+              return <NoteBox key={index} margin={margin} duration={duration} />;
             }
           })
         }
