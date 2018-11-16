@@ -110,22 +110,22 @@ class Piano extends Component {
       const editingOffset = noteTimeStamp - recStartTimeStamp;
 
 
-      console.log('RSTART: ', recStartTimeStamp.toString().slice(-6));
-      console.log('RSTOP: ', recStopTimeStamp.toString().slice(-6));
-      console.log('NOTETS: ', noteTimeStamp.toString().slice(-6));
-      console.log('LOCAL OFFSET: ', localOffset);
-      console.log('============================');
-      console.log('EDITING OFFSET: ', editingOffset);
-      console.log('ORIGINAL RSTART: ', recStartTimeStamp);
-      console.log('EDITED RSTART: ', recStopTimeStamp);
+      // console.log('RSTART: ', recStartTimeStamp.toString().slice(-6));
+      // console.log('RSTOP: ', recStopTimeStamp.toString().slice(-6));
+      // console.log('NOTETS: ', noteTimeStamp.toString().slice(-6));
+      // console.log('LOCAL OFFSET: ', localOffset);
+      // console.log('============================');
+      // console.log('EDITING OFFSET: ', editingOffset);
+      // console.log('ORIGINAL RSTART: ', recStartTimeStamp);
+      // console.log('EDITED RSTART: ', recStopTimeStamp);
       // console.log('EXPECTEDTS: ', recStopTimeStamp);
-      console.log('============================');
+      // console.log('============================');
 
       // noteTimeStamp = recStopTimeStamp + editingOffset;
       noteTimeStamp -= localOffset;
     }
 
-    console.log('FINALTS: ', noteTimeStamp);
+    // console.log('FINALTS: ', noteTimeStamp);
 
     const noteObject = {};
 
@@ -257,8 +257,8 @@ class Piano extends Component {
     if (!isRecording) {
       const recStartTimeStamp = new Date().getTime();
       if (noteHistory.length === 0) {
-        console.log('NEW SONG');
-        console.log('ORIGINALTS, RSTARTTS SET: ', recStartTimeStamp.toString().slice(-6));
+        // console.log('NEW SONG');
+        // console.log('ORIGINALTS, RSTARTTS SET: ', recStartTimeStamp.toString().slice(-6));
         this.setState({
           originalRecTimeStamp: recStartTimeStamp,
           recStartTimeStamp,
@@ -267,9 +267,9 @@ class Piano extends Component {
         });
       } else {
         const recStartTimeStamp = new Date().getTime();
-        console.log('EDITING');
-        console.log('RSTART UPDATED: ', recStartTimeStamp.toString().slice(-6));
-        console.log('HANDLE REC RSTOP: ', recStopTimeStamp);
+        // console.log('EDITING');
+        // console.log('RSTART UPDATED: ', recStartTimeStamp.toString().slice(-6));
+        // console.log('HANDLE REC RSTOP: ', recStopTimeStamp);
         this.setState(prevState => ({
           recStartTimeStamp,
           // goalTimeStamp: prevState.goalTimeStamp + (recStartTimeStamp - recStopTimeStamp),
@@ -280,9 +280,9 @@ class Piano extends Component {
       }
     } else {
       const recStopTimeStamp = new Date().getTime();
-      console.log('SONG SAVED');
-      console.log('RSTOP SET/UPDATED: ', recStopTimeStamp.toString().slice(-6));
-      console.log('NOTEHISTORY: ', noteHistory);
+      // console.log('SONG SAVED');
+      // console.log('RSTOP SET/UPDATED: ', recStopTimeStamp.toString().slice(-6));
+      // console.log('NOTEHISTORY: ', noteHistory);
       song.editSong(songId, { songName, originalRecTimeStamp, noteHistory });
       this.setState({ recStopTimeStamp, isRecording: false });
     }
@@ -333,7 +333,7 @@ class Piano extends Component {
       this.noteOff(midiData);
     };
 
-    console.log('LOCALTS: ', localTimeStamp.toString().slice(-6));
+    // console.log('LOCALTS: ', localTimeStamp.toString().slice(-6));
 
     // Calls playNote on appropriate notes
     // Clears playback interval once end of noteHistory array is reached.
