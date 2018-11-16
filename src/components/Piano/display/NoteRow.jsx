@@ -12,6 +12,7 @@ const NoteRowStyle = styled.div`
   color: ${props => props.type === 'black' ? '#494849' : '#33333399'};
   font-weight: 700;
 `;
+
 class NoteRow extends Component {
 
   checkRow = () => {
@@ -25,17 +26,23 @@ class NoteRow extends Component {
   }
 
   render() {
-    const { type, note, noteHistory, translateMidiToNote, originalRecTimeStamp } = this.props;
+    const {
+      type,
+      note,
+      noteHistory,
+      translateMidiToNote,
+      originalRecTimeStamp,
+    } = this.props;
+
     return (
       <NoteRowStyle type={type}>
         <span>{ translateMidiToNote(note) }</span>
-        {/* <span>{ note }</span> */}
         {
           noteHistory
           && noteHistory.map((box, index) => {
             if (box.data[1] === note) {
               const duration = box.timeStampOff - box.timeStampOn;
-              const margin = box.timeStampOn - originalRecTimeStamp;
+              const margin = (box.timeStampOn - originalRecTimeStamp);
               return <NoteBox key={index} margin={margin} duration={duration} />;
             }
           })

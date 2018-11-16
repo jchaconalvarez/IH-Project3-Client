@@ -21,10 +21,11 @@ class Piano extends Component {
   state = {
     midiAccess: null,
     midiInstrument: null,
+    synthWave: 0,
     originalRecTimeStamp: 0,
     recStartTimeStamp: 0,
     recStopTimeStamp: 0,
-    goalTimeStamp: 0,
+    // goalTimeStamp: 0,
     offset: null,
     activeNotes: [],
     noteHistory: [],
@@ -90,6 +91,7 @@ class Piano extends Component {
       activeNotes,
       noteHistory,
       isRecording,
+      synthWave,
     } = this.state;
 
     // Create oscillator and gain nodes for synth.
@@ -98,6 +100,8 @@ class Piano extends Component {
 
     // Variables used to create noteObject.
     const noteHz = this.convertNoteDataToFrequency(midiNote);
+
+    const waveForm = ['square', 'sine', 'triangle', 'sawtooth'];
 
     let noteTimeStamp = new Date().getTime();
     const localOffset = recStartTimeStamp - recStopTimeStamp;
@@ -130,7 +134,7 @@ class Piano extends Component {
     gainNode.gain.value = midiVelocity / 127;
 
     // Set up and start oscillator node.
-    oscillatorNode.type = 'square';
+    oscillatorNode.type = waveForm[synthWave];
     oscillatorNode.frequency.value = noteHz;
     oscillatorNode.connect(gainNode);
     oscillatorNode.start();
@@ -391,6 +395,17 @@ class Piano extends Component {
     }
   }
 
+  // changeSynthWave() {
+  //   const { synthWave } = this.state;
+  //   let i = synthWave;
+  //   if (i < 3) {
+  //     i++;
+  //   } else {
+  //     i = 0;
+  //   }
+  //   this.setState({ synthWave: i });
+  // }
+
   render() {
     const {
       activeNotes,
@@ -412,6 +427,7 @@ class Piano extends Component {
           clearHistory={this.clearHistory}
           changeName={this.changeName}
           translateMidiToNote={this.translateMidiToNote}
+          changeSynthWave={this.changeSynthWave}
         />
         <PianoWrapper>
           <Board activeNotes={activeNotes} />

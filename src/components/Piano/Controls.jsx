@@ -15,7 +15,7 @@ const ControlWrapper = styled.div`
   display: grid;
   grid-template-areas:
     '. device device metronome chrono chrono chrono .'
-    '. midi note metronome rec play clear .';
+    '. midi note metronome rec play clear wave';
   justify-items: stretch;
   align-items: center;
 `;
@@ -148,6 +148,25 @@ const Note = styled.a`
     0 0 100px white;
 `;
 
+const SynthWaveButton = styled.button`
+  grid-area: 'wave';
+  cursor: pointer;
+  width: 20px;
+  height: 10px;
+  text-align: center;
+  text-shadow: 0 1px #353535;
+  color:#F8F8F8;
+  border: 1px solid #6B6A6A;
+  border-radius: 3px;
+  background: linear-gradient(#6B6A6A,#4C4C4C);
+
+  &:active {
+    color: #D3D3D3;
+    background:#4C4C4C;
+    box-shadow: inset 0 0 5px 2px rgba(53,53,53,.5);
+  }
+`;
+
 export default function Controls(props) {
   const {
     activeNotes,
@@ -158,6 +177,7 @@ export default function Controls(props) {
     clearHistory,
     translateMidiToNote,
     isPlayingBack,
+    changeSynthWave,
   } = props;
   return (
     <ControlWrapper>
@@ -201,6 +221,7 @@ export default function Controls(props) {
           ? <ControlBtn area="clear" type="button" onClick={clearHistory}>Clear</ControlBtn>
           : <DisableBtn area="clear">-</DisableBtn>
       }
+      {/* <SynthWaveButton onClick={changeSynthWave}>WAVE</SynthWaveButton> */}
       <Metronome />
       <Chronometer isRecording={isRecording} />
     </ControlWrapper>

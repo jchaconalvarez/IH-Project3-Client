@@ -7,7 +7,6 @@ const ChronoContainer = styled.div`
 `;
 
 const Clock = styled.div`
-  /* text-align: start; */
   padding-left: 2rem;
   font-family: 'Orbitron', sans-serif;
   letter-spacing: 0.5rem;
