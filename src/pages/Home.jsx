@@ -22,14 +22,18 @@ const LogoContainer = styled.div`
   background-repeat: repeat;
   background-size: 55%;
   h1 {
-    font-size: 4rem;
+    font-size: 4.5rem;
     font-weight: 900;
     color: #0F8FAB;
+    margin: 0;
+    align-self: flex-start;
   }
 `;
 
 const Logo = styled.img`
+  margin-top: 20rem;
   width: 50%;
+  align-self: flex-end;
 `;
 
 const AuthContainer = styled.div`

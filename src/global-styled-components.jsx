@@ -1,7 +1,7 @@
 import { injectGlobal } from 'styled-components';
 
 const globalStyledComponents = injectGlobal`
-  @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,,700,800,900');
+  @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,700,800,900');
   @import url('https://fonts.googleapis.com/css?family=Orbitron');
 
   html {
