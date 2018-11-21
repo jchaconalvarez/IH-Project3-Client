@@ -2,6 +2,7 @@ import { injectGlobal } from 'styled-components';
 
 const globalStyledComponents = injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,700,800,900');
+  @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
   @import url('https://fonts.googleapis.com/css?family=Orbitron');
 
   html {
@@ -12,7 +13,7 @@ const globalStyledComponents = injectGlobal`
     margin: 0;
     padding: 0;
     height: 100vh;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Lato', sans-serif;
   }
 
   a {
